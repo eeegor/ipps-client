@@ -1,4 +1,4 @@
-require("@babel/polyfill");
+require('@babel/polyfill');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -15,7 +15,7 @@ const envKeys = Object.keys(env).reduce((prev, next) => {
 
 const config = {
   mode,
-  entry: ["@babel/polyfill", './src/index.js'],
+  entry: ['@babel/polyfill', './src/index.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[hash].js',

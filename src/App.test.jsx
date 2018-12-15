@@ -11,7 +11,7 @@ describe('App', () => {
   });
 
   it('shallow renders', () => {
-    const wrapper = shallow(<App />)
+    const wrapper = shallow(<App />);
     expect(wrapper).toBeTruthy();
-  })
-})
+  });
+});
