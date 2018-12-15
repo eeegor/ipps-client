@@ -7,12 +7,13 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "webpack-dev-server --mode development",
     "build": "NODE_ENV=production webpack",
-    "lint": "eslint src && prettier --list-different \"src/**/*.{js,jsx,css,scss}\"",
+    "deploy": "yarn build && now",
     "format": "prettier --write \"src/**/*.{js,jsx,json,css,scss}\" \"*.config.{js,json}\" \".babelrc\"",
-    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && jest",
-    "deploy": "yarn build && now"
+    "lint": "eslint src && prettier --list-different \"src/**/*.{js,jsx,css,scss}\"",
+    "prebuild": "yarn format && yarn lint",
+    "start": "webpack-dev-server --mode development",
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && jest"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
@@ -82,6 +83,9 @@
           ]
         }
       ],
+      "import/named": 0,
+      "import/no-named-as-default": 0,
+      "import/no-named-as-default-member": 0,
       "prettier/prettier": [
         "error"
       ]

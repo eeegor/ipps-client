@@ -21,6 +21,7 @@ const config = {
     filename: '[name].[hash].js',
     publicPath: process.env.PATH_PRODUCTION
   },
+  stats: 'minimal',
   module: {
     rules: [
       {
