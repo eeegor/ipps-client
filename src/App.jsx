@@ -14,7 +14,7 @@ export class App extends Component {
     this.setState(state => ({ ...state, errors: [...state.errors, error] }));
 
   setProviders = providers => this.setState(state => ({ ...state, providers }));
-  
+
   setRequestStatus = (status, callback) =>
     this.setState(
       state => ({
@@ -53,9 +53,14 @@ export class App extends Component {
   render() {
     return (
       <div className="app">
-        <Title text="Hello, Boy!" />
-        <Text text="A description" />
-        <div>{JSON.stringify(this.state, null, 4)}</div>
+        <div className="sidebar">
+          <button>Click</button>
+        </div>
+        <div className="content">
+          <Title text="Hello, Boy!" />
+          <Text text="A description" />
+          <div>{JSON.stringify(this.state, null, 4)}</div>
+        </div>
       </div>
     );
   }
