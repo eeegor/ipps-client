@@ -11,7 +11,8 @@
     "build": "NODE_ENV=production webpack",
     "lint": "eslint src && prettier --list-different \"src/**/*.{js,jsx,css,scss}\"",
     "format": "prettier --write \"src/**/*.{js,jsx,json,css,scss}\" \"*.config.{js,json}\" \".babelrc\"",
-    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && jest"
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && jest",
+    "deploy": "yarn build && now"
   },
   "dependencies": {
     "react": "^16.6.3",
