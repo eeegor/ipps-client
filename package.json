@@ -10,7 +10,8 @@
     "start": "webpack-dev-server --mode development",
     "build": "NODE_ENV=production webpack",
     "lint": "eslint src && prettier --list-different \"src/**/*.{js,jsx,css,scss}\"",
-    "format": "prettier --write \"src/**/*.{js,jsx,css,scss}\""
+    "format": "prettier --write \"src/**/*.{js,jsx,json,css,scss}\" \"*.config.{js,json}\" \".babelrc\"",
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && jest"
   },
   "dependencies": {
     "react": "^16.6.3",
@@ -21,9 +22,13 @@
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
     "css-loader": "^2.0.1",
     "dotenv": "^6.2.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
     "eslint": "^5.10.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.3.0",
@@ -31,6 +36,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
+    "jest": "^23.6.0",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
@@ -59,9 +65,15 @@
       "prettier"
     ],
     "rules": {
-      "react/jsx-filename-extension": [1, { 
-        "extensions": [".js", ".jsx"] 
-      }],
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      ],
       "prettier/prettier": [
         "error"
       ]

@@ -22,55 +22,55 @@ const config = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[hash].js',
-    publicPath: process.env.PATH_PRODUCTION,
+    publicPath: process.env.PATH_PRODUCTION
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
-        loader: "babel-loader",
-        options: { presets: ["@babel/env"] }
+        loader: 'babel-loader',
+        options: { presets: ['@babel/env'] }
       },
       {
         test: /\.s?css$/,
         use: [
           mode !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
           'css-loader',
-          'sass-loader',
-        ],
+          'sass-loader'
+        ]
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: ['file-loader'],
+        use: ['file-loader']
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: ['file-loader'],
-      },
-    ],
+        use: ['file-loader']
+      }
+    ]
   },
   resolve: {
-    extensions: ['.jsx', '.js'],
+    extensions: ['.jsx', '.js']
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './src/index.html'
     }),
     new MiniCssExtractPlugin({
       filename: '[name].[hash].css',
-      chunkFilename: '[id].css',
+      chunkFilename: '[id].css'
     }),
     new webpack.DefinePlugin(envKeys),
-    new webpack.HotModuleReplacementPlugin(),
-  ],
+    new webpack.HotModuleReplacementPlugin()
+  ]
 };
 
 if (mode == 'development') {
   Object.assign(config, {
     devtool: 'inline-source-map',
     output: {
-      publicPath: process.env.PATH_DEVELOPMENT,
+      publicPath: process.env.PATH_DEVELOPMENT
     },
     devServer: {
       contentBase: './dist',
@@ -78,9 +78,9 @@ if (mode == 'development') {
       historyApiFallback: true,
       proxy: {
         '/postman': 'http://localhost:5555',
-        '/v1': 'http://localhost:28080',
-      },
-    },
+        '/v1': 'http://localhost:28080'
+      }
+    }
   });
 }
 
