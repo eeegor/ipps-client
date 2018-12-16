@@ -1,0 +1,53 @@
+.ReactVirtualized__AutoSizer {
+  width: 100% !important;
+  height: 100vh !important;
+}
+.ReactVirtualized__Grid.ReactVirtualized__Table__Grid {
+  height: calc(100vh - 40px) !important;
+  overflow: scroll !important;
+}
+
+.ReactVirtualized__Table {
+  height: 100%;
+  font-size: 0.8rem;
+  overflow: scroll !important;
+}
+
+.ReactVirtualized__Table__row,
+.ReactVirtualized__Table__headerRow {
+  display: grid;
+  grid-template-columns: 600px 300px 200px 200px 300px 300px 300px;
+  text-align: left;
+  background: #fff;
+  white-space: nowrap;
+  overflow: hidden !important;
+}
+
+.ReactVirtualized__Table__headerRow {
+  overflow-x: scroll !important;
+  overflow-y: visible !important;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  background: #fafafa;
+  z-index: 10000;
+}
+
+.ReactVirtualized__Table__row {
+  border-bottom: 1px solid #ccc;
+}
+
+.ReactVirtualized__Table__headerColumn {
+  display: flex;
+  padding: 0.2rem 1rem 0.1rem 1rem;
+  align-items: center;
+  border-right: 1px solid #ddd;
+  font-weight: 700;
+}
+
+.ReactVirtualized__Table__rowColumn {
+  padding: 0.55rem 1rem 0.45rem 1rem;
+  margin-bottom: -1px;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid #f5f5f5;
+}
