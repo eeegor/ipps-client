@@ -1,13 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Lora:400,700');
 @import 'variables';
+
+// https://hackernoon.com/removing-that-ugly-focus-ring-and-keeping-it-too-6c8727fefcd2
+body:not(.user-is-tabbing) button:focus,
+body:not(.user-is-tabbing) input:focus,
+body:not(.user-is-tabbing) select:focus,
+body:not(.user-is-tabbing) textarea:focus {
+  outline: none;
+}
 
 *,
 *:before,
 *:after {
   box-sizing: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
 }
 
 html {
   box-sizing: border-box;
+  font-size: 16px;
+  font-family: Georgia, serif;
+  letter-spacing: 0.075rem;
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
+  font-family: 'Lora';
+  letter-spacing: 0.15rem;
 }
 
 html,
@@ -18,17 +45,16 @@ body {
 }
 
 .app {
-  font-family: Arial, Helvetica, sans-serif;
   background: #fafafa;
   color: #333;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 
   @media (min-width: $size--tablet) {
     display: flex;
     flex-wrap: nowrap;
-    flex-direction: row-reverse;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
+    flex-direction: row;
   }
 }
 
@@ -40,6 +66,9 @@ body {
   padding: 1rem;
   overflow-y: scroll;
 
+  @media (max-width: $size--tablet - 1px) {
+    display: none;
+  }
   @media (min-width: $size--tablet) {
     max-width: 300px;
   }
@@ -50,6 +79,5 @@ body {
 
 .content {
   width: 100%;
-  padding: 1rem;
-  overflow-y: scroll;
+  overflow: hidden;
 }
