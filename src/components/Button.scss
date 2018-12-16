@@ -1,0 +1,28 @@
+.button {
+  background: #ddd;
+  padding: 1.1rem 2rem 0.9rem 2rem;
+  color: #333;
+  border: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.15rem;
+  font-size: 0.8rem;
+  border-radius: 2rem;
+  transition: all .25s ease-in-out;
+  font-weight: 700;
+
+  &:hover {
+    color: #fff;
+    background: #0a5;
+    box-shadow: 0 0.1rem 2rem #00000020
+  }
+}
+
+.button--primary {
+  background: #0c9;
+  color: #fff;
+  border: 0;
+
+  &:hover {
+    background: #0a9;
+  }
+}
