@@ -8,6 +8,7 @@
   padding: 1rem;
   overflow-y: scroll;
   position: relative;
+  padding-bottom: 200px;
 
   @media (max-width: $size--tablet - 1px) {
     display: none;

@@ -16,14 +16,15 @@ import {
   reduceSetProviders,
   reduceSetRequestStatus,
   reduceShowAuthForm,
-  reduceSetFilterField
+  reduceSetFilterField,
+  reduceFilterFromQuery
 } from './util';
 import { Api, LOCAL_X_AUTH_TOKEN } from './api';
 
 const defaultState = {
   requests: {},
   providers: [],
-  filter: [],
+  filter: {},
   errors: [],
   isAuth: false,
   showAuthForm: false,
@@ -46,8 +47,10 @@ export class App extends Component {
     if (localStorage.getItem(LOCAL_X_AUTH_TOKEN)) {
       console.log("Welcome, you've been logged in :)");
       this.setAuth(true);
+      this.setState(state => reduceFilterFromQuery(state, null));
       return this.getProviders();
     }
+    setQuery('');
     this.showAuthForm();
     return console.log('Welcome');
   }
@@ -84,6 +87,8 @@ export class App extends Component {
 
   applyFilter(event = null) {
     event && event.preventDefault();
+    console.log('APPLY FILTER');
+    return this.getProviders();
   }
 
   async getProviders() {
@@ -151,7 +156,7 @@ export class App extends Component {
   }
 
   render() {
-    const { isAuth, showAuthForm, providers, requests } = this.state;
+    const { isAuth, showAuthForm, providers, requests, filter } = this.state;
     const hasProviders = providers && providers.length !== 0;
     const hasNoProviders = !providers || providers.length === 0;
 
@@ -171,6 +176,7 @@ export class App extends Component {
           <>
             <Sidebar
               isAuth={isAuth}
+              filterData={filter}
               onShowAuthForm={type => this.showAuthForm(type)}
               onSetFilterField={(field, value) =>
                 this.setFilterField(field, value)
@@ -180,20 +186,18 @@ export class App extends Component {
             />
 
             <div className="content">
-              {hasNoProviders &&
-                (requests.getProviders === 'providers:get:fail' && (
-                  <div className="info info--collection">
-                    There was an error fetching the providers
-                  </div>
-                ))}
+              {requests.getProviders === 'providers:get:fail' && (
+                <div className="info info--collection">
+                  There was an error fetching the providers
+                </div>
+              )}
 
-              {hasNoProviders &&
-                (requests.getProviders === 'providers:get:loading' && (
-                  <div className="info info--collection">
-                    <IconLoading size={120} />
-                    Loading providers...
-                  </div>
-                ))}
+              {requests.getProviders === 'providers:get:loading' && (
+                <div className="info info--collection">
+                  <IconLoading size={120} />
+                  Loading providers...
+                </div>
+              )}
 
               {hasNoProviders &&
                 (requests.getProviders === 'providers:get:success' && (

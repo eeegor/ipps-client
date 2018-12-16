@@ -1,25 +1,36 @@
 import React from 'react';
-import { FilterGroup } from './FilterGroup';
+import { FilterGroup, Button } from '.';
 import './Filter.scss';
 
 export const Filter = props => {
-  const { title, formData, onChange, onSubmit, submitLabel } = props;
-  const per_page = (formData && formData.per_page) || '';
-  const page = (formData && formData.page) || '';
-  const min_discharges = (formData && formData.min_discharges) || '';
-  const max_discharges = (formData && formData.max_discharges) || '';
+  const {
+    title,
+    filterData,
+    onApplyFilter,
+    onChange,
+    onSubmit,
+    submitLabel
+  } = props;
+  const per_page = (filterData && filterData.per_page) || '';
+  const page = (filterData && filterData.page) || '';
+  const min_discharges = (filterData && filterData.min_discharges) || '';
+  const max_discharges = (filterData && filterData.max_discharges) || '';
   const min_average_covered_charges =
-    (formData && formData.min_average_covered_charges) || '';
+    (filterData && filterData.min_average_covered_charges) || '';
   const max_average_covered_charges =
-    (formData && formData.max_average_covered_charges) || '';
+    (filterData && filterData.max_average_covered_charges) || '';
   const min_average_medicare_payments =
-    (formData && formData.min_average_medicare_payments) || '';
+    (filterData && filterData.min_average_medicare_payments) || '';
   const max_average_medicare_payments =
-    (formData && formData.max_average_medicare_payments) || '';
-  const provider_state = (formData && formData.provider_state) || '';
+    (filterData && filterData.max_average_medicare_payments) || '';
+  const provider_state = (filterData && filterData.state) || '';
+
+  console.log('filterData', filterData);
+  console.log('max_discharges', max_discharges);
 
   return (
     <div className="filter">
+    <form onSubmit={(event) => onApplyFilter(event)}>
       {/* <FilterGroup 
           label="Per Page"
           name="per_page"
@@ -82,6 +93,7 @@ export const Filter = props => {
         <label htmlFor="provider_state" className="label">
           Provider State
         </label>
+        {console.log('*** provider_state', provider_state)}
         <select
           name="provider_state"
           id="provider_state"
@@ -95,6 +107,13 @@ export const Filter = props => {
           <option value="wa">WA</option>
         </select>
       </div>
+
+      <div className="filter__apply">
+        <Button color="success" onClick={event => onApplyFilter(event)}>
+          Apply Filter
+        </Button>
+      </div>
+      </form>
     </div>
   );
 };

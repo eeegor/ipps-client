@@ -11,7 +11,7 @@
     "deploy": "yarn build && now",
     "format": "prettier --write \"src/**/*.{js,jsx,json,css,scss}\" \"*.config.{js,json}\" \".babelrc\"",
     "lint": "eslint src && prettier --list-different \"src/**/*.{js,jsx,css,scss}\"",
-    "prebuild": "yarn format && yarn lint",
+    "prebuild": "yarn format",
     "start": "webpack-dev-server --mode development",
     "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && jest"
   },
@@ -20,6 +20,7 @@
     "ajv": "^6.6.1",
     "axios": "^0.18.0",
     "lodash": "^4.17.11",
+    "query-string": "^6.2.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-virtualized": "^9.21.0"

@@ -1,6 +1,6 @@
 .button {
   background: #ddd;
-  padding: 1.1rem 2rem 0.9rem 2rem;
+  padding: 1rem 2rem 0.8rem 2rem;
   color: #333;
   border: 0;
   text-transform: uppercase;
@@ -12,12 +12,12 @@
 
   &:hover {
     color: #fff;
-    background: #0a5;
+    background: #0c9;
     box-shadow: 0 0.1rem 2rem #00000020;
   }
 }
 
-.button--primary {
+.button--success {
   background: #0c9;
   color: #fff;
   border: 0;

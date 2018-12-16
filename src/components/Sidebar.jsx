@@ -8,7 +8,8 @@ export const Sidebar = props => {
     onShowAuthForm,
     onSetFilterField,
     onApplyFilter,
-    onLogout
+    onLogout,
+    filterData
   } = props;
   return (
     <div className="sidebar">
@@ -46,10 +47,12 @@ export const Sidebar = props => {
             Logout
           </button>
           <Filter
+            filterData={filterData}
             submitLabel="Apply filter"
             onChange={(field, event) =>
               onSetFilterField(field, event.target.value)
             }
+            onApplyFilter={event => onApplyFilter(event)}
             onSubmit={event => onApplyFilter(event)}
           />
         </div>
