@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { List, Auth, 
+import {
+  List,
+  Auth,
   IconLoading,
   IconInfiniteSymbol,
-  Sidebar } from './components';
+  Sidebar
+} from './components';
 import './App.scss';
 import {
   serialize,

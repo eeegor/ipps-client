@@ -1,23 +1,23 @@
 .filter-group {
-	display: flex;
-	justify-content: space-between;
-	border-top: 1px solid rgba(#fff, 0.1);
-	padding: 1rem 0;
-	align-items: center;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(#fff, 0.1);
+  padding: 1rem 0;
+  align-items: center;
 
-	.label {
-		max-width: 10rem;
-		line-height: 1.25rem;
-		margin-bottom: 0;
-		font-size: 0.8rem;
-		opacity: 0.8;
-	}
+  .label {
+    max-width: 10rem;
+    line-height: 1.25rem;
+    margin-bottom: 0;
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
 
-	.input {
-		padding: 0.25rem 0.4rem 0.25rem 0.8rem;
-	  	line-height: 1rem;
-		max-width: 10rem;
-		align-items: flex-start;
-		height: 2rem;
-	}
+  .input {
+    padding: 0.25rem 0.4rem 0.25rem 0.8rem;
+    line-height: 1rem;
+    max-width: 10rem;
+    align-items: flex-start;
+    height: 2rem;
+  }
 }

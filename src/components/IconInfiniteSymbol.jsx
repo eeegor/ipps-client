@@ -3,7 +3,7 @@ import './IconInfiniteSymbol.scss';
 
 export const IconInfiniteSymbol = props => {
   const { size = 240 } = props;
-  
+
   return (
     <div className="icon icon--infinite-symbol">
       <svg

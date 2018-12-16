@@ -20,7 +20,7 @@ export const Filter = props => {
 
   return (
     <div className="filter">
-        {/* <FilterGroup 
+      {/* <FilterGroup 
           label="Per Page"
           name="per_page"
           max="30000"
@@ -34,67 +34,67 @@ export const Filter = props => {
           onChange={(type, event) => onChange(type, event)}
         /> */}
 
-        <FilterGroup 
-          label="Min Total Discharges"
-          name="min_discharges"
-          max="1000"
-          value={min_discharges}
-          onChange={(type, event) => onChange(type, event)}
-        />
-        <FilterGroup 
-          label="Max Total Discharges"
-          name="max_discharges"
-          max="1000"
-          value={max_discharges}
-          onChange={(type, event) => onChange(type, event)}
-        />
-        <FilterGroup 
-          label="Min Average Covered Charges"
-          name="min_average_covered_charges"
-          max="1000000"
-          value={min_average_covered_charges}
-          onChange={(type, event) => onChange(type, event)}
-        />
-        <FilterGroup 
-          label="Max Average Covered Charges"
-          name="max_average_covered_charges"
-          max="1000000"
-          value={max_average_covered_charges}
-          onChange={(type, event) => onChange(type, event)}
-        />
-        
-        <FilterGroup 
-          label="Min Average Medicare Payment"
-          name="min_average_medicare_payments"
-          max="1000000"
-          value={min_average_medicare_payments}
-          onChange={(type, event) => onChange(type, event)}
-        />
-        <FilterGroup 
-          label="Max Average Medicare Payment"
-          name="max_average_medicare_payments"
-          max="1000000"
-          value={max_average_medicare_payments}
-          onChange={(type, event) => onChange(type, event)}
-        />
-        
-        <div className="filter-group">
-          <label htmlFor="provider_state" className="label">
-            Provider State
-          </label>
-          <select
-            name="provider_state"
-            id="provider_state"
-            defaultValue={provider_state}
-            onChange={event => onChange('state', event)}
-          >
-            <option value="az">AZ</option>
-            <option value="ca">CA</option>
-            <option value="ny">NY</option>
-            <option value="tx">TX</option>
-            <option value="wa">WA</option>
-          </select>
-        </div>
+      <FilterGroup
+        label="Min Total Discharges"
+        name="min_discharges"
+        max="1000"
+        value={min_discharges}
+        onChange={(type, event) => onChange(type, event)}
+      />
+      <FilterGroup
+        label="Max Total Discharges"
+        name="max_discharges"
+        max="1000"
+        value={max_discharges}
+        onChange={(type, event) => onChange(type, event)}
+      />
+      <FilterGroup
+        label="Min Average Covered Charges"
+        name="min_average_covered_charges"
+        max="1000000"
+        value={min_average_covered_charges}
+        onChange={(type, event) => onChange(type, event)}
+      />
+      <FilterGroup
+        label="Max Average Covered Charges"
+        name="max_average_covered_charges"
+        max="1000000"
+        value={max_average_covered_charges}
+        onChange={(type, event) => onChange(type, event)}
+      />
+
+      <FilterGroup
+        label="Min Average Medicare Payment"
+        name="min_average_medicare_payments"
+        max="1000000"
+        value={min_average_medicare_payments}
+        onChange={(type, event) => onChange(type, event)}
+      />
+      <FilterGroup
+        label="Max Average Medicare Payment"
+        name="max_average_medicare_payments"
+        max="1000000"
+        value={max_average_medicare_payments}
+        onChange={(type, event) => onChange(type, event)}
+      />
+
+      <div className="filter-group">
+        <label htmlFor="provider_state" className="label">
+          Provider State
+        </label>
+        <select
+          name="provider_state"
+          id="provider_state"
+          defaultValue={provider_state}
+          onChange={event => onChange('state', event)}
+        >
+          <option value="az">AZ</option>
+          <option value="ca">CA</option>
+          <option value="ny">NY</option>
+          <option value="tx">TX</option>
+          <option value="wa">WA</option>
+        </select>
       </div>
+    </div>
   );
 };
