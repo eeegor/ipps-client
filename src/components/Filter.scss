@@ -1,0 +1,33 @@
+.filter {
+  margin-top: 2rem;
+}
+
+.filter-group {
+  margin-bottom: 2rem;
+
+  .input {
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+    line-height: 1rem;
+  }
+
+  .min-group,
+  .max-group {
+    display: inline-flex;
+    flex-direction: column;
+    width: calc(50% - 0.5rem);
+
+    .label {
+      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+      opacity: 0.5;
+    }
+  }
+
+  .min-group {
+    margin-right: 0.5rem;
+  }
+
+  .max-group {
+    margin-left: 0.5rem;
+  }
+}
