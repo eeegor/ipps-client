@@ -3,6 +3,7 @@ import { Text } from './Text';
 import { List } from './List';
 import { Button } from './Button';
 import { Filter } from './Filter';
+import { FilterGroup } from './FilterGroup';
 import { FormAuth } from './FormAuth';
 import { Auth } from './Auth';
 import { Sidebar } from './Sidebar';
@@ -16,6 +17,7 @@ export {
   List,
   Button,
   Filter,
+  FilterGroup,
   FormAuth,
   Auth,
   Sidebar,

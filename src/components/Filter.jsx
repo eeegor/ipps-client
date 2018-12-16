@@ -1,4 +1,5 @@
 import React from 'react';
+import { FilterGroup } from './FilterGroup';
 import './Filter.scss';
 
 export const Filter = props => {
@@ -19,154 +20,81 @@ export const Filter = props => {
 
   return (
     <div className="filter">
-      <div className="filter-group">
-        <label className="label">Paging:</label>
-        <div className="min-group">
-          <label className="label" htmlFor="per_page">
-            Per Page
+        {/* <FilterGroup 
+          label="Per Page"
+          name="per_page"
+          max="30000"
+          value={per_page}
+          onChange={(type, event) => onChange(type, event)}
+        />
+        <FilterGroup 
+          label="Page"
+          name="page"
+          value={page}
+          onChange={(type, event) => onChange(type, event)}
+        /> */}
+
+        <FilterGroup 
+          label="Min Total Discharges"
+          name="min_discharges"
+          max="1000"
+          value={min_discharges}
+          onChange={(type, event) => onChange(type, event)}
+        />
+        <FilterGroup 
+          label="Max Total Discharges"
+          name="max_discharges"
+          max="1000"
+          value={max_discharges}
+          onChange={(type, event) => onChange(type, event)}
+        />
+        <FilterGroup 
+          label="Min Average Covered Charges"
+          name="min_average_covered_charges"
+          max="1000000"
+          value={min_average_covered_charges}
+          onChange={(type, event) => onChange(type, event)}
+        />
+        <FilterGroup 
+          label="Max Average Covered Charges"
+          name="max_average_covered_charges"
+          max="1000000"
+          value={max_average_covered_charges}
+          onChange={(type, event) => onChange(type, event)}
+        />
+        
+        <FilterGroup 
+          label="Min Average Medicare Payment"
+          name="min_average_medicare_payments"
+          max="1000000"
+          value={min_average_medicare_payments}
+          onChange={(type, event) => onChange(type, event)}
+        />
+        <FilterGroup 
+          label="Max Average Medicare Payment"
+          name="max_average_medicare_payments"
+          max="1000000"
+          value={max_average_medicare_payments}
+          onChange={(type, event) => onChange(type, event)}
+        />
+        
+        <div className="filter-group">
+          <label htmlFor="provider_state" className="label">
+            Provider State
           </label>
-          <input
-            className="input"
-            type="number"
-            id="per_page"
-            name="per_page"
-            min="1"
-            max="30000"
-            defaultValue={per_page}
-            onChange={event => onChange('per_page', event)}
-          />
-        </div>
-        <div className="max-group">
-          <label className="label" htmlFor="page">
-            Page
-          </label>
-          <input
-            className="input"
-            type="number"
-            id="page"
-            name="page"
-            min="1"
-            defaultValue={page}
-            onChange={event => onChange('page', event)}
-          />
-        </div>
-      </div>
-      <div className="filter-group">
-        <label className="label">Total Discharges:</label>
-        <div className="min-group">
-          <label className="label" htmlFor="min_discharges">
-            Min
-          </label>
-          <input
-            className="input"
-            type="number"
-            id="min_discharges"
-            name="min_discharges"
-            min="0"
-            max="1000"
-            defaultValue={min_discharges}
-            onChange={event => onChange('min_discharges', event)}
-          />
-        </div>
-        <div className="max-group">
-          <label className="label" htmlFor="max_discharges">
-            Max
-          </label>
-          <input
-            className="input"
-            type="number"
-            id="max_discharges"
-            name="max_discharges"
-            min="0"
-            max="1000"
-            defaultValue={max_discharges}
-            onChange={event => onChange('max_discharges', event)}
-          />
-        </div>
-      </div>
-      <div className="filter-group">
-        <label className="label">Average Covered Charges:</label>
-        <div className="min-group">
-          <label className="label" htmlFor="min_average_covered_charges">
-            Min
-          </label>
-          <input
-            className="input"
-            type="number"
-            id="min_average_covered_charges"
-            name="min_average_covered_charges"
-            min="0"
-            max="1000000"
-            defaultValue={min_average_covered_charges}
-            onChange={event => onChange('min_average_covered_charges', event)}
-          />
-        </div>
-        <div className="max-group">
-          <label className="label" htmlFor="max_average_covered_charges">
-            Max
-          </label>
-          <input
-            className="input"
-            type="number"
-            id="max_average_covered_charges"
-            name="max_average_covered_charges"
-            min="0"
-            max="1000000"
-            defaultValue={max_average_covered_charges}
-            onChange={event => onChange('max_average_covered_charges', event)}
-          />
+          <select
+            name="provider_state"
+            id="provider_state"
+            defaultValue={provider_state}
+            onChange={event => onChange('state', event)}
+          >
+            <option value="az">AZ</option>
+            <option value="ca">CA</option>
+            <option value="ny">NY</option>
+            <option value="tx">TX</option>
+            <option value="wa">WA</option>
+          </select>
         </div>
       </div>
-      <div className="filter-group">
-        <label className="label">Average Medicare Payment:</label>
-        <div className="min-group">
-          <label className="label" htmlFor="min_average_medicare_payments">
-            Min
-          </label>
-          <input
-            className="input"
-            type="number"
-            id="min_average_medicare_payments"
-            name="min_average_medicare_payments"
-            min="0"
-            max="1000000"
-            defaultValue={min_average_medicare_payments}
-            onChange={event => onChange('min_average_medicare_payments', event)}
-          />
-        </div>
-        <div className="max-group">
-          <label className="label" htmlFor="max_average_medicare_payments">
-            Max
-          </label>
-          <input
-            className="input"
-            type="number"
-            id="max_average_medicare_payments"
-            name="max_average_medicare_payments"
-            min="0"
-            max="1000000"
-            defaultValue={max_average_medicare_payments}
-            onChange={event => onChange('max_average_medicare_payments', event)}
-          />
-        </div>
-      </div>
-      <div className="filter-group">
-        <label htmlFor="provider_state" className="label">
-          Provider State
-        </label>
-        <select
-          name="provider_state"
-          id="provider_state"
-          defaultValue={provider_state}
-          onChange={event => onChange('provider_state', event)}
-        >
-          <option value="az">AZ</option>
-          <option value="ca">CA</option>
-          <option value="ny">NY</option>
-          <option value="tx">TX</option>
-          <option value="wa">WA</option>
-        </select>
-      </div>
-    </div>
   );
 };

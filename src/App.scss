@@ -142,6 +142,11 @@ button {
     background: rgba(#fff, 0.1);
     height: 3rem;
     transition: all 0.2s ease-in-out;
+    font-size: 0.8rem;
+
+    @media (min-width: $size--desktop) {
+      font-size: 1rem;
+    }
 
     &:hover {
       background: rgba(#fff, 0.3);
