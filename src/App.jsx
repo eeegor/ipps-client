@@ -1,156 +1,42 @@
 import React, { Component } from 'react';
-import { Title, Text } from './components';
+import { List, Auth, 
+  IconLoading,
+  IconInfiniteSymbol,
+  Sidebar } from './components';
 import './App.scss';
-import axios from 'axios';
-import { FormAuth } from './components/FormAuth';
+import {
+  serialize,
+  setQuery,
+  reduceSetError,
+  reduceSetAuth,
+  reduceSetFormAuthField,
+  reduceSetProviders,
+  reduceSetRequestStatus,
+  reduceShowAuthForm,
+  reduceSetFilterField
+} from './util';
+import { Api, LOCAL_X_AUTH_TOKEN } from './api';
 
-const ROOT_URL = 'https://ipps-api-secure.now.sh';
-const LOCAL_X_AUTH_TOKEN = 'ipps-api-secure';
+const defaultState = {
+  requests: {},
+  providers: [],
+  filter: [],
+  errors: [],
+  isAuth: false,
+  showAuthForm: false,
+  showLoginForm: false,
+  formAuth: {
+    email: '',
+    password: ''
+  }
+};
 
 export class App extends Component {
-  state = {
-    requests: {},
-    providers: [],
-    errors: [],
-    isAuth: false,
-    showAuthForm: false,
-    showLoginForm: false,
-    formAuth: {
-      email: '',
-      password: ''
-    }
-  };
+  state = defaultState;
 
-  setAuth = isAuth => this.setState(state => ({ ...state, isAuth }));
-
-  setFormAuthField = (field, value) =>
-    this.setState(state => ({
-      ...state,
-      formAuth: {
-        ...state.formAuth,
-        [field]: value
-      }
-    }));
-
-  setError = error =>
-    this.setState(
-      state => ({ ...state, errors: [...state.errors, error] }),
-      () => console.log('*** latest error ***', error)
-    );
-
-  setProviders = providers => this.setState(state => ({ ...state, providers }));
-
-  setRequestStatus = (status, callback) =>
-    this.setState(
-      state => ({
-        ...state,
-        requests: { ...state.requests, getProviders: status }
-      }),
-      callback
-    );
-
-  async getProviders() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const query = decodeURIComponent(urlParams.toString());
-
-    this.setState(state => ({
-      ...state,
-      requests: {
-        ...state.requests,
-        getProviders: 'dispatched'
-      }
-    }));
-
-    await axios
-      .get(`${ROOT_URL}/providers?${query}`, {
-        headers: {
-          'x-auth': localStorage.getItem(LOCAL_X_AUTH_TOKEN) || ''
-        }
-      })
-      .then(res => {
-        return this.setRequestStatus('providers:get:success', () => {
-          this.setProviders(res.data);
-        });
-      })
-      .catch(error =>
-        this.setRequestStatus('providers:get:failed', () =>
-          this.setError(error)
-        )
-      );
-  }
-
-  async signup(e = null) {
-    e && e.preventDefault();
-    await axios
-      .post(`${ROOT_URL}/signup`, this.state.formAuth)
-      .then(res => {
-        if (!res.headers['x-auth']) {
-          return Promise.reject('Missing token');
-        }
-        this.setAuth(true);
-        localStorage.setItem(LOCAL_X_AUTH_TOKEN, res.headers['x-auth']);
-        return this.setRequestStatus('signup:success', () =>
-          this.getProviders()
-        );
-      })
-      .catch(error => {
-        this.setAuth(false);
-        this.setRequestStatus('signup:failed', () => this.setError(error));
-      });
-  }
-
-  async login(e = null) {
-    e && e.preventDefault();
-    await axios
-      .post(`${ROOT_URL}/login`, this.state.formAuth)
-      .then(res => {
-        if (!res.headers['x-auth']) {
-          return Promise.reject('Missing token');
-        }
-        this.setAuth(true);
-        localStorage.setItem(LOCAL_X_AUTH_TOKEN, res.headers['x-auth']);
-        return this.setRequestStatus('login:success', () =>
-          this.getProviders()
-        );
-      })
-      .catch(error => {
-        this.setAuth(false);
-        return this.setRequestStatus('login:failed', () =>
-          this.setError(error)
-        );
-      });
-  }
-
-  async logout(e = null) {
-    e && e.preventDefault();
-    await axios
-      .delete(`${ROOT_URL}/logout`, {
-        headers: {
-          'x-auth': localStorage.getItem(LOCAL_X_AUTH_TOKEN)
-        }
-      })
-      .then(() => {
-        localStorage.removeItem(LOCAL_X_AUTH_TOKEN);
-        this.setAuth(false);
-        this.setProviders([]);
-        return this.setRequestStatus('logout:success', () =>
-          console.log('logged out :)')
-        );
-      })
-      .catch(error => {
-        this.setAuth(false);
-        return this.setRequestStatus('logout:failed', () =>
-          this.setError(error)
-        );
-      });
-  }
-
-  showAuthForm(type = 'signup', e = null) {
-    e && e.preventDefault();
-    return this.setState(state => ({
-      ...state,
-      showAuthForm: type
-    }));
+  constructor(props) {
+    super(props);
+    this.api = new Api();
   }
 
   componentDidMount() {
@@ -163,65 +49,175 @@ export class App extends Component {
     return console.log('Welcome');
   }
 
+  setError = error =>
+    this.setState(
+      state => reduceSetError(state, { error }),
+      () => console.log('*** latest error ***', error)
+    );
+
+  setAuth = isAuth => this.setState(state => reduceSetAuth(state, { isAuth }));
+
+  setFormAuthField = (field, value) =>
+    this.setState(state => reduceSetFormAuthField(state, { field, value }));
+
+  setProviders = providers =>
+    this.setState(state => reduceSetProviders(state, { providers }));
+
+  setRequestStatus = (status, callback) =>
+    this.setState(state => reduceSetRequestStatus(state, { status }), callback);
+
+  showAuthForm(type = 'signup', event = null) {
+    event && event.preventDefault();
+    return this.setState(state => reduceShowAuthForm(state, { type }));
+  }
+
+  setFilterField = (field, value) =>
+    this.setState(
+      state => reduceSetFilterField(state, { field, value }),
+      () => {
+        setQuery(serialize(this.state.filter));
+      }
+    );
+
+  applyFilter(event = null) {
+    event && event.preventDefault();
+  }
+
+  async getProviders() {
+    this.setRequestStatus('providers:get:loading');
+    await this.api
+      .getProviders()
+      .then(res => {
+        return this.setRequestStatus('providers:get:success', () => {
+          this.setProviders(res.data);
+        });
+      })
+      .catch(error =>
+        this.setRequestStatus('providers:get:fail', () => this.setError(error))
+      );
+  }
+
+  async signup(event = null) {
+    event && event.preventDefault();
+    await this.api
+      .signup(this.state.formAuth)
+      .then(res => {
+        this.setAuth(true);
+        return this.setRequestStatus('signup:success', () =>
+          this.getProviders()
+        );
+      })
+      .catch(error => {
+        this.setAuth(false);
+        this.setRequestStatus('signup:fail', () => this.setError(error));
+      });
+  }
+
+  async login(event = null) {
+    event && event.preventDefault();
+    await this.api
+      .login(this.state.formAuth)
+      .then(res => {
+        this.setAuth(true);
+        return this.setRequestStatus('login:success', () =>
+          this.getProviders()
+        );
+      })
+      .catch(error => {
+        this.setAuth(false);
+        this.showAuthForm('login');
+        return this.setRequestStatus('login:fail', () => this.setError(error));
+      });
+  }
+
+  async logout(event = null) {
+    event && event.preventDefault();
+    await this.api
+      .logout()
+      .then(() => {
+        this.setAuth(false);
+        this.setProviders([]);
+        return this.setRequestStatus('logout:success', () =>
+          console.log('logged out :)')
+        );
+      })
+      .catch(error => {
+        this.setAuth(false);
+        return this.setRequestStatus('logout:fail', () => this.setError(error));
+      });
+  }
+
   render() {
-    const { isAuth, showAuthForm } = this.state;
-    const hasProviders =
-      this.state.providers && this.state.providers.length !== 0;
-    const hasNoProviders =
-      !this.state.providers || this.state.providers.length === 0;
+    const { isAuth, showAuthForm, providers, requests } = this.state;
+    const hasProviders = providers && providers.length !== 0;
+    const hasNoProviders = !providers || providers.length === 0;
 
     return (
       <div className="app">
-        <div className="sidebar">
-          <Title text="Hello, Boy!" />
-          <Text text="A description" />
-          <div>{JSON.stringify(this.state, null, 4)}</div>
-          {!isAuth && (
-            <>
-              <button className="button" onClick={e => this.showAuthForm('signup', e)}>
-                Sign up
-              </button>
-              <button className="button" onClick={e => this.showAuthForm('login', e)}>
-                Login
-              </button>
-            </>
-          )}
-          {isAuth && (
-            <>
-              <button className="button" onClick={e => this.logout(e)}>Logout</button>
-            </>
-          )}
-        </div>
+        <Auth
+          isAuth={isAuth}
+          showAuthForm={showAuthForm || 'signup'}
+          onSetFormAuthField={(field, value) =>
+            this.setFormAuthField(field, value)
+          }
+          onSignup={event => this.signup(event)}
+          onLogin={event => this.login(event)}
+        />
 
-        <div className="content">
-          {showAuthForm === 'signup' && !isAuth && (
-            <FormAuth
-              type="signup"
-              title="Signup"
-              submitLabel="Signup"
-              onChange={(field, event) =>
-                this.setFormAuthField(field, event.target.value)
+        {isAuth && (
+          <>
+            <Sidebar
+              isAuth={isAuth}
+              onShowAuthForm={type => this.showAuthForm(type)}
+              onSetFilterField={(field, value) =>
+                this.setFilterField(field, value)
               }
-              onSubmit={event => this.signup(event)}
+              onApplyFilter={event => this.applyFilter(event)}
+              onLogout={event => this.logout(event)}
             />
-          )}
 
-          {showAuthForm === 'login' && !isAuth && (
-            <FormAuth
-              type="login"
-              title="Login"
-              submitLabel="Login"
-              onChange={(field, event) =>
-                this.setFormAuthField(field, event.target.value)
-              }
-              onSubmit={event => this.login(event)}
-            />
-          )}
+            <div className="content">
+              {hasNoProviders &&
+                (requests.getProviders === 'providers:get:fail' && (
+                  <div className="info info--collection">
+                    There was an error fetching the providers
+                  </div>
+                ))}
 
-          {isAuth && hasNoProviders && (
-            <div className="p-3">Loading providers...</div>
-          )}
-        </div>
+              {hasNoProviders &&
+                (requests.getProviders === 'providers:get:loading' && (
+                  <div className="info info--collection">
+                    <IconLoading size={120} />
+                    Loading providers...
+                  </div>
+                ))}
+
+              {hasNoProviders &&
+                (requests.getProviders === 'providers:get:success' && (
+                  <div className="info info--collection">
+                    <IconInfiniteSymbol size={160} />
+                    Your query did not match any providers
+                  </div>
+                ))}
+
+              {hasProviders &&
+                requests.getProviders === 'providers:get:success' && (
+                  <List
+                    items={providers}
+                    columns={[
+                      { label: 'Provider Name' },
+                      { label: 'Provider City' },
+                      { label: 'Provider State' },
+                      { label: 'Total Discharges' },
+                      { label: 'Average Covered Charges' },
+                      { label: 'Average Total Payments' },
+                      { label: 'Average Medicare Payments' }
+                    ]}
+                  />
+                )}
+            </div>
+          </>
+        )}
       </div>
     );
   }

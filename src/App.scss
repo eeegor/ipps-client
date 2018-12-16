@@ -5,7 +5,10 @@
 body:not(.user-is-tabbing) button:focus,
 body:not(.user-is-tabbing) input:focus,
 body:not(.user-is-tabbing) select:focus,
-body:not(.user-is-tabbing) textarea:focus {
+body:not(.user-is-tabbing) textarea:focus,
+.ReactVirtualized__Grid,
+.ReactVirtualized__Table__Grid,
+.ReactVirtualized__Table__headerColumn {
   outline: none;
 }
 
@@ -16,14 +19,24 @@ body:not(.user-is-tabbing) textarea:focus {
   font-size: inherit;
   font-family: inherit;
   font-weight: inherit;
+  line-height: inherit;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
 }
 
 html {
   box-sizing: border-box;
   font-size: 16px;
-  font-family: Georgia, serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   letter-spacing: 0.075rem;
   font-weight: 400;
+  line-height: 1rem;
 }
 
 h1,
@@ -33,15 +46,9 @@ h4,
 h5,
 h6,
 button {
-  font-family: 'Lora';
+  // font-family: 'Dosis';
   letter-spacing: 0.15rem;
-}
-
-html,
-body {
-  margin: 0;
-  height: 100%;
-  width: 100%;
+  font-weight: 700;
 }
 
 .app {
@@ -54,7 +61,7 @@ body {
   @media (min-width: $size--tablet) {
     display: flex;
     flex-wrap: nowrap;
-    flex-direction: row;
+    flex-direction: row-reverse;
   }
 }
 
@@ -65,6 +72,7 @@ body {
   color: #fafafa;
   padding: 1rem;
   overflow-y: scroll;
+  position: relative;
 
   @media (max-width: $size--tablet - 1px) {
     display: none;
@@ -75,9 +83,127 @@ body {
   @media (min-width: $size--desktop) {
     max-width: 400px;
   }
+
+  .title {
+    max-width: 10rem;
+  }
+
+  .text {
+    max-width: 16rem;
+  }
+
+  .button--logout {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
 }
 
 .content {
   width: 100%;
   overflow: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  opacity: 0.5;
+}
+
+.input {
+  width: 100%;
+  font-size: 1.25rem;
+  line-height: 2rem;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #ddd;
+  outline: 0;
+  border-radius: 2rem;
+}
+
+.switch {
+  .switch__cells {
+    display: grid;
+
+    &.grid--2 {
+      grid-template-columns: repeat(2, 1fr);
+
+      > *:nth-child(1) {
+        margin-right: 1px;
+      }
+    }
+  }
+
+  .switch__cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(#fff, 0.1);
+    height: 3rem;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background: rgba(#fff, 0.3);
+    }
+  }
+}
+
+.info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2rem;
+  padding-bottom: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(#fff, 0.9);
+  flex-direction: column;
+
+  .info--collection {
+  }
+}
+
+.icon {
+  display: block;
+}
+
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+  to {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+  to {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+}
+
+.rotating {
+  -webkit-animation: rotating 2s linear infinite;
+  -moz-animation: rotating 2s linear infinite;
+  -ms-animation: rotating 2s linear infinite;
+  -o-animation: rotating 2s linear infinite;
+  animation: rotating 2s linear infinite;
 }
