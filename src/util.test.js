@@ -201,7 +201,7 @@ describe('util', () => {
       showAuthForm: 'signup'
     });
   });
-  
+
   it('reduceToggleSidebar', () => {
     const state = {
       one: {},
@@ -242,5 +242,4 @@ describe('util', () => {
       }
     });
   });
-  
 });

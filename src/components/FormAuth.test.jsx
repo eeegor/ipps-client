@@ -40,4 +40,10 @@ describe('FormAuth', () => {
       .simulate('click');
     expect(callback).toHaveBeenCalledTimes(1);
   });
+
+  it('should handle default values', () => {
+    const wrapper = mount(<FormAuth formData={{}} />);
+    wrapper.find('.input--email');
+    expect(wrapper).toBeTruthy();
+  });
 });
