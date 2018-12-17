@@ -39,7 +39,7 @@ export const makeObjectStringValues = (obj, keys) => {
   console.log('dedede', queryString.parse(location.search, {}));
   let nextObj = obj;
   Object.keys(pick(obj, keys)).map(key => {
-    if (!obj[key]) {
+    if (!obj[key] || obj[key] === undefined) {
       return delete nextObj[key];
     } else if (Array.isArray(obj[key])) {
       return obj[key][obj[key].length - 1];
