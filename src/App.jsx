@@ -190,7 +190,7 @@ export class App extends Component {
     const hasProviders = providers && providers.length !== 0;
     const hasNoProviders = !providers || providers.length === 0;
     const blocked = showAuthForm || showSidebar;
-    const { page = 1, perPage, currentCount, totalCount } = meta.providers;
+    const { currentPage, perPage, currentCount, totalCount } = meta.providers;
 
     return (
       <div className={`app${blocked ? ' app--blocked' : ''}`}>
@@ -250,9 +250,27 @@ export class App extends Component {
                 ))}
 
               <div className="list-results">
-                <h1 className="list-results__title">Search Results:</h1>
-                <p className="list-results__description">
-                  Page:<b>{page}</b>{' '}Per page:<b>{perPage}</b>{' '}Current:<b>{currentCount}</b>{' '}Total:<b>{totalCount}</b>
+                <h1 className="list-results__title">
+                  <b>
+                    {currentCount && currentCount !== 0
+                      ? currentCount
+                      : totalCount}
+                  </b>{' '}
+                  Results
+                </h1>
+                <p className="list-results__info">
+                  <span className="info-block">
+                    <span>Page:</span>
+                    <span>
+                      <b>{currentPage}</b>
+                    </span>
+                  </span>
+                  <span className="info-block">
+                    <span>Per page:</span>
+                    <span>
+                      <b>{perPage}</b>
+                    </span>
+                  </span>
                 </p>
               </div>
 

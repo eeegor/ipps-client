@@ -116,7 +116,9 @@ hr {
   border-radius: 0.25rem;
   -webkit-appearance: none;
 
-  $color--placeholder: rgba($color--primary-hover, 0.5);
+  color: darken($color--primary, 15%);
+
+  $color--placeholder: rgba(#333, 0.3);
 
   &::-webkit-input-placeholder {
     /* Chrome/Opera/Safari */
@@ -223,11 +225,20 @@ hr {
     }
   }
 
-  &__description {
+  &__info {
     font-size: 0.8rem;
     line-height: 1.5;
+    letter-spacing: 0.01rem;
     margin: 0;
     color: rgba(#333, 0.5);
+
+    span {
+      padding-right: 0.5rem;
+
+      span {
+        padding-right: 0.25rem;
+      }
+    }
 
     b {
       color: rgba(#333, 0.9);

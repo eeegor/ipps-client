@@ -3,33 +3,36 @@
 .menu-toggle {
   align-items: center;
   background: $color--primary;
-  border-radius: 2rem;
-  box-shadow: 0 0.25rem 2rem 0 rgba(#333, 0.4);
+  border-radius: 0.25rem;
+  // box-shadow: 0 0.25rem 2rem 0 rgba(#333, 0.4);
   border: 2px solid $color--primary;
   color: #fff;
   display: flex;
   font-size: 0.8rem;
   font-weight: 700;
-  height: 4rem;
   justify-content: center;
   letter-spacing: 0.15rem;
-  padding-top: 2px;
   position: fixed;
-  right: 1rem;
   text-transform: uppercase;
-  top: 1rem;
-  width: 4rem;
   z-index: 100000;
 
+  height: 2.5rem;
+  width: 5rem;
+  right: 0.75rem;
+  top: 0.75rem;
   transition: all 0.2s ease-in-out;
   @media (min-width: $size--tablet) {
-    right: 1.5rem;
-    top: 1.5rem;
+    height: 3rem;
+    width: 6rem;
+    right: 1rem;
+    top: 1rem;
   }
 
   &--open {
-    color: $color--primary;
-    background: #fff;
+    color: #fff;
+    // color: $color--primary;
+    background: rgba($color--primary, 0.5);
     border-color: #fff;
+    box-shadow: 0 0.25rem 2rem 0 rgba($color--primary, 0.4);
   }
 }

@@ -11,7 +11,7 @@ export const MenuToggle = props => {
   );
   return (
     <div className={classNames} onClick={event => onClick(event)}>
-      {isOpen ? 'X' : 'Menu'}
+      {isOpen ? 'Close' : 'Menu'}
     </div>
   );
 };

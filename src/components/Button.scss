@@ -7,7 +7,7 @@
   border: 0;
   text-transform: uppercase;
   letter-spacing: 0.15rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   border-radius: 0.25rem;
   transition: all 0.25s ease-in-out;
   font-weight: 700;
@@ -26,7 +26,7 @@
 
   &:hover {
     color: #333;
-    border: 1px solid #ccc;
+    border: 1px solid #fff;
     background: rgba(#fff, 0.2);
     box-shadow: 0 0.25rem 4rem rgba(#000, 0.05);
   }
