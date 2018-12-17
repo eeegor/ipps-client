@@ -2,17 +2,19 @@
 
 .ReactVirtualized__AutoSizer {
   width: 100% !important;
-  height: 100vh !important;
+  height: calc(100vh - 100px) !important;
 }
 .ReactVirtualized__Grid.ReactVirtualized__Table__Grid {
-  height: calc(100vh - 40px) !important;
+  height: calc(100vh - 140px) !important;
   overflow: scroll !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ReactVirtualized__Table {
   height: 100%;
   font-size: 0.8rem;
   overflow: scroll !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ReactVirtualized__Table__row,
@@ -30,16 +32,16 @@
   overflow-y: visible !important;
   align-items: center;
   border-bottom: 1px solid #ddd;
-  background: #fafafa;
+  background: #fff;
   z-index: 10000;
-
-  @media (max-width: $size--tablet - 1px) {
-    overflow-x: scroll !important;
-  }
 }
 
 .ReactVirtualized__Table__row {
   border-bottom: 1px solid #ccc;
+
+  &:hover {
+    background: rgba($color--primary, 0.05);
+  }
 }
 
 .ReactVirtualized__Table__headerColumn {
@@ -56,4 +58,8 @@
   display: flex;
   align-items: center;
   border-right: 1px solid #f5f5f5;
+}
+
+.ReactVirtualized__Table__sortableHeaderIcon {
+  fill: $color--primary;
 }

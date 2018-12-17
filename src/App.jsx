@@ -94,6 +94,7 @@ export class App extends Component {
     );
 
   applyFilter(event = null) {
+    this.setState(state => ({ ...state, showSidebar: false }));
     event && event.preventDefault();
     return this.getProviders();
   }
@@ -173,10 +174,16 @@ export class App extends Component {
     } = this.state;
     const hasProviders = providers && providers.length !== 0;
     const hasNoProviders = !providers || providers.length === 0;
+    const blocked = showAuthForm || showSidebar;
 
     return (
-      <div className="app">
-        {isAuth && <MenuToggle onClick={event => this.toggleSidebar(event)} />}
+      <div className={`app${blocked ? ' app--blocked' : ''}`}>
+        {isAuth && (
+          <MenuToggle
+            ioOpen={showSidebar}
+            onClick={event => this.toggleSidebar(event)}
+          />
+        )}
         <Auth
           isAuth={isAuth}
           showAuthForm={showAuthForm || 'signup'}
@@ -189,7 +196,7 @@ export class App extends Component {
         />
 
         {isAuth && (
-          <>
+          <div className={`app__container`}>
             {showSidebar && (
               <Sidebar
                 isAuth={isAuth}
@@ -226,6 +233,11 @@ export class App extends Component {
                   </div>
                 ))}
 
+              <div className="list-results">
+                <h1 className="list-results__title">Search Results:</h1>
+                <p className="list-results__description">Found <b>{30}</b> entries</p>
+              </div>
+
               {hasProviders &&
                 requests.getProviders === 'providers:get:success' && (
                   <List
@@ -244,7 +256,7 @@ export class App extends Component {
                   />
                 )}
             </div>
-          </>
+          </div>
         )}
       </div>
     );

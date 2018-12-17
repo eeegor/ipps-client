@@ -14,6 +14,7 @@ const envKeys = Object.keys(env).reduce((prev, next) => {
 }, {});
 
 const config = {
+  performance: { hints: false },
   mode,
   entry: ['@babel/polyfill', './src/index.js'],
   output: {

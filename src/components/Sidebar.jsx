@@ -20,6 +20,19 @@ export const Sidebar = props => {
         <div className="sidebar__container">
           <Title text="IPPS Patient Data" />
           <Text text="Provider Summary for the Top 100 Diagnosis-Related Groups" />
+
+          <hr />
+
+          <div className="sidebar__actions">
+            <Button
+              className="button--logout button--outline"
+              onClick={e => onLogout(e)}
+            >
+              Logout
+            </Button>
+          </div>
+
+          <hr />
           {/* <div className="switch">
             <div className="switch__title">
               <h3>View Mode</h3>
@@ -48,17 +61,6 @@ export const Sidebar = props => {
             onApplyFilter={event => onApplyFilter(event)}
             onSubmit={event => onApplyFilter(event)}
           />
-
-          <hr />
-
-          <div className="sidebar__actions">
-            <Button
-              className="button--logout button--outline"
-              onClick={e => onLogout(e)}
-            >
-              Logout
-            </Button>
-          </div>
         </div>
       )}
     </div>

@@ -1,3 +1,5 @@
+@import '../variables';
+
 .button {
   background: #ddd;
   padding: 1rem 2rem 0.8rem 2rem;
@@ -12,32 +14,33 @@
 
   &:hover {
     color: #fff;
-    background: #5ce;
+    background: $color--primary-hover;
     box-shadow: 0 0.1rem 2rem #00000020;
   }
 }
 
 .button--outline {
-  background: #fff;
+  background: transparent;
   border: 1px solid #ddd;
   color: #333;
 
   &:hover {
-    background: #ddd;
+    color: #333;
+    border: 1px solid #ccc;
+    background: rgba(#fff, 0.2);
+    box-shadow: 0 0.25rem 4rem rgba(#000, 0.05);
   }
 }
 
 .button--logout {
-  max-width: 160px;
-  margin: 0 auto;
 }
 
 .button--success {
-  background: #29c;
+  background: $color--primary;
   color: #fff;
   border: 0;
 
   &:hover {
-    background: #5ce;
+    background: $color--primary-hover;
   }
 }

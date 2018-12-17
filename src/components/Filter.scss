@@ -3,13 +3,36 @@
 .filter {
   margin-top: 2rem;
   position: relative;
+
+  hr {
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .filter__page-controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+  }
+
+  &__filter-group {
+    @media (min-width: $size--tablet) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 1rem;
+    }
+  }
 }
 
 .filter__apply {
   position: fixed;
   bottom: 0;
   right: -1px;
-  background-image: linear-gradient(to bottom, rgba(#fff, 0), rgba(#fff, 1));
+  background-image: linear-gradient(
+    to bottom,
+    rgba($color--primary, 0),
+    rgba($color--primary, 1)
+  );
   height: 160px;
   width: 100%;
   display: flex;
@@ -22,5 +45,10 @@
   }
   @media (min-width: $size--desktop) {
     max-width: 400px;
+  }
+
+  .button--success {
+    background: #fff;
+    color: $color--primary;
   }
 }

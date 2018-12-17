@@ -32,7 +32,7 @@ export const FormAuth = props => {
             className="input input--email"
             id="email"
             name="email"
-            type="text"
+            type="email"
             defaultValue={email}
             onChange={event => onChange('email', event)}
           />

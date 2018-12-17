@@ -3,10 +3,12 @@
 .sidebar {
   width: 100%;
   flex: 1 0 auto;
-  background: #fff;
-  color: #333;
+  background: $color--primary;
+  color: #fff;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   position: relative;
+  z-index: 200;
 
   &__container {
     padding: 1rem;
@@ -38,11 +40,24 @@
   .text {
     max-width: 16rem;
   }
+
+  hr {
+    border-color: rgba(#fff, 0.3);
+  }
+
+  .button--outline {
+    color: #fff !important;
+    border-color: rgba(#fff, 0.5);
+
+    &:hover {
+
+    }
+  }
 }
 
 .sidebar__actions {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  // justify-content: center;
   padding: 1rem;
 }
