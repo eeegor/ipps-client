@@ -16,6 +16,7 @@ export const allowedParams = [
 
 export const serialize = obj => {
   var str = [];
+  /* istanbul ignore next */
   for (var p in obj)
     if (obj.hasOwnProperty(p) && obj[p] !== '') {
       str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
@@ -29,33 +30,31 @@ export const makeObjectIntegerValues = (obj, keys) => {
     if (!parseInt(obj[key], 10)) {
       return delete nextObj[key];
     }
-    console.log('pass', parseInt(obj[key], 10));
     nextObj[key] = parseInt(obj[key], 10);
   });
   return nextObj;
 };
 
 export const makeObjectStringValues = (obj, keys) => {
-  console.log('dedede', queryString.parse(location.search, {}));
   let nextObj = obj;
   Object.keys(pick(obj, keys)).map(key => {
     if (!obj[key] || obj[key] === undefined) {
       return delete nextObj[key];
     } else if (Array.isArray(obj[key])) {
-      return obj[key][obj[key].length - 1];
+      return (nextObj[key] = obj[key][obj[key].length - 1]);
     }
     nextObj[key] = obj[key].toLowerCase();
   });
   return nextObj;
 };
 
-export const getQuery = () => {
+export const getQuery = () => /* istanbul ignore next */ {
   const urlParams = new URLSearchParams(window.location.search);
   const query = decodeURIComponent(urlParams.toString());
   return query;
 };
 
-export const setQuery = query => {
+export const setQuery = query => /* istanbul ignore next */ {
   if (history.pushState) {
     const { protocol, host, pathname } = window.location;
     const nextQuery = `${protocol}//${host}${pathname}?${query}`;
