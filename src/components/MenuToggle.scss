@@ -22,7 +22,9 @@
   z-index: 100000;
 
   transition: all 0.2s ease-in-out;
-  @media (max-width: $size--tablet - 1) {
+  @media (min-width: $size--tablet) {
+    right: 1.5rem;
+    top: 1.5rem;
   }
 
   &--open {

@@ -246,7 +246,7 @@ export class App extends Component {
                     items={providers}
                     columns={[
                       { label: 'Provider Name' },
-                      { label: 'Provider Street' },
+                      { label: 'Provider Street Address' },
                       { label: 'Provider City' },
                       { label: 'Provider State' },
                       { label: 'Hospital Referral Region Description' },

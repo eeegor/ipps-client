@@ -82,7 +82,7 @@ export class List extends React.Component {
             rowCount={sortedItems.length}
             rowGetter={({ index }) => sortedItems[index]}
             rowHeight={40}
-            width={2200}
+            width={2600}
             height={height}
             sort={this._sort}
             sortBy={sortBy}
