@@ -86,6 +86,23 @@ export const reduceSetProviders = (state, payload) => ({
   providers: payload.providers
 });
 
+export const reduceSetProvidersMeta = (state, payload) => {
+  console.log(payload);
+  return {
+    ...state,
+    meta: {
+      ...state.meta,
+      providers: {
+        totalCount: payload.meta['x-total-count'],
+        currentCount: payload.meta['x-current-count'],
+        perPage: payload.meta['x-current-page-limit'],
+        currentPage: payload.meta['x-current-page'],
+        dbEngine: payload.meta['x-db-engine']
+      }
+    }
+  };
+};
+
 export const reduceSetRequestStatus = (state, payload) => ({
   ...state,
   requests: { ...state.requests, getProviders: payload.status }

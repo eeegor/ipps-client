@@ -16,6 +16,7 @@ import {
   reduceSetAuth,
   reduceSetFormAuthField,
   reduceSetProviders,
+  reduceSetProvidersMeta,
   reduceSetRequestStatus,
   reduceShowAuthForm,
   reduceSetFilterField,
@@ -35,6 +36,15 @@ const defaultState = {
   formAuth: {
     email: '',
     password: ''
+  },
+  meta: {
+    providers: {
+      totalCount: null,
+      currentCount: null,
+      perPage: null,
+      currentPage: null,
+      dbEngine: null
+    }
   }
 };
 
@@ -72,6 +82,9 @@ export class App extends Component {
   setProviders = providers =>
     this.setState(state => reduceSetProviders(state, { providers }));
 
+  setProviderMeta = meta =>
+    this.setState(state => reduceSetProvidersMeta(state, { meta }));
+
   setRequestStatus = (status, callback) =>
     this.setState(state => reduceSetRequestStatus(state, { status }), callback);
 
@@ -105,6 +118,7 @@ export class App extends Component {
       .getProviders()
       .then(res => {
         return this.setRequestStatus('providers:get:success', () => {
+          this.setProviderMeta(res.headers);
           this.setProviders(res.data);
         });
       })
@@ -170,11 +184,13 @@ export class App extends Component {
       providers,
       requests,
       filter,
-      showSidebar
+      showSidebar,
+      meta
     } = this.state;
     const hasProviders = providers && providers.length !== 0;
     const hasNoProviders = !providers || providers.length === 0;
     const blocked = showAuthForm || showSidebar;
+    const { page = 1, perPage, currentCount, totalCount } = meta.providers;
 
     return (
       <div className={`app${blocked ? ' app--blocked' : ''}`}>
@@ -236,7 +252,7 @@ export class App extends Component {
               <div className="list-results">
                 <h1 className="list-results__title">Search Results:</h1>
                 <p className="list-results__description">
-                  Found <b>{30}</b> entries
+                  Page:<b>{page}</b>{' '}Per page:<b>{perPage}</b>{' '}Current:<b>{currentCount}</b>{' '}Total:<b>{totalCount}</b>
                 </p>
               </div>
 

@@ -42,10 +42,13 @@
   border-bottom: 1px solid #ddd;
   background: #fff;
   z-index: 10000;
+  position: relative;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0 2px 2rem 0 rgba(#000, 0.1);
 }
 
 .ReactVirtualized__Table__row {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ddd;
 
   &:hover {
     background: rgba($color--primary, 0.05);
