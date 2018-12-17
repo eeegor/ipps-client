@@ -7,6 +7,7 @@ import { FilterGroup } from './FilterGroup';
 import { FormAuth } from './FormAuth';
 import { Auth } from './Auth';
 import { Sidebar } from './Sidebar';
+import { MenuToggle } from './MenuToggle';
 import { IconLoading } from './IconLoading';
 import { IconBatteryEmpty } from './IconBatteryEmpty';
 import { IconInfiniteSymbol } from './IconInfiniteSymbol';
@@ -21,6 +22,7 @@ export {
   FormAuth,
   Auth,
   Sidebar,
+  MenuToggle,
   IconLoading,
   IconBatteryEmpty,
   IconInfiniteSymbol

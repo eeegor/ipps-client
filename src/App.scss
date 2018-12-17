@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Lora:400,700');
 @import 'variables';
 
 // https://hackernoon.com/removing-that-ugly-focus-ring-and-keeping-it-too-6c8727fefcd2
@@ -46,8 +45,7 @@ h4,
 h5,
 h6,
 button {
-  // font-family: 'Dosis';
-  letter-spacing: 0.15rem;
+  letter-spacing: 0.1rem;
   font-weight: 700;
 }
 
@@ -63,6 +61,11 @@ button {
     flex-wrap: nowrap;
     flex-direction: row-reverse;
   }
+}
+
+hr {
+  border: none;
+  border-bottom: 1px dashed rgba(#000, 0.2);
 }
 
 .content {
@@ -85,7 +88,7 @@ button {
   padding: 0.5rem 1.5rem;
   border: 1px solid #ddd;
   outline: 0;
-  border-radius: 2rem;
+  border-radius: 0.25rem;
 }
 
 .switch {
@@ -105,7 +108,7 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(#fff, 0.1);
+    background: rgba(#000, 0.1);
     height: 3rem;
     transition: all 0.2s ease-in-out;
     font-size: 0.8rem;

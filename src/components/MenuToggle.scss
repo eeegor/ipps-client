@@ -1,0 +1,27 @@
+@import '../variables';
+
+.menu-toggle {
+  display: none;
+  text-transform: uppercase;
+  letter-spacing: 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  position: relative;
+  padding-top: 2px;
+  color: #333;
+
+  @media (max-width: $size--tablet - 1) {
+    display: flex;
+    box-shadow: 0 0.125rem 1rem 0 rgba(#333, 0.5);
+    z-index: 100000;
+    height: 4rem;
+    width: 4rem;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2rem;
+    background: #fff;
+  }
+}

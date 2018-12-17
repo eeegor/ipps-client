@@ -14,16 +14,13 @@ export const Sidebar = props => {
   return (
     <div className="sidebar">
       {!isAuth && (
-        <>
-          <Button onClick={e => onShowAuthForm('signup', e)}>Sign up</Button>
-          <Button onClick={e => onShowAuthForm('login', e)}>Login</Button>
-        </>
+        <div className="info">You must be logged in to see this page :)</div>
       )}
       {isAuth && (
-        <div>
+        <div className="sidebar__container">
           <Title text="IPPS Patient Data" />
           <Text text="Provider Summary for the Top 100 Diagnosis-Related Groups" />
-          <div className="switch">
+          {/* <div className="switch">
             <div className="switch__title">
               <h3>View Mode</h3>
             </div>
@@ -41,11 +38,7 @@ export const Sidebar = props => {
               <div className="switch__cell">Load All Data</div>
               <div className="switch__cell">Select Columns</div>
             </div>
-          </div>
-
-          <button className="button button--logout" onClick={e => onLogout(e)}>
-            Logout
-          </button>
+          </div> */}
           <Filter
             filterData={filterData}
             submitLabel="Apply filter"
@@ -55,6 +48,17 @@ export const Sidebar = props => {
             onApplyFilter={event => onApplyFilter(event)}
             onSubmit={event => onApplyFilter(event)}
           />
+
+          <hr />
+
+          <div className="sidebar__actions">
+            <Button
+              className="button--logout button--outline"
+              onClick={e => onLogout(e)}
+            >
+              Logout
+            </Button>
+          </div>
         </div>
       )}
     </div>

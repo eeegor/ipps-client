@@ -4,7 +4,9 @@ import {
   Auth,
   IconLoading,
   IconInfiniteSymbol,
-  Sidebar
+  Sidebar,
+  MenuToggle,
+  IconBatteryEmpty
 } from './components';
 import './App.scss';
 import {
@@ -17,18 +19,19 @@ import {
   reduceSetRequestStatus,
   reduceShowAuthForm,
   reduceSetFilterField,
-  reduceFilterFromQuery
+  reduceFilterFromQuery,
+  reduceToggleSidebar
 } from './util';
 import { Api, LOCAL_X_AUTH_TOKEN } from './api';
 
 const defaultState = {
   requests: {},
-  providers: [],
   filter: {},
+  providers: [],
   errors: [],
   isAuth: false,
   showAuthForm: false,
-  showLoginForm: false,
+  showSidebar: false,
   formAuth: {
     email: '',
     password: ''
@@ -45,7 +48,7 @@ export class App extends Component {
 
   componentDidMount() {
     if (localStorage.getItem(LOCAL_X_AUTH_TOKEN)) {
-      console.log("Welcome, you've been logged in :)");
+      console.log("Welcome back, you've been logged in :)");
       this.setAuth(true);
       this.setState(state => reduceFilterFromQuery(state, null));
       return this.getProviders();
@@ -77,6 +80,11 @@ export class App extends Component {
     return this.setState(state => reduceShowAuthForm(state, { type }));
   }
 
+  toggleSidebar(event = null) {
+    event && event.preventDefault();
+    return this.setState(state => reduceToggleSidebar(state));
+  }
+
   setFilterField = (field, value) =>
     this.setState(
       state => reduceSetFilterField(state, { field, value }),
@@ -87,7 +95,6 @@ export class App extends Component {
 
   applyFilter(event = null) {
     event && event.preventDefault();
-    console.log('APPLY FILTER');
     return this.getProviders();
   }
 
@@ -156,12 +163,20 @@ export class App extends Component {
   }
 
   render() {
-    const { isAuth, showAuthForm, providers, requests, filter } = this.state;
+    const {
+      isAuth,
+      showAuthForm,
+      providers,
+      requests,
+      filter,
+      showSidebar
+    } = this.state;
     const hasProviders = providers && providers.length !== 0;
     const hasNoProviders = !providers || providers.length === 0;
 
     return (
       <div className="app">
+        {isAuth && <MenuToggle onClick={event => this.toggleSidebar(event)} />}
         <Auth
           isAuth={isAuth}
           showAuthForm={showAuthForm || 'signup'}
@@ -170,25 +185,29 @@ export class App extends Component {
           }
           onSignup={event => this.signup(event)}
           onLogin={event => this.login(event)}
+          onGotoAuth={(goto, event) => this.showAuthForm(goto, event)}
         />
 
         {isAuth && (
           <>
-            <Sidebar
-              isAuth={isAuth}
-              filterData={filter}
-              onShowAuthForm={type => this.showAuthForm(type)}
-              onSetFilterField={(field, value) =>
-                this.setFilterField(field, value)
-              }
-              onApplyFilter={event => this.applyFilter(event)}
-              onLogout={event => this.logout(event)}
-            />
+            {showSidebar && (
+              <Sidebar
+                isAuth={isAuth}
+                filterData={filter}
+                onShowAuthForm={type => this.showAuthForm(type)}
+                onSetFilterField={(field, value) =>
+                  this.setFilterField(field, value)
+                }
+                onApplyFilter={event => this.applyFilter(event)}
+                onLogout={event => this.logout(event)}
+              />
+            )}
 
             <div className="content">
               {requests.getProviders === 'providers:get:fail' && (
                 <div className="info info--collection">
-                  There was an error fetching the providers
+                  <IconBatteryEmpty size={120} />
+                  We reached some limits :(
                 </div>
               )}
 
@@ -213,8 +232,10 @@ export class App extends Component {
                     items={providers}
                     columns={[
                       { label: 'Provider Name' },
+                      { label: 'Provider Street' },
                       { label: 'Provider City' },
                       { label: 'Provider State' },
+                      { label: 'Hospital Referral Region Description' },
                       { label: 'Total Discharges' },
                       { label: 'Average Covered Charges' },
                       { label: 'Average Total Payments' },

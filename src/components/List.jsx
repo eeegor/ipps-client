@@ -1,7 +1,7 @@
 import React from 'react';
 import { AutoSizer, Table, Column, SortDirection } from 'react-virtualized';
 import { sortBy as lodashSortBy } from 'lodash';
-import './List.css';
+import './List.scss';
 
 export class List extends React.Component {
   constructor(props) {

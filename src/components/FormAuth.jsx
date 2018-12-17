@@ -3,10 +3,18 @@ import { Button } from '.';
 import './FormAuth.scss';
 
 export const FormAuth = props => {
-  const { title, type, formData, onChange, onSubmit, submitLabel } = props;
+  const {
+    title,
+    type,
+    formData,
+    submitLabel,
+    onChange,
+    onSubmit,
+    onGotoAuth
+  } = props;
   const email = (formData && formData.email) || '';
   const password = (formData && formData.password) || '';
-  const formType = (type === 'login' && type) || 'signup';
+  let formType = (type === 'login' && type) || 'signup';
 
   return (
     <div className={`form-auth form-auth--${formType}`}>
@@ -48,6 +56,17 @@ export const FormAuth = props => {
           <Button className="submit" type="submit">
             {submitLabel || 'Submit'}
           </Button>
+        </div>
+
+        <div className="form-auth__links-group">
+          <a
+            className="link"
+            onClick={event =>
+              onGotoAuth(formType === 'signup' ? 'login' : 'signup', event)
+            }
+          >
+            {`Go to ${formType === 'signup' ? 'Login' : 'Signup'} instead`}
+          </a>
         </div>
       </form>
     </div>

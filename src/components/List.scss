@@ -1,3 +1,5 @@
+@import '../variables';
+
 .ReactVirtualized__AutoSizer {
   width: 100% !important;
   height: 100vh !important;
@@ -16,7 +18,7 @@
 .ReactVirtualized__Table__row,
 .ReactVirtualized__Table__headerRow {
   display: grid;
-  grid-template-columns: 600px 300px 200px 200px 300px 300px 300px;
+  grid-template-columns: 600px 300px 200px 200px 300px 300px 400px 300px 300px;
   text-align: left;
   background: #fff;
   white-space: nowrap;
@@ -24,12 +26,16 @@
 }
 
 .ReactVirtualized__Table__headerRow {
-  overflow-x: scroll !important;
+  overflow-x: hidden !important;
   overflow-y: visible !important;
   align-items: center;
   border-bottom: 1px solid #ddd;
   background: #fafafa;
   z-index: 10000;
+
+  @media (max-width: $size--tablet - 1px) {
+    overflow-x: scroll !important;
+  }
 }
 
 .ReactVirtualized__Table__row {

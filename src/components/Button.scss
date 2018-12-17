@@ -6,23 +6,38 @@
   text-transform: uppercase;
   letter-spacing: 0.15rem;
   font-size: 0.8rem;
-  border-radius: 2rem;
+  border-radius: 0.25rem;
   transition: all 0.25s ease-in-out;
   font-weight: 700;
 
   &:hover {
     color: #fff;
-    background: #0c9;
+    background: #5ce;
     box-shadow: 0 0.1rem 2rem #00000020;
   }
 }
 
+.button--outline {
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #333;
+
+  &:hover {
+    background: #ddd;
+  }
+}
+
+.button--logout {
+  max-width: 160px;
+  margin: 0 auto;
+}
+
 .button--success {
-  background: #0c9;
+  background: #29c;
   color: #fff;
   border: 0;
 
   &:hover {
-    background: #0a9;
+    background: #5ce;
   }
 }

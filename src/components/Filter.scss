@@ -8,8 +8,8 @@
 .filter__apply {
   position: fixed;
   bottom: 0;
-  right: 0;
-  background-image: linear-gradient(to bottom, rgba(#333, 0), rgba(#333, 1));
+  right: -1px;
+  background-image: linear-gradient(to bottom, rgba(#fff, 0), rgba(#fff, 1));
   height: 160px;
   width: 100%;
   display: flex;

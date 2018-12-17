@@ -29,16 +29,20 @@ export const makeObjectIntegerValues = (obj, keys) => {
     if (!parseInt(obj[key], 10)) {
       return delete nextObj[key];
     }
+    console.log('pass', parseInt(obj[key], 10));
     nextObj[key] = parseInt(obj[key], 10);
   });
   return nextObj;
 };
 
 export const makeObjectStringValues = (obj, keys) => {
+  console.log('dedede', queryString.parse(location.search, {}));
   let nextObj = obj;
   Object.keys(pick(obj, keys)).map(key => {
     if (!obj[key]) {
       return delete nextObj[key];
+    } else if (Array.isArray(obj[key])) {
+      return obj[key][obj[key].length - 1];
     }
     nextObj[key] = obj[key].toLowerCase();
   });
@@ -92,6 +96,11 @@ export const reduceShowAuthForm = (state, payload) => ({
   showAuthForm: payload.type
 });
 
+export const reduceToggleSidebar = state => ({
+  ...state,
+  showSidebar: !state.showSidebar
+});
+
 export const reduceSetFilterField = (state, payload) => ({
   ...state,
   filter: {
@@ -100,7 +109,7 @@ export const reduceSetFilterField = (state, payload) => ({
   }
 });
 
-export const reduceFilterFromQuery = (state, payload) => ({
+export const reduceFilterFromQuery = state => ({
   ...state,
   filter: {
     ...makeObjectStringValues(
