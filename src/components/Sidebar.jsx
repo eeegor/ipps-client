@@ -36,7 +36,6 @@ export const Sidebar = props => {
               onSetFilterField(field, event.target.value)
             }
             onApplyFilter={event => onApplyFilter(event)}
-            onSubmit={event => onApplyFilter(event)}
           />
         </div>
       )}

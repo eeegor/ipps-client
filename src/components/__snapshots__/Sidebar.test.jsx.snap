@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sidebar renders markup correctly 1`] = `
+<div
+  className="sidebar"
+>
+  <div
+    className="info"
+  >
+    You must be logged in to see this page :)
+  </div>
+</div>
+`;
