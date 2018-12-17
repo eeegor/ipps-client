@@ -2,12 +2,20 @@
 
 .ReactVirtualized__AutoSizer {
   width: 100% !important;
-  height: calc(100vh - 100px) !important;
+  height: calc(100vh - 4rem) !important;
 }
 .ReactVirtualized__Grid.ReactVirtualized__Table__Grid {
-  height: calc(100vh - 140px) !important;
+  height: calc(100vh - 4rem - 40px) !important;
   overflow: scroll !important;
   -webkit-overflow-scrolling: touch;
+}
+@media (min-width: $size--tablet) {
+  .ReactVirtualized__AutoSizer {
+    height: calc(100vh - 5rem) !important;
+  }
+  .ReactVirtualized__Grid.ReactVirtualized__Table__Grid {
+    height: calc(100vh - 5rem - 40px) !important;
+  }
 }
 
 .ReactVirtualized__Table {

@@ -180,7 +180,7 @@ export class App extends Component {
       <div className={`app${blocked ? ' app--blocked' : ''}`}>
         {isAuth && (
           <MenuToggle
-            ioOpen={showSidebar}
+            isOpen={showSidebar}
             onClick={event => this.toggleSidebar(event)}
           />
         )}
@@ -235,7 +235,9 @@ export class App extends Component {
 
               <div className="list-results">
                 <h1 className="list-results__title">Search Results:</h1>
-                <p className="list-results__description">Found <b>{30}</b> entries</p>
+                <p className="list-results__description">
+                  Found <b>{30}</b> entries
+                </p>
               </div>
 
               {hasProviders &&

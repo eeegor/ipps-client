@@ -1,8 +1,5 @@
 @import '../variables';
 
-$color--floating-bg: rgb(240, 255, 250);
-$color--floating: rgb(85, 85, 85);
-
 .menu-toggle {
   align-items: center;
   background: $color--primary;
@@ -23,6 +20,14 @@ $color--floating: rgb(85, 85, 85);
   top: 1rem;
   width: 4rem;
   z-index: 100000;
+
+  transition: all 0.2s ease-in-out;
   @media (max-width: $size--tablet - 1) {
+  }
+
+  &--open {
+    color: $color--primary;
+    background: #fff;
+    border-color: #fff;
   }
 }
