@@ -9,8 +9,8 @@
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "deploy": "yarn build && now",
-    "format": "prettier --write \"src/**/*.{js,jsx,json,css,scss}\" \"*.config.{js,json}\" \".babelrc\"",
-    "lint": "eslint src && prettier --list-different \"src/**/*.{js,jsx,css,scss}\"",
+    "format": "prettier --write \"{src,test}/**/*.{js,jsx,json,css,scss}\" \"*.config.{js,json}\" \".babelrc\"",
+    "lint": "eslint src && prettier --list-different \"{src}/**/*.{js,jsx,css,scss}\"",
     "prebuild": "rm -rf dist && yarn format",
     "start": "webpack-dev-server --mode development",
     "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && jest"
