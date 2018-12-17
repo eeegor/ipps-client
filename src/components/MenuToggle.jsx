@@ -1,13 +1,16 @@
 import React from 'react';
+import classnames from 'classnames';
 import './MenuToggle.scss';
 
 export const MenuToggle = props => {
-  const { onClick, isOpen } = props;
+  const { className, onClick, isOpen } = props;
+  const classNames = classnames(
+    'menu-toggle',
+    className,
+    isOpen && `menu-toggle--open`
+  );
   return (
-    <div
-      className={`menu-toggle${isOpen ? ' menu-toggle--open' : ''}`}
-      onClick={event => onClick(event)}
-    >
+    <div className={classNames} onClick={event => onClick(event)}>
       {isOpen ? 'X' : 'Menu'}
     </div>
   );
