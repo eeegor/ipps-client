@@ -6,7 +6,11 @@ import {
   IconInfiniteSymbol,
   Sidebar,
   MenuToggle,
-  IconBatteryEmpty
+  IconBatteryEmpty,
+  Button,
+  Title,
+  Text,
+  Filter
 } from './components';
 import './App.scss';
 import {
@@ -21,13 +25,26 @@ import {
   reduceShowAuthForm,
   reduceSetFilterField,
   reduceFilterFromQuery,
-  reduceToggleSidebar
+  reduceToggleSidebar,
+  getQuery
 } from './util';
 import { Api, LOCAL_X_AUTH_TOKEN } from './api';
 
+const defaultFilter = {
+  per_page: false,
+  page: 1,
+  min_discharges: false,
+  max_discharges: false,
+  min_average_covered_charges: false,
+  max_average_covered_charges: false,
+  min_average_medicare_payments: false,
+  max_average_medicare_payments: false,
+  provider_state: ''
+}
+
 const defaultState = {
   requests: {},
-  filter: {},
+  filter: defaultFilter,
   providers: [],
   errors: [],
   isAuth: false,
@@ -54,17 +71,39 @@ export class App extends Component {
   constructor(props) {
     super(props);
     this.api = new Api();
+
+    this.setError = this.setError.bind(this);
+    this.setAuth = this.setAuth.bind(this);
+    this.setFormAuthField = this.setFormAuthField.bind(this);
+    this.setProviders = this.setProviders.bind(this);
+    this.setProviderMeta = this.setProviderMeta.bind(this);
+    this.setRequestStatus = this.setRequestStatus.bind(this);
+    this.showAuthForm = this.showAuthForm.bind(this);
+    this.toggleSidebar = this.toggleSidebar.bind(this);
+    this.setFilterField = this.setFilterField.bind(this);
+    this.applyFilter = this.applyFilter.bind(this);
   }
 
   componentDidMount() {
     if (localStorage.getItem(LOCAL_X_AUTH_TOKEN)) {
       console.log("Welcome back, you've been logged in :)");
       this.setAuth(true);
-      this.setState(state => reduceFilterFromQuery(state, null));
+      // check and apply if prev filter state exists
+      if (getQuery() && getQuery() !== '') {
+        this.setState(state => reduceFilterFromQuery(state));
+      } else {
+        // return default filter state if no prev state exists
+        this.setState(state => ({
+          ...state,
+          filter: defaultFilter
+        }))
+      }
       return this.getProviders();
     }
+    // show default filter state
     setQuery('');
     this.showAuthForm();
+    this.watchUrl();
     return console.log('Welcome');
   }
 
@@ -106,10 +145,24 @@ export class App extends Component {
       }
     );
 
-  applyFilter(event = null) {
-    this.setState(state => ({ ...state, showSidebar: false }));
+  applyFilter(event = null, showSidebar = false) {
     event && event.preventDefault();
+    this.setState(state => ({ ...state, showSidebar }));
     return this.getProviders();
+  }
+
+  resetFilter(event = null, showSidebar = true) {
+    event && event.preventDefault();
+    // console.log('query', queryString.parse(getQuery()));
+    // console.log('state', this.state.filter);
+    setQuery('');
+    this.setState((state) => ({
+      ...state,
+      filter: defaultFilter
+    }));
+    // console.log('reduceFilterFromQuery', reduceFilterFromQuery());
+    // setQuery('');
+    // return this.applyFilter(null, showSidebar);
   }
 
   async getProviders() {
@@ -139,7 +192,7 @@ export class App extends Component {
       })
       .catch(error => {
         this.setAuth(false);
-        this.setRequestStatus('signup:fail', () => this.setError(error));
+        return this.setRequestStatus('signup:fail', () => this.setError(error));
       });
   }
 
@@ -189,11 +242,10 @@ export class App extends Component {
     } = this.state;
     const hasProviders = providers && providers.length !== 0;
     const hasNoProviders = !providers || providers.length === 0;
-    const blocked = showAuthForm || showSidebar;
     const { currentPage, perPage, currentCount, totalCount } = meta.providers;
 
     return (
-      <div className={`app${blocked ? ' app--blocked' : ''}`}>
+      <div>
         {isAuth && (
           <MenuToggle
             isOpen={showSidebar}
@@ -214,16 +266,41 @@ export class App extends Component {
         {isAuth && (
           <div className={`app__container`}>
             {showSidebar && (
-              <Sidebar
-                isAuth={isAuth}
-                filterData={filter}
-                onShowAuthForm={type => this.showAuthForm(type)}
-                onSetFilterField={(field, value) =>
-                  this.setFilterField(field, value)
-                }
-                onApplyFilter={event => this.applyFilter(event)}
-                onLogout={event => this.logout(event)}
-              />
+              <Sidebar isAuth={isAuth}>
+                <Title text="IPPS Patient Data" />
+                <Text text="Provider Summary for the Top 100 Diagnosis-Related Groups" />
+                <hr />
+                <div className="sidebar__actions">
+                  <Button
+                    className="button--logout button--outline"
+                    onClick={event => this.logout(event)}
+                  >
+                    Logout
+                  </Button>
+                  <Button
+                    className="button--reset button--outline"
+                    onClick={event => this.resetFilter(event)}
+                  >
+                    Reset Filter
+                  </Button>
+                </div>
+                <hr />
+                <Filter
+                  filterData={filter}
+                  submitLabel="Apply filter"
+                  onChange={(field, event) =>
+                    this.setFilterField(field, event.target.value)
+                  }
+                  applyFilter={
+                    <Button
+                      color="success"
+                      onClick={event => this.applyFilter(event)}
+                    >
+                      Apply Filter
+                    </Button>
+                  }
+                />
+              </Sidebar>
             )}
 
             <div className="content">

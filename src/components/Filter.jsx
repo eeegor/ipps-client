@@ -1,27 +1,27 @@
 import React from 'react';
-import { FilterGroup, Button } from '.';
+import { FilterGroup } from '.';
 import './Filter.scss';
 
 export const Filter = props => {
-  const { filterData, onApplyFilter, onChange } = props;
-  const per_page = (filterData && filterData.per_page) || '';
-  const page = (filterData && filterData.page) || '';
-  const min_discharges = (filterData && filterData.min_discharges) || '';
-  const max_discharges = (filterData && filterData.max_discharges) || '';
-  const min_average_covered_charges =
-    (filterData && filterData.min_average_covered_charges) || '';
-  const max_average_covered_charges =
-    (filterData && filterData.max_average_covered_charges) || '';
-  const min_average_medicare_payments =
-    (filterData && filterData.min_average_medicare_payments) || '';
-  const max_average_medicare_payments =
-    (filterData && filterData.max_average_medicare_payments) || '';
-  const provider_state = (filterData && filterData.state) || '';
+  const { filterData, applyFilter, onChange } = props;
+  const {
+    per_page,
+    page,
+    min_discharges,
+    max_discharges,
+    min_average_covered_charges,
+    max_average_covered_charges,
+    min_average_medicare_payments,
+    max_average_medicare_payments,
+    state: provider_state
+  } = filterData;
 
   return (
     <div className="filter">
       <form onSubmit={event => onApplyFilter(event)}>
         <div className="filter__filter-group filter__page-controls">
+          {console.log('inside filter', filterData)}
+          {console.log('inside filter:per_page', per_page)}
           <FilterGroup
             label="Per Page"
             name="per_page"
@@ -112,17 +112,13 @@ export const Filter = props => {
             className="input input--text"
             name="provider_state"
             id="provider_state"
-            defaultValue={provider_state}
+            value={provider_state}
             placeholder="e.g. NY"
             onChange={event => onChange('state', event)}
           />
         </div>
 
-        <div className="filter__apply">
-          <Button color="success" onClick={event => onApplyFilter(event)}>
-            Apply Filter
-          </Button>
-        </div>
+        <div className="filter__apply">{applyFilter}</div>
       </form>
     </div>
   );

@@ -28,7 +28,7 @@ export const makeObjectIntegerValues = (obj, keys) => {
   let nextObj = obj;
   Object.keys(pick(obj, keys)).map(key => {
     if (!parseInt(obj[key], 10)) {
-      return delete nextObj[key];
+      return nextObj[key];
     }
     nextObj[key] = parseInt(obj[key], 10);
   });
@@ -39,7 +39,7 @@ export const makeObjectStringValues = (obj, keys) => {
   let nextObj = obj;
   Object.keys(pick(obj, keys)).map(key => {
     if (!obj[key] || obj[key] === undefined) {
-      return delete nextObj[key];
+      return nextObj[key];
     } else if (Array.isArray(obj[key])) {
       return (nextObj[key] = obj[key][obj[key].length - 1]);
     }
@@ -48,16 +48,22 @@ export const makeObjectStringValues = (obj, keys) => {
   return nextObj;
 };
 
-export const getQuery = () => /* istanbul ignore next */ {
-  const urlParams = new URLSearchParams(window.location.search);
-  const query = decodeURIComponent(urlParams.toString());
-  return query;
-};
+export const getQuery = () =>
+  /* istanbul ignore next */
 
-export const setQuery = query => /* istanbul ignore next */ {
+  {
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = decodeURIComponent(urlParams.toString());
+    return query;
+  };
+
+export const setQuery = (query /* istanbul ignore next */) => {
   if (history.pushState) {
     const { protocol, host, pathname } = window.location;
-    const nextQuery = `${protocol}//${host}${pathname}?${query}`;
+    const nextQuery =
+      query && query !== ''
+        ? `${protocol}//${host}${pathname}?${query}`
+        : `${protocol}//${host}${pathname}`;
     return window.history.pushState({ path: nextQuery }, '', nextQuery);
   }
 };

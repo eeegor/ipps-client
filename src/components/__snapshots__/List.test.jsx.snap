@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List renders markup correctly 1`] = `
+<div
+  className="ReactVirtualized__AutoSizer"
+  style={
+    Object {
+      "height": 0,
+      "overflow": "visible",
+      "width": 0,
+    }
+  }
+>
+  <div
+    aria-colcount={2}
+    aria-rowcount={0}
+    className="ReactVirtualized__Table"
+    role="grid"
+    style={Object {}}
+  >
+    <div
+      className="ReactVirtualized__Table__headerRow"
+      role="row"
+      style={
+        Object {
+          "height": 40,
+          "overflow": "hidden",
+          "paddingRight": 0,
+          "width": 2600,
+        }
+      }
+    >
+      <div
+        aria-label="A"
+        aria-sort="descending"
+        className="ReactVirtualized__Table__headerColumn ReactVirtualized__Table__sortableHeaderColumn"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="columnheader"
+        style={
+          Object {
+            "WebkitFlex": "0 1 1px",
+            "flex": "0 1 1px",
+            "msFlex": "0 1 1px",
+          }
+        }
+        tabIndex={0}
+      >
+        <span
+          className="ReactVirtualized__Table__headerTruncatedText"
+          title="A"
+        >
+          A
+        </span>
+        <svg
+          className="ReactVirtualized__Table__sortableHeaderIcon ReactVirtualized__Table__sortableHeaderIcon--DESC"
+          height={18}
+          viewBox="0 0 24 24"
+          width={18}
+        >
+          <path
+            d="M7 10l5 5 5-5z"
+          />
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+        </svg>
+      </div>
+      <div
+        aria-label="B"
+        aria-sort="none"
+        className="ReactVirtualized__Table__headerColumn ReactVirtualized__Table__sortableHeaderColumn"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="columnheader"
+        style={
+          Object {
+            "WebkitFlex": "0 1 1px",
+            "flex": "0 1 1px",
+            "msFlex": "0 1 1px",
+          }
+        }
+        tabIndex={0}
+      >
+        <span
+          className="ReactVirtualized__Table__headerTruncatedText"
+          title="B"
+        >
+          B
+        </span>
+      </div>
+    </div>
+    <div
+      aria-label="grid"
+      aria-readonly={true}
+      className="ReactVirtualized__Grid ReactVirtualized__Table__Grid"
+      onScroll={[Function]}
+      role="rowgroup"
+      style={
+        Object {
+          "WebkitOverflowScrolling": "touch",
+          "boxSizing": "border-box",
+          "direction": "ltr",
+          "height": -40,
+          "overflowX": "hidden",
+          "overflowY": "auto",
+          "position": "relative",
+          "width": 2600,
+          "willChange": "transform",
+        }
+      }
+      tabIndex={0}
+    />
+  </div>
+</div>
+`;

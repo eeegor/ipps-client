@@ -33,12 +33,9 @@
   position: fixed;
   bottom: 0;
   right: -1px;
-  background-image: linear-gradient(
-    to bottom,
-    rgba($color--primary, 0),
-    rgba($color--primary, 1)
-  );
-  height: 90px;
+  background: rgba(darken($color--primary, 1%), 0.9);
+  box-shadow: 0 -0.5rem 4rem 0 rgba(#fff, 0.15);
+  height: 6rem;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -53,13 +50,17 @@
   }
 
   .button--success {
+    font-size: 1rem;
+    padding: 1.25rem 2rem 1.15rem 2rem;
     background: #fff;
-    color: $color--primary;
-    border: 1px solid rgba(darken($color--primary, 3%), 0.8);
+    color: darken($color--primary, 5%);
+    border: 1px solid rgba(darken(#fff, 10%), 0.8);
 
     &:hover {
-      color: darken($color--primary, 15%);
-      box-shadow: 0 0.25rem 2rem 0 darken($color--primary, 10%);
+      background: $color--success;
+      border-color: darken($color--success, 3%);
+      color: #fff;
+      box-shadow: none;
     }
   }
 }

@@ -19,7 +19,7 @@ export const FilterGroup = props => {
         name={name}
         min={min}
         max={max}
-        defaultValue={value}
+        value={value}
         placeholder={placeholder}
         onChange={event => onChange(name, event)}
       />
