@@ -11,7 +11,7 @@
     "deploy": "yarn build && now",
     "format": "prettier --write \"{src,test}/**/*.{js,jsx,json,css,scss}\" \"*.config.{js,json}\" \".babelrc\"",
     "lint": "eslint src && prettier --list-different \"{src}/**/*.{js,jsx,css,scss}\"",
-    "prebuild": "rm -rf dist && yarn format",
+    "prebuild": "rm -rf dist && yarn format && cp -r src/assets dist",
     "start": "webpack-dev-server --mode development",
     "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && jest"
   },
