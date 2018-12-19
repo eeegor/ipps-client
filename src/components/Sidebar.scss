@@ -51,12 +51,12 @@
     border-color: rgba(#fff, 0.5);
     padding: 1rem 1rem 0.8rem 1rem;
     margin: 0.5rem 0;
-    
+
     &:hover {
-      background: rgba(#fff, 0.3)
+      background: rgba(#fff, 0.3);
     }
   }
-  
+
   .button--logout {
     &:hover {
       border-color: rgba($color--danger, 0.5);

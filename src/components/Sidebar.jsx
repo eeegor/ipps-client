@@ -8,7 +8,9 @@ export const Sidebar = props => {
       {!isAuth && (
         <div className="info">You must be logged in to see this page :)</div>
       )}
-      {isAuth && <div className="sidebar__container">{children}</div>}
+      {isAuth && (
+        <div className="sidebar__container">{children && children}</div>
+      )}
     </div>
   );
 };
