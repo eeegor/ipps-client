@@ -63,7 +63,7 @@ export class List extends React.Component {
 
   render() {
     const { sortBy, sortDirection, sortedItems } = this.state;
-    const { columns } = this.props;
+    const { columns, windowSize } = this.props;
     const cols = columns.map((columnProps, index) => (
       <Column
         key={index}
@@ -72,18 +72,24 @@ export class List extends React.Component {
         {...columnProps}
       />
     ));
-    const addedWidth = columns.reduce((acc, current) => acc + current.width, 0);
+
+    const calculatedHeight = windowSize && {
+      height: windowSize.height - (windowSize.width < 767 ? 64 : 80)
+    };
 
     return (
-      <AutoSizer className="ReactVirtualized__AutoSizer">
-        {({ height, width }) => (
+      <AutoSizer
+        className="ReactVirtualized__AutoSizer"
+        style={calculatedHeight}
+      >
+        {() => (
           <Table
             headerHeight={40}
             rowCount={sortedItems.length}
             rowGetter={({ index }) => sortedItems[index]}
             rowHeight={40}
             width={2600}
-            height={height}
+            height={calculatedHeight.height}
             sort={this._sort}
             sortBy={sortBy}
             sortDirection={sortDirection}
