@@ -3,7 +3,7 @@ import { getQuery } from './util';
 
 export const ROOT_URL = 'https://ipps-api.now.sh';
 // export const ROOT_URL = 'http://localhost:5000';
-export const LOCAL_X_AUTH_TOKEN = 'ipps-api';
+export const LOCALSTORAGE_TOKEN_NAME = 'ipps-api';
 
 export class Api {
   async signup(formData) {
@@ -11,7 +11,7 @@ export class Api {
       axios
         .post(`${ROOT_URL}/signup`, formData)
         .then(res => {
-          localStorage.setItem(LOCAL_X_AUTH_TOKEN, res.headers['x-auth']);
+          localStorage.setItem(LOCALSTORAGE_TOKEN_NAME, res.headers['x-auth']);
           return resolve(res);
         })
         .catch(
@@ -26,7 +26,7 @@ export class Api {
       axios
         .post(`${ROOT_URL}/login`, formData)
         .then(res => {
-          localStorage.setItem(LOCAL_X_AUTH_TOKEN, res.headers['x-auth']);
+          localStorage.setItem(LOCALSTORAGE_TOKEN_NAME, res.headers['x-auth']);
           return resolve(res);
         })
         .catch(
@@ -41,11 +41,11 @@ export class Api {
       axios
         .delete(`${ROOT_URL}/logout`, {
           headers: {
-            'x-auth': localStorage.getItem(LOCAL_X_AUTH_TOKEN)
+            'x-auth': localStorage.getItem(LOCALSTORAGE_TOKEN_NAME)
           }
         })
         .then(res => {
-          localStorage.removeItem(LOCAL_X_AUTH_TOKEN);
+          localStorage.removeItem(LOCALSTORAGE_TOKEN_NAME);
           return resolve(res);
         })
         .catch(
@@ -61,7 +61,7 @@ export class Api {
       axios
         .get(`${ROOT_URL}/providers${getQuery() ? `?${getQuery()}` : ''}`, {
           headers: {
-            'x-auth': localStorage.getItem(LOCAL_X_AUTH_TOKEN) || ''
+            'x-auth': localStorage.getItem(LOCALSTORAGE_TOKEN_NAME) || ''
           }
         })
         .then(res => {

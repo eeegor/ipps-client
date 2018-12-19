@@ -10,7 +10,8 @@ import {
   Button,
   Title,
   Text,
-  Filter
+  Filter,
+  ListResults
 } from './components';
 import './App.scss';
 import {
@@ -28,7 +29,7 @@ import {
   reduceToggleSidebar,
   getQuery
 } from './util';
-import { Api, LOCAL_X_AUTH_TOKEN } from './api';
+import { Api, LOCALSTORAGE_TOKEN_NAME } from './api';
 
 const defaultFilter = {
   per_page: false,
@@ -40,9 +41,21 @@ const defaultFilter = {
   min_average_medicare_payments: false,
   max_average_medicare_payments: false,
   provider_state: ''
-}
+};
+
+const defaultMeta = {
+  providers: {
+    totalCount: null,
+    currentCount: null,
+    perPage: null,
+    currentPage: null,
+    dbEngine: null,
+    providerStates: []
+  }
+};
 
 const defaultState = {
+  bodyClass: '',
   requests: {},
   filter: defaultFilter,
   providers: [],
@@ -54,15 +67,7 @@ const defaultState = {
     email: '',
     password: ''
   },
-  meta: {
-    providers: {
-      totalCount: null,
-      currentCount: null,
-      perPage: null,
-      currentPage: null,
-      dbEngine: null
-    }
-  }
+  meta: defaultMeta
 };
 
 export class App extends Component {
@@ -71,40 +76,73 @@ export class App extends Component {
   constructor(props) {
     super(props);
     this.api = new Api();
+  }
 
-    this.setError = this.setError.bind(this);
-    this.setAuth = this.setAuth.bind(this);
-    this.setFormAuthField = this.setFormAuthField.bind(this);
-    this.setProviders = this.setProviders.bind(this);
-    this.setProviderMeta = this.setProviderMeta.bind(this);
-    this.setRequestStatus = this.setRequestStatus.bind(this);
-    this.showAuthForm = this.showAuthForm.bind(this);
-    this.toggleSidebar = this.toggleSidebar.bind(this);
-    this.setFilterField = this.setFilterField.bind(this);
-    this.applyFilter = this.applyFilter.bind(this);
+  handleResize = () =>
+    this.setState(state => ({
+      prevWindowHeight: state.windowHeight || null,
+      prevWindowWidth: state.windowWidth || null,
+      windowHeight: Math.max(
+        document.documentElement.clientHeight,
+        window.innerHeight || 0
+      ),
+      windowWidth: Math.max(
+        document.documentElement.clientWidth,
+        window.innerWidth || 0
+      )
+    }));
+
+  checkBrowserAgent() {
+    // Detects if device is on iOS
+    const isIos = () => {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test(userAgent);
+    };
+
+    if (isIos()) {
+      return 'ios';
+    }
+
+    return '';
+  }
+
+  optimizeForMobile() {
+    window.addEventListener('load', () => {
+      window.scrollTo(0, 0);
+    });
+  }
+
+  initFilter() {
+    if (getQuery() && getQuery() !== '') {
+      return this.setState(state => reduceFilterFromQuery(state));
+    }
+
+    this.setState(state => ({
+      ...state,
+      filter: defaultFilter,
+      meta: defaultMeta
+    }));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
   }
 
   componentDidMount() {
-    if (localStorage.getItem(LOCAL_X_AUTH_TOKEN)) {
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+    this.optimizeForMobile();
+    this.setState(state => ({ ...state, bodyClass: this.checkBrowserAgent() }));
+
+    if (localStorage.getItem(LOCALSTORAGE_TOKEN_NAME)) {
       console.log("Welcome back, you've been logged in :)");
       this.setAuth(true);
-      // check and apply if prev filter state exists
-      if (getQuery() && getQuery() !== '') {
-        this.setState(state => reduceFilterFromQuery(state));
-      } else {
-        // return default filter state if no prev state exists
-        this.setState(state => ({
-          ...state,
-          filter: defaultFilter
-        }))
-      }
+      this.initFilter();
       return this.getProviders();
     }
-    // show default filter state
+
     setQuery('');
     this.showAuthForm();
-    this.watchUrl();
-    return console.log('Welcome');
   }
 
   setError = error =>
@@ -147,22 +185,20 @@ export class App extends Component {
 
   applyFilter(event = null, showSidebar = false) {
     event && event.preventDefault();
-    this.setState(state => ({ ...state, showSidebar }));
+    this.setState(state => ({ ...state, showSidebar, meta: defaultMeta }));
     return this.getProviders();
   }
 
   resetFilter(event = null, showSidebar = true) {
     event && event.preventDefault();
-    // console.log('query', queryString.parse(getQuery()));
-    // console.log('state', this.state.filter);
     setQuery('');
-    this.setState((state) => ({
+    this.setState(state => ({
       ...state,
-      filter: defaultFilter
+      showSidebar,
+      filter: defaultFilter,
+      meta: defaultMeta
     }));
-    // console.log('reduceFilterFromQuery', reduceFilterFromQuery());
-    // setQuery('');
-    // return this.applyFilter(null, showSidebar);
+    return this.applyFilter(null, showSidebar);
   }
 
   async getProviders() {
@@ -232,20 +268,23 @@ export class App extends Component {
 
   render() {
     const {
+      bodyClass,
       isAuth,
       showAuthForm,
       providers,
       requests,
       filter,
       showSidebar,
-      meta
+      meta,
+      windowHeight,
+      windowWidth
     } = this.state;
     const hasProviders = providers && providers.length !== 0;
     const hasNoProviders = !providers || providers.length === 0;
     const { currentPage, perPage, currentCount, totalCount } = meta.providers;
 
     return (
-      <div>
+      <div className="app">
         {isAuth && (
           <MenuToggle
             isOpen={showSidebar}
@@ -264,7 +303,7 @@ export class App extends Component {
         />
 
         {isAuth && (
-          <div className={`app__container`}>
+          <div className={`app__container ${bodyClass}`}>
             {showSidebar && (
               <Sidebar isAuth={isAuth}>
                 <Title text="IPPS Patient Data" />
@@ -287,6 +326,7 @@ export class App extends Component {
                 <hr />
                 <Filter
                   filterData={filter}
+                  filterMeta={meta}
                   submitLabel="Apply filter"
                   onChange={(field, event) =>
                     this.setFilterField(field, event.target.value)
@@ -311,13 +351,6 @@ export class App extends Component {
                 </div>
               )}
 
-              {requests.getProviders === 'providers:get:loading' && (
-                <div className="info info--collection">
-                  <IconLoading size={120} />
-                  Loading providers...
-                </div>
-              )}
-
               {hasNoProviders &&
                 (requests.getProviders === 'providers:get:success' && (
                   <div className="info info--collection">
@@ -326,34 +359,26 @@ export class App extends Component {
                   </div>
                 ))}
 
-              <div className="list-results">
-                <h1 className="list-results__title">
-                  <b>
-                    {currentCount && currentCount !== 0
-                      ? currentCount
-                      : totalCount}
-                  </b>{' '}
-                  Results
-                </h1>
-                <p className="list-results__info">
-                  <span className="info-block">
-                    <span>Page:</span>
-                    <span>
-                      <b>{currentPage}</b>
-                    </span>
-                  </span>
-                  <span className="info-block">
-                    <span>Per page:</span>
-                    <span>
-                      <b>{perPage}</b>
-                    </span>
-                  </span>
-                </p>
-              </div>
+              {requests.getProviders === 'providers:get:loading' && (
+                <div className="loader loader--collection">
+                  <IconLoading size={120} />
+                  Loading providers...
+                </div>
+              )}
+
+              <ListResults
+                {...{
+                  totalCount,
+                  currentCount,
+                  currentPage,
+                  perPage
+                }}
+              />
 
               {hasProviders &&
                 requests.getProviders === 'providers:get:success' && (
                   <List
+                    windowSize={{ height: windowHeight, width: windowWidth }}
                     items={providers}
                     columns={[
                       { label: 'Provider Name' },

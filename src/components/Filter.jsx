@@ -3,7 +3,7 @@ import { FilterGroup } from '.';
 import './Filter.scss';
 
 export const Filter = props => {
-  const { filterData, applyFilter, onChange } = props;
+  const { filterData, applyFilter, onChange, filterMeta } = props;
   const {
     per_page,
     page,
@@ -13,7 +13,7 @@ export const Filter = props => {
     max_average_covered_charges,
     min_average_medicare_payments,
     max_average_medicare_payments,
-    state: provider_state
+    provider_state
   } = filterData;
 
   return (
@@ -108,14 +108,22 @@ export const Filter = props => {
           <label htmlFor="provider_state" className="label">
             Provider State
           </label>
-          <input
-            className="input input--text"
+          <select
+            onChange={event => onChange('provider_state', event)}
             name="provider_state"
             id="provider_state"
             value={provider_state}
-            placeholder="e.g. NY"
-            onChange={event => onChange('state', event)}
-          />
+          >
+            <option value="">Select state</option>
+            {filterMeta &&
+              filterMeta.providers.providerStates.map(unit => {
+                return (
+                  <option key={unit} value={unit}>
+                    {unit.toUpperCase()}
+                  </option>
+                );
+              })}
+          </select>
         </div>
 
         <div className="filter__apply">{applyFilter}</div>
