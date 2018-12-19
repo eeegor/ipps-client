@@ -158,17 +158,41 @@ hr {
   }
 }
 
+.loader {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2rem;
+  padding-bottom: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(#fff, 0.9);
+  flex-direction: column;
+  text-align: center;
+  line-height: 1.5rem;
+  z-index: 100000;
+
+  @media (min-width: 767px) {
+    top: 80px;
+  }
+}
+
 .icon {
   display: block;
 }
 
 @-webkit-keyframes rotating /* Safari and Chrome */ {
   from {
+    -webkit-transform-origin: center center;
     -webkit-transform: rotate(360deg);
     -o-transform: rotate(360deg);
     transform: rotate(360deg);
   }
   to {
+    -webkit-transform-origin: center center;
     -webkit-transform: rotate(0deg);
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
@@ -176,16 +200,18 @@ hr {
 }
 @keyframes rotating {
   from {
+    -webkit-transform-origin: center center; 
+    -webkit-transform: rotate(360deg);
     -ms-transform: rotate(360deg);
     -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
     -o-transform: rotate(360deg);
     transform: rotate(360deg);
   }
   to {
+    -webkit-transform-origin: center center; 
+    -webkit-transform: rotate(0deg);
     -ms-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
   }
