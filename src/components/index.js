@@ -1,6 +1,7 @@
 import { Title } from './Title';
 import { Text } from './Text';
 import { List } from './List';
+import { ListResults } from './ListResults';
 import { Button } from './Button';
 import { Filter } from './Filter';
 import { FilterGroup } from './FilterGroup';
@@ -16,6 +17,7 @@ export {
   Title,
   Text,
   List,
+  ListResults,
   Button,
   Filter,
   FilterGroup,
