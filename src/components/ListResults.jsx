@@ -3,7 +3,7 @@ import './ListResults.scss';
 
 export const ListResults = props => {
   const { currentCount, totalCount, currentPage, perPage } = props;
-  const totalPages = Math.ceil(currentCount / perPage);
+  const totalPages = Math.ceil(currentCount / perPage) || 1;
   const numberPlaceholder = '---';
   const formatNumber = value => parseInt(value, 10).toLocaleString();
   return (
@@ -28,7 +28,7 @@ export const ListResults = props => {
             </b>
             {' / '}
             <b className="list-results__total-pages">
-              {(!!currentCount && !!totalCount && formatNumber(totalPages)) ||
+              {(!!currentCount && !!totalCount && (formatNumber(totalPages) || 1)) ||
                 numberPlaceholder}
             </b>
           </span>

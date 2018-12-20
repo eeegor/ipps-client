@@ -14,7 +14,9 @@ import {
   Text,
   Filter,
   ListResults,
-  IconAuth
+  IconAuth,
+  IconError,
+  IconSmiley
 } from './components';
 import './App.scss';
 import {
@@ -127,9 +129,10 @@ export class App extends Component {
     const token = localStorage.getItem(LOCALSTORAGE_TOKEN_NAME);
     if (token) {
       this.setAuth('auth');
+
       return setTimeout(() => {
         return this.profile();
-      }, 1000);
+      }, 500);
     }
     this.showAuthForm(true);
   }
@@ -323,24 +326,37 @@ export class App extends Component {
       <div
         className={classnames(
           'app',
-          bodyClass && bodyClass,
+          bodyClass,
           isAuth === true && 'is-auth',
           isAuth === true && showSidebar && 'has-sidebar'
         )}
       >
         {isAuth === 'auth' && (
           <div className="info info--auth">
+            <IconAuth size={100} />
+            <Text>Validating token...</Text>
+          </div>
+        )}
+
+        {requests.profile === 'profile:fail' && (
+          <div className="info info--bad-token">
             <IconAuth size={80} />
-            Validating token...
+            <Text>Token failed validation</Text>
           </div>
         )}
 
         {isAuth === 'exit' && (
           <div className="info info--auth-exit">
-            Goodby!
-            <Button onClick={event => this.showAuthForm('login', event)}>
-              Login
-            </Button>
+            <IconSmiley size={120} />
+            <Text>Goodbye and thanks for visiting!</Text>
+            <div className="grid grid-2">
+              <Button onClick={event => this.showAuthForm('login', event)}>
+                Login
+              </Button>
+              <Button onClick={event => this.showAuthForm('signup', event)}>
+                Signup
+              </Button>
+            </div>
           </div>
         )}
 
@@ -356,6 +372,7 @@ export class App extends Component {
             onGotoAuth={(goto, event) => this.showAuthForm(goto, event)}
           />
         )}
+
         {isAuth === true && (
           <div className={`app__container`}>
             <div className="sidebar-controls">
@@ -407,26 +424,30 @@ export class App extends Component {
             <div className="content" style={!showSidebar ? windowSize : {}}>
               {requests.providers === 'providers:get:fail' && (
                 <div className="info info--collection">
-                  <IconBatteryEmpty size={120} />
-                  Ooops, something went wrong, please try again
+                  <IconError size={120} />
+                  <Text>Ooops, something went wrong, please try again</Text>
                 </div>
               )}
+
+              {console.log('providersCount', providers)}
 
               {hasNoProviders &&
                 (requests.providers === 'providers:get:success' && (
                   <div className="info info--collection">
                     <IconInfiniteSymbol size={160} />
-                    Your query did not match any providers
+                    <Text>Your query did not match any providers</Text>
                   </div>
                 ))}
 
               {requests.providers === 'providers:get:loading' && (
-                <div className="loader loader--collection">
+                <div className="info loader">
                   <IconLoading size={120} />
-                  Loading{' '}
-                  {queryString.parse(location.search.replace('?', ''))
-                    .per_page || 100}{' '}
-                  providers...
+                  <Text>
+                    Loading{' '}
+                    {queryString.parse(location.search.replace('?', ''))
+                      .per_page || 100}{' '}
+                    providers...
+                  </Text>
                 </div>
               )}
 
