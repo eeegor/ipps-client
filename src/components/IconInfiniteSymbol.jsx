@@ -2,7 +2,7 @@ import React from 'react';
 import './IconInfiniteSymbol.scss';
 
 export const IconInfiniteSymbol = props => {
-  const { color = '#29c', height, width, size = 240 } = props;
+  const { color, height, width, size = 240 } = props;
 
   return (
     <div className="icon icon--infinite-symbol">
@@ -20,7 +20,7 @@ export const IconInfiniteSymbol = props => {
       >
         <g>
           <path
-            fill={color}
+            fill={color || '#29c'}
             d="M310.277,107.305c-43.976,0-92.099,63.076-107.475,84.968
 		c-15.52-22.071-63.487-84.771-107.332-84.771c-52.64,0-95.47,42.83-95.47,95.47s42.83,95.47,95.47,95.47
 		c43.976,0,92.099-63.076,107.475-84.968c15.52,22.071,63.488,84.771,107.332,84.771c52.64,0,95.47-42.83,95.47-95.47
