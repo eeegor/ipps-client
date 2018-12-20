@@ -146,7 +146,7 @@ describe('util', () => {
       two: 'Another Value',
       providers: [],
       requests: {
-        getProviders: 'providers:get:loading'
+        providers: 'providers:get:loading'
       }
     });
   });
@@ -163,7 +163,8 @@ describe('util', () => {
     expect(result).toEqual({
       one: {},
       two: 'Another Value',
-      showAuthForm: 'signup'
+      showAuthForm: 'signup',
+      isAuth: false
     });
   });
 

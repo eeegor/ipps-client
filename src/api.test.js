@@ -6,6 +6,10 @@ import { App } from './App';
 
 const DUMMY_AUTH_TOKEN = 'TOKEN2393299283203932HJSKS';
 const AUTH_HEADERS = { 'x-auth': DUMMY_AUTH_TOKEN };
+afterEach(() => {
+  jest.clearAllMocks();
+  jest.restoreAllMocks();
+});
 
 describe('async api signup actions', () => {
   it('tests a signup request', async () => {
@@ -42,7 +46,7 @@ describe('async api signup actions', () => {
     const api = new Api();
     const mockResponse = await api.signup(requestPayload);
     expect(mockResponse).toEqual(responsePayload);
-    expect(axios.post).toHaveBeenCalledTimes(2);
+    expect(axios.post).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -63,7 +67,7 @@ describe('async api login actions', () => {
     const api = new Api();
     const mockResponse = await api.login(requestPayload);
     expect(mockResponse).toEqual(responsePayload);
-    expect(axios.post).toHaveBeenCalledTimes(3);
+    expect(axios.post).toHaveBeenCalledTimes(1);
     expect(axios.post).toHaveBeenCalledWith(
       `${ROOT_URL}/login`,
       requestPayload
@@ -81,7 +85,27 @@ describe('async api login actions', () => {
     const api = new Api();
     const mockResponse = await api.login(requestPayload);
     expect(mockResponse).toEqual(responsePayload);
-    expect(axios.post).toHaveBeenCalledTimes(4);
+    expect(axios.post).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('async profile actions', () => {
+  it('tests a profile request', async () => {
+    const requestPayload = {
+      headers: AUTH_HEADERS
+    };
+    const responsePayload = {
+      headers: AUTH_HEADERS,
+      data: {
+        id: '5c1828290d8dda46a20bc68b',
+        email: 'something@example.com'
+      }
+    };
+    axios.get.mockImplementationOnce(() => Promise.resolve(responsePayload));
+    const api = new Api();
+    const mockResponse = await api.profile(requestPayload);
+    expect(mockResponse).toEqual(responsePayload);
+    expect(axios.get).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -97,9 +121,9 @@ describe('async providers actions', () => {
     const responsePayload = {
       headers: AUTH_HEADERS,
       data: [
-        { 'Provider Name': 'EXAMPLE 1' },
-        { 'Provider Name': 'EXAMPLE 2' },
-        { 'Provider Name': 'EXAMPLE 3' }
+        { 'Provider Name': 'EXAMPLE 1', state: 'TX' },
+        { 'Provider Name': 'EXAMPLE 2', state: 'TX' },
+        { 'Provider Name': 'EXAMPLE 3', state: 'TX' }
       ]
     };
     axios.get.mockImplementationOnce(() => Promise.resolve(responsePayload));
