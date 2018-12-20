@@ -73,4 +73,23 @@ export class Api {
         );
     });
   }
+
+  async profile() {
+    return await new Promise((resolve, reject) => {
+      // istanbul ignore next
+      axios
+        .get(`${ROOT_URL}/profile`, {
+          headers: {
+            'x-auth': localStorage.getItem(LOCALSTORAGE_TOKEN_NAME) || ''
+          }
+        })
+        .then(res => {
+          return resolve(res);
+        })
+        .catch(
+          // istanbul ignore next
+          error => reject(error)
+        );
+    });
+  }
 }
