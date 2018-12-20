@@ -3,5 +3,7 @@
 exports[`Text renders markup correctly 1`] = `
 <p
   className="text"
-/>
+>
+  Hello
+</p>
 `;

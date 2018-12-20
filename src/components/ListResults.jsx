@@ -28,7 +28,9 @@ export const ListResults = props => {
             </b>
             {' / '}
             <b className="list-results__total-pages">
-              {(!!currentCount && !!totalCount && (formatNumber(totalPages) || 1)) ||
+              {(!!currentCount &&
+                !!totalCount &&
+                (formatNumber(totalPages) || 1)) ||
                 numberPlaceholder}
             </b>
           </span>
