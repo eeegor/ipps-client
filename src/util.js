@@ -49,7 +49,7 @@ export const serialize = obj => {
  * Get browser url query as object
  */
 
-const currentQuery = queryString.parse(location.search, {});
+const currentQuery = () => queryString.parse(location.search, {});
 
 /**
  *
@@ -101,13 +101,12 @@ export const reduceSetFilterField = (state, payload) => ({
 
 export const getAllowedQueryParams = () => {
   let nextFilter = {};
-  Object.keys(currentQuery).map(key => {
+  Object.keys(currentQuery()).map(key => {
     if (Object.keys(allowedParams).includes(key)) {
       if (key === 'state') {
-        return (nextFilter['provider_state'] = currentQuery[key]);
+        return (nextFilter['provider_state'] = currentQuery()[key]);
       }
-      nextFilter[key] = currentQuery[key];
-    } else {
+      nextFilter[key] = currentQuery()[key];
     }
   });
   return nextFilter;
@@ -130,7 +129,10 @@ export const reduceFilterFromQuery = state => ({
 
 export const reduceSetRequestStatus = (state, payload) => ({
   ...state,
-  requests: { ...state.requests, getProviders: payload.status }
+  requests: {
+    ...state.requests,
+    [payload.status.split(':')[0]]: payload.status
+  }
 });
 
 /**
@@ -173,7 +175,8 @@ export const reduceSetFormAuthField = (state, payload) => ({
 
 export const reduceShowAuthForm = (state, payload) => ({
   ...state,
-  showAuthForm: payload.type
+  showAuthForm: payload.type,
+  isAuth: false
 });
 
 /**
@@ -218,11 +221,26 @@ export const reduceToggleSidebar = state => ({
   showSidebar: !state.showSidebar
 });
 
+/**
+ *
+ * Calculate current viewport width
+ */
+
 export const windowMaxWidth = () =>
   Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
+/**
+ *
+ * Calculate current viewport height
+ */
+
 export const windowMaxHeight = () =>
   Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+/**
+ *
+ * Check if browser agent is ios
+ */
 
 export const checkBrowserAgent = () => {
   // Detects if device is on iOS

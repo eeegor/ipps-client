@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '.';
+import { Button, IconLogo } from '.';
 import './FormAuth.scss';
 
 export const FormAuth = props => {
@@ -19,6 +19,9 @@ export const FormAuth = props => {
   return (
     <div className={`form-auth form-auth--${formType}`}>
       <form className="form-auth__form" onSubmit={event => onSubmit(event)}>
+        <div className="form-auth__logo">
+          <IconLogo width={120} height={60} />
+        </div>
         {title && (
           <div className="form-auth__title">
             <h2>{title}</h2>

@@ -3,9 +3,8 @@ import './ListResults.scss';
 
 export const ListResults = props => {
   const { currentCount, totalCount, currentPage, perPage } = props;
-  const totalPages = Math.ceil(Math.round(currentCount / perPage));
+  const totalPages = Math.ceil(currentCount / perPage);
   const numberPlaceholder = '---';
-  console.log('total', totalPages);
   const formatNumber = value => parseInt(value, 10).toLocaleString();
   return (
     <div className="list-results">

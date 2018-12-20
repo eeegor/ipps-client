@@ -9,7 +9,10 @@ import { FormAuth } from './FormAuth';
 import { Auth } from './Auth';
 import { Sidebar } from './Sidebar';
 import { MenuToggle } from './MenuToggle';
+import { IconLogo } from './IconLogo';
 import { IconLoading } from './IconLoading';
+import { IconAuth } from './IconAuth';
+import { IconError } from './IconError';
 import { IconBatteryEmpty } from './IconBatteryEmpty';
 import { IconInfiniteSymbol } from './IconInfiniteSymbol';
 
@@ -25,6 +28,9 @@ export {
   Auth,
   Sidebar,
   MenuToggle,
+  IconLogo,
+  IconAuth,
+  IconError,
   IconLoading,
   IconBatteryEmpty,
   IconInfiniteSymbol

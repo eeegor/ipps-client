@@ -5,7 +5,7 @@ exports[`List renders markup correctly 1`] = `
   className="ReactVirtualized__AutoSizer"
   style={
     Object {
-      "height": 0,
+      "height": 536,
       "overflow": "visible",
       "width": 0,
     }
@@ -102,9 +102,9 @@ exports[`List renders markup correctly 1`] = `
           "WebkitOverflowScrolling": "touch",
           "boxSizing": "border-box",
           "direction": "ltr",
-          "height": -40,
+          "height": 496,
           "overflowX": "hidden",
-          "overflowY": "auto",
+          "overflowY": "hidden",
           "position": "relative",
           "width": 2600,
           "willChange": "transform",

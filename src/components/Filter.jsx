@@ -3,10 +3,10 @@ import { FilterGroup } from '.';
 import './Filter.scss';
 
 export const Filter = props => {
-  const { filterData, applyFilter, onChange, filterMeta } = props;
+  const { filterData, onChange, filterMeta, onSubmit } = props;
   const {
-    per_page,
     page,
+    per_page,
     min_discharges,
     max_discharges,
     min_average_covered_charges,
@@ -18,10 +18,8 @@ export const Filter = props => {
 
   return (
     <div className="filter">
-      <form onSubmit={event => onApplyFilter(event)}>
+      <form onSubmit={event => onSubmit(event)}>
         <div className="filter__filter-group filter__page-controls">
-          {console.log('inside filter', filterData)}
-          {console.log('inside filter:per_page', per_page)}
           <FilterGroup
             label="Per Page"
             name="per_page"
@@ -129,7 +127,7 @@ export const Filter = props => {
           </div>
         </div>
 
-        {applyFilter && <div className="filter__apply">{applyFilter}</div>}
+        <input className="filter__hidden-submit" type="submit" />
       </form>
     </div>
   );

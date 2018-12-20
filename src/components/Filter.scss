@@ -28,4 +28,11 @@
       grid-gap: 1rem;
     }
   }
+
+  .filter__hidden-submit {
+    visibility: hidden;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
 }

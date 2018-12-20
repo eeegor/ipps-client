@@ -23,17 +23,23 @@ body:not(.user-is-tabbing) textarea:focus,
 }
 
 html,
-body,
-.app,
-.app__container,
-.content {
-  position: fixed;
-  overflow: hidden;
+body {
   margin: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+}
+
+html,
+body,
+.content,
+.app__container,
+.app {
+  @media (min-width: $size--tablet) {
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
 }
 
 html {
@@ -48,6 +54,29 @@ html {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  &.is-sidebar-open {
+    background: $color--primary;
+  }
+}
+
+.app {
+  &.no-auth {
+    overflow-y: scroll !important;
+  }
+}
+
+.app__container {
+  background: #fafafa;
+  color: #333;
+
+  @media (min-width: $size--tablet) {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row-reverse;
+  }
 }
 
 h1,
@@ -71,17 +100,6 @@ button {
   font-weight: 700;
 }
 
-.app__container {
-  background: #fafafa;
-  color: #333;
-
-  @media (min-width: $size--tablet) {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row-reverse;
-  }
-}
-
 b {
   font-weight: bold;
 }
@@ -92,9 +110,10 @@ hr {
 }
 
 .content {
-  z-index: 20;
+  z-index: 1000;
   overflow: scroll !important;
   -webkit-overflow-scrolling: touch;
+  background: #fff;
 }
 
 .label {
@@ -147,14 +166,7 @@ hr {
   border: 1px solid #ddd;
   background: #fff;
   position: relative;
-
-  &::after {
-    content: '';
-    display: flex;
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
+  color: darken($color--primary, 15%);
 
   &::-ms-expand {
     display: none;
@@ -178,7 +190,8 @@ hr {
     right: 1rem;
     transform: translateY(-30%);
     border: 6px solid transparent;
-    border-color: #333 transparent transparent transparent;
+    border-color: darken($color--primary, 15%) transparent transparent
+      transparent;
   }
 }
 
@@ -209,7 +222,7 @@ hr {
   right: 0;
   bottom: 0;
   padding: 2rem;
-  padding-bottom: 8rem;
+  padding-bottom: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -217,7 +230,7 @@ hr {
   flex-direction: column;
   text-align: center;
   line-height: 1.5rem;
-  z-index: 100000;
+  z-index: 2000;
 
   @media (min-width: 767px) {
     top: 80px;
@@ -226,4 +239,20 @@ hr {
 
 .icon {
   display: block;
+}
+
+.list-wrap {
+  background: #fff;
+  min-height: 100%;
+}
+
+.has-sidebar {
+  .apply-filter {
+    display: block;
+  }
+  @media (max-width: $size--tablet - 1px) {
+    .list-wrap {
+      display: none;
+    }
+  }
 }

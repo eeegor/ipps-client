@@ -12,7 +12,7 @@ export const Auth = props => {
     onGotoAuth
   } = props;
 
-  if (showAuthForm === 'login' && !isAuth) {
+  if (showAuthForm === 'login' && isAuth === false) {
     return (
       <FormAuth
         type="login"

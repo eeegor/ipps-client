@@ -5,10 +5,10 @@ export const Sidebar = props => {
   const { isAuth, children } = props;
   return (
     <div className="sidebar">
-      {!isAuth && (
+      {isAuth === false && (
         <div className="info">You must be logged in to see this page :)</div>
       )}
-      {isAuth && (
+      {isAuth === true && (
         <div className="sidebar__container">{children && children}</div>
       )}
     </div>

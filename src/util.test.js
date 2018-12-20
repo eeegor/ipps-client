@@ -1,7 +1,5 @@
 import {
   serialize,
-  makeObjectIntegerValues,
-  makeObjectStringValues,
   reduceSetError,
   reduceSetAuth,
   reduceSetFormAuthField,
@@ -10,8 +8,7 @@ import {
   reduceSetRequestStatus,
   reduceShowAuthForm,
   reduceToggleSidebar,
-  reduceSetFilterField,
-  reduceFilterFromQuery
+  reduceSetFilterField
 } from './util';
 
 describe('util', () => {
@@ -25,38 +22,6 @@ describe('util', () => {
     expect(result).toBe(
       'one=Some%20value&two=Another%20Value&some%20numbers=12345'
     );
-  });
-
-  it('makeObjectIntegerValues', () => {
-    const example = {
-      one: null,
-      two: [2331, 'Another Value'],
-      'some numbers': '12345',
-      numbers: 87654
-    };
-    const keys = ['one', 'two', 'some numbers', 'numbers'];
-    const result = makeObjectIntegerValues(example, keys);
-    expect(result).toEqual({
-      two: 2331,
-      'some numbers': 12345,
-      numbers: 87654
-    });
-  });
-
-  it('makeObjectStringValues', () => {
-    const example = {
-      one: null,
-      two: 'Another Value',
-      three: [2331, 'Another Value'],
-      numbers: 87654
-    };
-    const keys = ['one', 'two', 'three'];
-    const result = makeObjectStringValues(example, keys);
-    expect(result).toEqual({
-      two: 'another value',
-      three: 'Another Value',
-      numbers: 87654
-    });
   });
 
   it('reduceSetError', () => {
@@ -132,38 +97,38 @@ describe('util', () => {
     });
   });
 
-  it('reduceSetProvidersMeta', () => {
-    const state = {
-      one: {},
-      two: 'Another Value',
-      providers: [],
-      meta: {}
-    };
-    const payload = {
-      meta: {
-        'x-total-count': 5,
-        'x-current-count': 12,
-        'x-current-page-limit': 32,
-        'x-current-page': 123,
-        'x-db-engine': 'redis'
-      }
-    };
-    const result = reduceSetProvidersMeta(state, payload);
-    expect(result).toEqual({
-      one: {},
-      two: 'Another Value',
-      providers: [],
-      meta: {
-        providers: {
-          totalCount: 5,
-          currentCount: 12,
-          perPage: 32,
-          currentPage: 123,
-          dbEngine: 'redis'
-        }
-      }
-    });
-  });
+  // it('reduceSetProvidersMeta', () => {
+  //   const state = {
+  //     one: {},
+  //     two: 'Another Value',
+  //     providers: [],
+  //     meta: {}
+  //   };
+  //   const payload = {
+  //     meta: {
+  //       'x-total-count': 5,
+  //       'x-current-count': 12,
+  //       'x-current-page-limit': 32,
+  //       'x-current-page': 123,
+  //       'x-db-engine': 'redis'
+  //     }
+  //   };
+  //   const result = reduceSetProvidersMeta(state, payload);
+  //   expect(result).toEqual({
+  //     one: {},
+  //     two: 'Another Value',
+  //     providers: [],
+  //     meta: {
+  //       providers: {
+  //         totalCount: 5,
+  //         currentCount: 12,
+  //         perPage: 32,
+  //         currentPage: 123,
+  //         dbEngine: 'redis'
+  //       }
+  //     }
+  //   });
+  // });
 
   it('reduceSetRequestStatus', () => {
     const state = {

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import queryString from 'queryString';
+import classnames from 'classnames';
 import {
   List,
   Auth,
@@ -11,7 +13,8 @@ import {
   Title,
   Text,
   Filter,
-  ListResults
+  ListResults,
+  IconAuth
 } from './components';
 import './App.scss';
 import {
@@ -27,7 +30,10 @@ import {
   reduceSetFilterField,
   reduceFilterFromQuery,
   reduceToggleSidebar,
-  getQuery
+  getQuery,
+  windowMaxWidth,
+  windowMaxHeight,
+  checkBrowserAgent
 } from './util';
 import { Api, LOCALSTORAGE_TOKEN_NAME } from './api';
 
@@ -56,6 +62,7 @@ const defaultMeta = {
 
 const defaultState = {
   bodyClass: '',
+  userAgent: '',
   requests: {},
   filter: defaultFilter,
   providers: [],
@@ -67,7 +74,11 @@ const defaultState = {
     email: '',
     password: ''
   },
-  meta: defaultMeta
+  meta: defaultMeta,
+  windowSize: {
+    height: undefined,
+    width: undefined
+  }
 };
 
 export class App extends Component {
@@ -78,41 +89,21 @@ export class App extends Component {
     this.api = new Api();
   }
 
-  handleResize = () =>
-    this.setState(state => ({
-      prevWindowHeight: state.windowHeight || null,
-      prevWindowWidth: state.windowWidth || null,
-      windowHeight: Math.max(
-        document.documentElement.clientHeight,
-        window.innerHeight || 0
-      ),
-      windowWidth: Math.max(
-        document.documentElement.clientWidth,
-        window.innerWidth || 0
-      )
+  handleResize = () => {
+    return this.setState(state => ({
+      ...state,
+      windowSize: { width: windowMaxWidth(), height: windowMaxHeight() },
+      bodyClass: windowMaxWidth() < 767 ? 'is-mobile' : 'is-desktop'
     }));
+  };
 
-  checkBrowserAgent() {
-    // Detects if device is on iOS
-    const isIos = () => {
-      const userAgent = window.navigator.userAgent.toLowerCase();
-      return /iphone|ipad|ipod/.test(userAgent);
-    };
-
-    if (isIos()) {
-      return 'ios';
-    }
-
-    return '';
-  }
-
-  optimizeForMobile() {
+  optimizeForMobile = () => {
     window.addEventListener('load', () => {
       window.scrollTo(0, 0);
     });
-  }
+  };
 
-  initFilter() {
+  initFilter = () => {
     if (getQuery() && getQuery() !== '') {
       return this.setState(state => reduceFilterFromQuery(state));
     }
@@ -122,84 +113,103 @@ export class App extends Component {
       filter: defaultFilter,
       meta: defaultMeta
     }));
+  };
+
+  componentDidCatch(error, info) {
+    this.setError({ error, info });
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
+    this.initFilter();
+    this.handleResize();
+    this.optimizeForMobile();
+    const token = localStorage.getItem(LOCALSTORAGE_TOKEN_NAME);
+    if (token) {
+      this.setAuth('auth');
+      return setTimeout(() => {
+        return this.profile();
+      }, 1000);
+    }
+    this.showAuthForm(true);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
   }
 
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-    this.handleResize();
-    this.optimizeForMobile();
-    this.setState(state => ({ ...state, bodyClass: this.checkBrowserAgent() }));
-
-    if (localStorage.getItem(LOCALSTORAGE_TOKEN_NAME)) {
-      console.log("Welcome back, you've been logged in :)");
-      this.setAuth(true);
-      this.initFilter();
-      return this.getProviders();
-    }
-
-    setQuery('');
-    this.showAuthForm();
-  }
-
-  setError = error =>
+  setError = error => {
     this.setState(
       state => reduceSetError(state, { error }),
       () => console.log('*** latest error ***', error)
     );
+  };
 
-  setAuth = isAuth => this.setState(state => reduceSetAuth(state, { isAuth }));
+  setAuth = isAuth => {
+    this.setState(state => reduceSetAuth(state, { isAuth }));
+  };
 
-  setFormAuthField = (field, value) =>
+  setFormAuthField = (field, value) => {
     this.setState(state => reduceSetFormAuthField(state, { field, value }));
+  };
 
-  setProviders = providers =>
+  setProviders = providers => {
     this.setState(state => reduceSetProviders(state, { providers }));
+  };
 
-  setProviderMeta = meta =>
+  setProviderMeta = meta => {
     this.setState(state => reduceSetProvidersMeta(state, { meta }));
+  };
 
-  setRequestStatus = (status, callback) =>
+  setRequestStatus = (status, callback) => {
     this.setState(state => reduceSetRequestStatus(state, { status }), callback);
+  };
 
-  showAuthForm(type = 'signup', event = null) {
+  showAuthForm = (type = 'signup', event = null) => {
     event && event.preventDefault();
     return this.setState(state => reduceShowAuthForm(state, { type }));
-  }
+  };
 
-  toggleSidebar(event = null) {
+  toggleSidebar = (event = null) => {
     event && event.preventDefault();
-    return this.setState(state => reduceToggleSidebar(state));
-  }
+    return this.setState(
+      state => reduceToggleSidebar(state),
+      () =>
+        this.state.showSidebar === true
+          ? document.body.classList.add('is-sidebar-open')
+          : document.body.classList.remove('is-sidebar-open')
+    );
+  };
 
-  setFilterField = (field, value) =>
+  setFilterField = (field, value) => {
     this.setState(
       state => reduceSetFilterField(state, { field, value }),
-      () => {
-        setQuery(serialize(this.state.filter));
-      }
+      () => setQuery(serialize(this.state.filter))
     );
+  };
 
-  applyFilter(event = null, showSidebar = false) {
+  applyFilter = (event = null, showSidebar = false) => {
     event && event.preventDefault();
-    this.setState(state => ({ ...state, showSidebar, meta: defaultMeta }));
-    return this.getProviders();
-  }
+    this.toggleSidebar();
+    return this.setState(
+      state => ({ ...state, showSidebar, meta: defaultMeta }),
+      () => this.getProviders()
+    );
+  };
 
-  resetFilter(event = null, showSidebar = true) {
+  resetFilter = (event = null, showSidebar = true) => {
     event && event.preventDefault();
     setQuery('');
-    this.setState(state => ({
-      ...state,
-      showSidebar,
-      filter: defaultFilter,
-      meta: defaultMeta
-    }));
-    return this.applyFilter(null, showSidebar);
-  }
+    return this.setState(
+      state => ({
+        ...state,
+        showSidebar,
+        filter: defaultFilter,
+        meta: defaultMeta
+      }),
+      () => this.applyFilter(null, showSidebar)
+    );
+  };
 
   async getProviders() {
     this.setRequestStatus('providers:get:loading');
@@ -254,8 +264,10 @@ export class App extends Component {
     await this.api
       .logout()
       .then(() => {
-        this.setAuth(false);
-        this.setProviders([]);
+        this.toggleSidebar();
+        this.setState(defaultState);
+        this.handleResize();
+        this.setAuth('exit');
         return this.setRequestStatus('logout:success', () =>
           console.log('logged out :)')
         );
@@ -263,6 +275,31 @@ export class App extends Component {
       .catch(error => {
         this.setAuth(false);
         return this.setRequestStatus('logout:fail', () => this.setError(error));
+      });
+  }
+
+  async profile(event = null) {
+    event && event.preventDefault();
+    await this.api
+      .profile()
+      .then(res => {
+        return this.setRequestStatus('profile:success', () => {
+          this.setAuth(true);
+          this.getProviders();
+          console.log('profile success!', res);
+          return this.setState(state => ({
+            ...state,
+            profile: res.data
+          }));
+        });
+      })
+      .catch(error => {
+        this.setAuth(false);
+        console.log('profile error!');
+        return this.setRequestStatus('profile:fail', () => {
+          this.setError(error);
+          return error;
+        });
       });
   }
 
@@ -276,46 +313,67 @@ export class App extends Component {
       filter,
       showSidebar,
       meta,
-      windowHeight,
-      windowWidth
+      windowSize
     } = this.state;
     const hasProviders = providers && providers.length !== 0;
     const hasNoProviders = !providers || providers.length === 0;
     const { currentPage, perPage, currentCount, totalCount } = meta.providers;
 
     return (
-      <div className="app">
-        {isAuth && (
-          <div>
-            <MenuToggle
-              isOpen={showSidebar}
-              onClick={event => this.toggleSidebar(event)}
-            />
+      <div
+        className={classnames(
+          'app',
+          bodyClass && bodyClass,
+          isAuth === true && 'is-auth',
+          isAuth === true && showSidebar && 'has-sidebar'
+        )}
+      >
+        {isAuth === 'auth' && (
+          <div className="info info--auth">
+            <IconAuth size={80} />
+            Validating token...
           </div>
         )}
-        <Auth
-          isAuth={isAuth}
-          showAuthForm={showAuthForm || 'signup'}
-          onSetFormAuthField={(field, value) =>
-            this.setFormAuthField(field, value)
-          }
-          onSignup={event => this.signup(event)}
-          onLogin={event => this.login(event)}
-          onGotoAuth={(goto, event) => this.showAuthForm(goto, event)}
-        />
 
-        {isAuth && (
-          <div className={`app__container ${bodyClass}`}>
+        {isAuth === 'exit' && (
+          <div className="info info--auth-exit">
+            Goodby!
+            <Button onClick={event => this.showAuthForm('login', event)}>
+              Login
+            </Button>
+          </div>
+        )}
+
+        {isAuth === false && showAuthForm && (
+          <Auth
+            isAuth={isAuth}
+            showAuthForm={showAuthForm || 'signup'}
+            onSetFormAuthField={(field, value) =>
+              this.setFormAuthField(field, value)
+            }
+            onSignup={event => this.signup(event)}
+            onLogin={event => this.login(event)}
+            onGotoAuth={(goto, event) => this.showAuthForm(goto, event)}
+          />
+        )}
+        {isAuth === true && (
+          <div className={`app__container`}>
+            <div className="sidebar-controls">
+              <MenuToggle
+                isOpen={showSidebar}
+                onClick={event => this.toggleSidebar(event)}
+              />
+              <div className="apply-filter">
+                <Button
+                  color="success"
+                  onClick={event => this.applyFilter(event)}
+                >
+                  Apply Filter
+                </Button>
+              </div>
+            </div>
             {showSidebar && (
               <Sidebar isAuth={isAuth}>
-                <div className="apply-filter">
-                  <Button
-                    color="success"
-                    onClick={event => this.applyFilter(event)}
-                  >
-                    Apply Filter
-                  </Button>
-                </div>
                 <Title text="IPPS Patient Data" />
                 <Text text="Provider Summary for the Top 100 Diagnosis-Related Groups" />
                 <hr />
@@ -341,60 +399,66 @@ export class App extends Component {
                   onChange={(field, event) =>
                     this.setFilterField(field, event.target.value)
                   }
+                  onSubmit={event => this.applyFilter(event)}
                 />
               </Sidebar>
             )}
 
-            <div className="content">
-              {requests.getProviders === 'providers:get:fail' && (
+            <div className="content" style={!showSidebar ? windowSize : {}}>
+              {requests.providers === 'providers:get:fail' && (
                 <div className="info info--collection">
                   <IconBatteryEmpty size={120} />
-                  We reached some limits :(
+                  Ooops, something went wrong, please try again
                 </div>
               )}
 
               {hasNoProviders &&
-                (requests.getProviders === 'providers:get:success' && (
+                (requests.providers === 'providers:get:success' && (
                   <div className="info info--collection">
                     <IconInfiniteSymbol size={160} />
                     Your query did not match any providers
                   </div>
                 ))}
 
-              {requests.getProviders === 'providers:get:loading' && (
+              {requests.providers === 'providers:get:loading' && (
                 <div className="loader loader--collection">
                   <IconLoading size={120} />
-                  Loading providers...
+                  Loading{' '}
+                  {queryString.parse(location.search.replace('?', ''))
+                    .per_page || 100}{' '}
+                  providers...
                 </div>
               )}
 
-              <ListResults
-                {...{
-                  totalCount,
-                  currentCount,
-                  currentPage,
-                  perPage
-                }}
-              />
+              <div className="list-wrap">
+                <ListResults
+                  {...{
+                    totalCount,
+                    currentCount,
+                    currentPage,
+                    perPage
+                  }}
+                />
 
-              {hasProviders &&
-                requests.getProviders === 'providers:get:success' && (
-                  <List
-                    windowSize={{ height: windowHeight, width: windowWidth }}
-                    items={providers}
-                    columns={[
-                      { label: 'Provider Name' },
-                      { label: 'Provider Street Address' },
-                      { label: 'Provider City' },
-                      { label: 'Provider State' },
-                      { label: 'Hospital Referral Region Description' },
-                      { label: 'Total Discharges' },
-                      { label: 'Average Covered Charges' },
-                      { label: 'Average Total Payments' },
-                      { label: 'Average Medicare Payments' }
-                    ]}
-                  />
-                )}
+                {hasProviders &&
+                  requests.providers === 'providers:get:success' && (
+                    <List
+                      windowSize={windowSize}
+                      items={providers}
+                      columns={[
+                        { label: 'Provider Name' },
+                        { label: 'Provider Street Address' },
+                        { label: 'Provider City' },
+                        { label: 'Provider State' },
+                        { label: 'Hospital Referral Region Description' },
+                        { label: 'Total Discharges' },
+                        { label: 'Average Covered Charges' },
+                        { label: 'Average Total Payments' },
+                        { label: 'Average Medicare Payments' }
+                      ]}
+                    />
+                  )}
+              </div>
             </div>
           </div>
         )}

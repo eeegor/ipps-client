@@ -1,28 +1,33 @@
 @import '../variables';
 
 .form-auth {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   padding: 2rem;
+  background: #fff;
 }
 
 .form-auth__form {
   max-width: 20rem;
   margin: 0 auto;
-  padding: 4rem 0;
+  padding: 0;
 
   @media (min-width: $size--tablet) {
     padding: 6rem 0;
   }
 }
 
+.form-auth__logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+}
+
 .form-auth__title {
-  font-size: 2rem;
-  margin-bottom: 2rem;
+  font-size: 1.25rem;
+  margin: 0 auto;
+  margin-bottom: 1rem;
   text-align: center;
+  max-width: 12rem;
 }
 
 .form-auth__input-group {

@@ -88,7 +88,9 @@ export class Api {
         })
         .catch(
           // istanbul ignore next
-          error => reject(error)
+          error => {
+            reject(error);
+          }
         );
     });
   }

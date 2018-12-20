@@ -11,17 +11,4 @@ describe('App', () => {
     ReactDOM.render(<App />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
-
-  it('should invoke the showAuthForm callback', () => {
-    let mockFn = jest.fn();
-    App.prototype.showAuthForm = mockFn;
-
-    let wrapper = shallow(<App />);
-    wrapper
-      .find('.submit')
-      .props()
-      .onPress();
-
-    expect(mockFn).toHaveBeenCalledTimes(1);
-  });
 });

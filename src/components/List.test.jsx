@@ -1,13 +1,18 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { List } from './List';
 
 let wrapper;
 
 beforeEach(() => {
+  const windowSize = { height: 600, width: 320 };
   const columns = [{ dataKey: 'a', label: 'A' }, { dataKey: 'b', label: 'B' }];
-  wrapper = mount(<List columns={columns}>Hello</List>);
+  wrapper = mount(
+    <List windowSize={windowSize} columns={columns}>
+      Hello
+    </List>
+  );
 });
 
 describe('List', () => {
