@@ -217,3 +217,23 @@ export const reduceToggleSidebar = state => ({
   ...state,
   showSidebar: !state.showSidebar
 });
+
+export const windowMaxWidth = () =>
+  Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+
+export const windowMaxHeight = () =>
+  Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+export const checkBrowserAgent = () => {
+  // Detects if device is on iOS
+  const isIos = () => {
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    return /iphone|ipad|ipod/.test(userAgent);
+  };
+
+  if (isIos()) {
+    return 'ios';
+  }
+
+  return '';
+};
