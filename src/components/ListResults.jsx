@@ -38,7 +38,7 @@ export const ListResults = props => {
         <span className="info-block">
           <span>Per page:</span>
           <span>
-            <b>{(!!perPage && formatNumber(perPage)) || numberPlaceholder}</b>
+            <b className="list-results__per-page">{(!!perPage && formatNumber(perPage)) || numberPlaceholder}</b>
           </span>
         </span>
       </p>

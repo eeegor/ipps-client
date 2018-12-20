@@ -1,0 +1,199 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListResults renders markup correctly 1`] = `
+<div
+  className="list-results"
+>
+  <h1
+    className="list-results__title"
+  >
+    <b
+      className="list-results__current-count"
+    >
+      20
+    </b>
+     / 
+    <b
+      className="list-results__total-count"
+    >
+      100
+    </b>
+     
+    Results
+  </h1>
+  <p
+    className="list-results__info"
+  >
+    <span
+      className="info-block"
+    >
+      <span
+        className="list-results__page"
+      >
+        Page:
+      </span>
+      <span
+        className="list-results__pages"
+      >
+        <b
+          className="list-results__current-page"
+        >
+          2
+        </b>
+         / 
+        <b
+          className="list-results__total-pages"
+        >
+          4
+        </b>
+      </span>
+    </span>
+    <span
+      className="info-block"
+    >
+      <span>
+        Per page:
+      </span>
+      <span>
+        <b
+          className="list-results__per-page"
+        >
+          5
+        </b>
+      </span>
+    </span>
+  </p>
+</div>
+`;
+
+exports[`ListResults renders markup with empty value correctly 1`] = `
+<div
+  className="list-results"
+>
+  <h1
+    className="list-results__title"
+  >
+    <b
+      className="list-results__current-count"
+    >
+      0
+    </b>
+     / 
+    <b
+      className="list-results__total-count"
+    >
+      100
+    </b>
+     
+    Results
+  </h1>
+  <p
+    className="list-results__info"
+  >
+    <span
+      className="info-block"
+    >
+      <span
+        className="list-results__page"
+      >
+        Page:
+      </span>
+      <span
+        className="list-results__pages"
+      >
+        <b
+          className="list-results__current-page"
+        >
+          1
+        </b>
+         / 
+        <b
+          className="list-results__total-pages"
+        >
+          1
+        </b>
+      </span>
+    </span>
+    <span
+      className="info-block"
+    >
+      <span>
+        Per page:
+      </span>
+      <span>
+        <b
+          className="list-results__per-page"
+        >
+          5
+        </b>
+      </span>
+    </span>
+  </p>
+</div>
+`;
+
+exports[`ListResults renders markup with placeholders correctly 1`] = `
+<div
+  className="list-results"
+>
+  <h1
+    className="list-results__title"
+  >
+    <b
+      className="list-results__current-count"
+    >
+      ---
+    </b>
+     / 
+    <b
+      className="list-results__total-count"
+    >
+      ---
+    </b>
+     
+    Results
+  </h1>
+  <p
+    className="list-results__info"
+  >
+    <span
+      className="info-block"
+    >
+      <span
+        className="list-results__page"
+      >
+        Page:
+      </span>
+      <span
+        className="list-results__pages"
+      >
+        <b
+          className="list-results__current-page"
+        >
+          ---
+        </b>
+         / 
+        <b
+          className="list-results__total-pages"
+        >
+          ---
+        </b>
+      </span>
+    </span>
+    <span
+      className="info-block"
+    >
+      <span>
+        Per page:
+      </span>
+      <span>
+        <b
+          className="list-results__per-page"
+        >
+          ---
+        </b>
+      </span>
+    </span>
+  </p>
+</div>
+`;
