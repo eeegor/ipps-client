@@ -16,7 +16,7 @@ export const Auth = props => {
     return (
       <FormAuth
         type="login"
-        title="Log in"
+        title="Log in to existing account"
         submitLabel="Log in"
         onChange={(field, event) =>
           onSetFormAuthField(field, event.target.value)
@@ -30,7 +30,7 @@ export const Auth = props => {
   return (
     <FormAuth
       type="signup"
-      title="Sign up"
+      title="Create a new account"
       submitLabel="Sign up"
       onChange={(field, event) => onSetFormAuthField(field, event.target.value)}
       onSubmit={event => onSignup(event)}
