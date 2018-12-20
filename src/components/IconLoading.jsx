@@ -2,14 +2,14 @@ import React from 'react';
 import './IconLoading.scss';
 
 export const IconLoading = props => {
-  const { size = 240 } = props;
+  const { color = '#29c', height, width, size = 240 } = props;
 
   return (
     <div className="icon icon--loading">
       <svg
         className="rotating"
-        height={size}
-        width={size}
+        height={height || size}
+        width={width || size}
         version="1.1"
         id="icon-loading"
         xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +20,7 @@ export const IconLoading = props => {
         xmlSpace="preserve"
       >
         <path
-          style={{ fill: '#29c' }}
+          fill={color}
           d="M24.157,42.474l-1.921-2.825c-0.349-0.508-0.222-1.206,0.302-1.556
 	c0.508-0.349,1.19-0.206,1.54,0.302l3.095,4.555c0.317,0.413,0.302,1-0.048,1.413l-3.651,4.222c-0.397,0.46-1.095,0.508-1.571,0.111
 	c-0.46-0.413-0.508-1.111-0.111-1.587l2.095-2.413c-0.698-0.016-1.381-0.079-2.079-0.175c-1.095-0.143-2.19-0.381-3.286-0.73

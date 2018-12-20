@@ -13,7 +13,7 @@ import { IconLogo } from './IconLogo';
 import { IconLoading } from './IconLoading';
 import { IconAuth } from './IconAuth';
 import { IconError } from './IconError';
-import { IconBatteryEmpty } from './IconBatteryEmpty';
+import { IconSmiley } from './IconSmiley';
 import { IconInfiniteSymbol } from './IconInfiniteSymbol';
 
 export {
@@ -31,7 +31,7 @@ export {
   IconLogo,
   IconAuth,
   IconError,
+  IconSmiley,
   IconLoading,
-  IconBatteryEmpty,
   IconInfiniteSymbol
 };
