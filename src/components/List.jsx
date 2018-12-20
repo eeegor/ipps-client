@@ -2,6 +2,7 @@ import React from 'react';
 import { AutoSizer, Table, Column, SortDirection } from 'react-virtualized';
 import { sortBy as lodashSortBy } from 'lodash';
 import './List.scss';
+import { guid } from '../util';
 
 export class List extends React.Component {
   constructor(props) {
@@ -93,6 +94,7 @@ export class List extends React.Component {
             sort={this._sort}
             sortBy={sortBy}
             sortDirection={sortDirection}
+            key={() => guid()}
           >
             {cols}
           </Table>
