@@ -7,7 +7,9 @@ import queryString from 'query-string';
 
 export function guid() {
   function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
   }
   return [s4() + s4(), s4(), s4(), s4(), s4() + s4() + s4()].join('-');
 }
@@ -82,7 +84,7 @@ export const getQuery = () =>
  * Set browser url query
  */
 
-export const setQuery = query => {
+export const setQuery = query => /* istanbul ignore next */ {
   if (history.pushState) {
     const { protocol, host, pathname } = window.location;
     const nextQuery =
@@ -111,7 +113,7 @@ export const reduceSetFilterField = (state, payload) => ({
  * Prepare next filter state
  */
 
-export const getAllowedQueryParams = () => {
+export const getAllowedQueryParams = () /* istanbul ignore next */ => {
   let nextFilter = {};
   Object.keys(currentQuery()).map(key => {
     if (Object.keys(allowedParams).includes(key)) {
@@ -207,6 +209,7 @@ export const reduceSetProviders = (state, payload) => ({
  */
 
 export const reduceSetProvidersMeta = (state, payload) => {
+  // istanbul ignore next
   return {
     ...state,
     meta: {
@@ -217,7 +220,7 @@ export const reduceSetProvidersMeta = (state, payload) => {
         perPage: payload.meta['x-current-page-limit'],
         currentPage: payload.meta['x-current-page'],
         dbEngine: payload.meta['x-db-engine'],
-        providerStates: JSON.parse(payload.meta['x-available-states'] || '')
+        providerStates: JSON.parse(payload.meta['x-available-states'] || [])
       }
     }
   };
@@ -239,7 +242,10 @@ export const reduceToggleSidebar = state => ({
  */
 
 export const windowMaxWidth = () =>
-  Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+  Math.max(
+    document.documentElement.clientWidth,
+    window.innerWidth /* istanbul ignore next */ || 0
+  );
 
 /**
  *
@@ -247,14 +253,17 @@ export const windowMaxWidth = () =>
  */
 
 export const windowMaxHeight = () =>
-  Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  Math.max(
+    document.documentElement.clientHeight,
+    window.innerHeight /* istanbul ignore next */ || 0
+  );
 
 /**
  *
  * Check if browser agent is ios
  */
 
-export const checkBrowserAgent = () => {
+export const checkBrowserAgent = () => /* istanbul ignore next */ {
   // Detects if device is on iOS
   const isIos = () => {
     const userAgent = window.navigator.userAgent.toLowerCase();

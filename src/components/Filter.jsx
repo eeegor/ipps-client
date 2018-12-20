@@ -115,7 +115,8 @@ export const Filter = props => {
               value={provider_state}
             >
               <option value="">Select state</option>
-              {filterMeta &&
+
+              {/* istanbul ignore next */ filterMeta &&
                 filterMeta.providers.providerStates.map(unit => {
                   return (
                     <option key={unit} value={unit}>

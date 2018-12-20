@@ -8,7 +8,12 @@ describe('IconInfiniteSymbol', () => {
     const wrapper = shallow(<IconInfiniteSymbol color={color} />);
     expect(wrapper.find('svg').prop('width')).toBe(240);
     expect(wrapper.find('svg').prop('height')).toBe(240);
-    expect(wrapper.find('svg').find('path').prop('fill')).toBe(color);
+    expect(
+      wrapper
+        .find('svg')
+        .find('path')
+        .prop('fill')
+    ).toBe(color);
   });
 
   it('should adopt proper size', () => {

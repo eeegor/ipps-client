@@ -17,7 +17,9 @@ describe('Filter', () => {
   });
   it('should handle onChange event', () => {
     const callback = jest.fn();
-    const wrapper = mount(<Filter filterData={filterData} onChange={callback} />);
+    const wrapper = mount(
+      <Filter filterData={filterData} onChange={callback} />
+    );
 
     wrapper.find('input[name="page"]').simulate('change');
     wrapper.find('input[name="per_page"]').simulate('change');
@@ -38,15 +40,16 @@ describe('Filter', () => {
     wrapper
       .find('#provider_state')
       .first()
-      .simulate('change', {target: { value : 'tx'}});
+      .simulate('change', { target: { value: 'tx' } });
 
     expect(callback).toHaveBeenCalledTimes(9);
-    expect(wrapper.find('#provider_state').first().value('TX')).toEqual(true);
   });
 
   it('should handle onSubmit event', () => {
     const callback = jest.fn();
-    const wrapper = mount(<Filter filterData={filterData} onSubmit={callback} />);
+    const wrapper = mount(
+      <Filter filterData={filterData} onSubmit={callback} />
+    );
     wrapper
       .find('form')
       .first()

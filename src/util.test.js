@@ -8,10 +8,21 @@ import {
   reduceSetRequestStatus,
   reduceShowAuthForm,
   reduceToggleSidebar,
-  reduceSetFilterField
+  reduceSetFilterField,
+  guid,
+  windowMaxHeight,
+  windowMaxWidth
 } from './util';
 
 describe('util', () => {
+  it('provides uniq id', () => {
+    const id1 = guid();
+    const id2 = guid();
+    const id3 = guid();
+    expect(id1).toHaveLength(36);
+    expect(id1 === id2).not.toBe(true);
+  });
+
   it('serializes object', () => {
     const example = {
       one: 'Some value',
@@ -97,38 +108,81 @@ describe('util', () => {
     });
   });
 
-  // it('reduceSetProvidersMeta', () => {
-  //   const state = {
-  //     one: {},
-  //     two: 'Another Value',
-  //     providers: [],
-  //     meta: {}
-  //   };
-  //   const payload = {
-  //     meta: {
-  //       'x-total-count': 5,
-  //       'x-current-count': 12,
-  //       'x-current-page-limit': 32,
-  //       'x-current-page': 123,
-  //       'x-db-engine': 'redis'
-  //     }
-  //   };
-  //   const result = reduceSetProvidersMeta(state, payload);
-  //   expect(result).toEqual({
-  //     one: {},
-  //     two: 'Another Value',
-  //     providers: [],
-  //     meta: {
-  //       providers: {
-  //         totalCount: 5,
-  //         currentCount: 12,
-  //         perPage: 32,
-  //         currentPage: 123,
-  //         dbEngine: 'redis'
-  //       }
-  //     }
-  //   });
-  // });
+  it('reduceSetProvidersMeta', () => {
+    const state = {
+      one: {},
+      two: 'Another Value',
+      providers: [],
+      meta: {}
+    };
+    const payload = {
+      meta: {
+        'x-total-count': 5,
+        'x-current-count': 12,
+        'x-current-page-limit': 32,
+        'x-current-page': 123,
+        'x-db-engine': 'redis',
+        'x-available-states': JSON.stringify(['ca', 'tx', 'ny'])
+      }
+    };
+    const payload2 = {
+      meta: {
+        'x-total-count': 5,
+        'x-current-count': 12,
+        'x-current-page-limit': 32,
+        'x-current-page': 123,
+        'x-db-engine': 'redis',
+        'x-available-states': JSON.stringify([])
+      }
+    };
+    const result = reduceSetProvidersMeta(state, payload);
+    const result2 = reduceSetProvidersMeta(state, payload2);
+    expect(result).toEqual({
+      one: {},
+      two: 'Another Value',
+      providers: [],
+      meta: {
+        providers: {
+          totalCount: 5,
+          currentCount: 12,
+          perPage: 32,
+          currentPage: 123,
+          dbEngine: 'redis',
+          providerStates: ['ca', 'tx', 'ny']
+        }
+      }
+    });
+    expect(result2).toEqual({
+      one: {},
+      two: 'Another Value',
+      providers: [],
+      meta: {
+        providers: {
+          totalCount: 5,
+          currentCount: 12,
+          perPage: 32,
+          currentPage: 123,
+          dbEngine: 'redis',
+          providerStates: []
+        }
+      }
+    });
+    expect(result).toEqual({
+      one: {},
+      two: 'Another Value',
+      providers: [],
+      meta: {
+        providers: {
+          totalCount: 5,
+          currentCount: 12,
+          perPage: 32,
+          currentPage: 123,
+          dbEngine: 'redis',
+          providerStates: ['ca', 'tx', 'ny']
+        }
+      }
+    });
+  });
 
   it('reduceSetRequestStatus', () => {
     const state = {
@@ -183,6 +237,16 @@ describe('util', () => {
       two: 'Another Value',
       showSidebar: true
     });
+  });
+
+  it('windowMaxWidth', () => {
+    const result = windowMaxWidth();
+    expect(result).toEqual(1024);
+  });
+
+  it('windowMaxHeight', () => {
+    const result = windowMaxHeight();
+    expect(result).toEqual(768);
   });
 
   it('reduceSetFilterField', () => {
