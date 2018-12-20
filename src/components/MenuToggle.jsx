@@ -10,8 +10,8 @@ export const MenuToggle = props => {
     isOpen && `menu-toggle--open`
   );
   return (
-    <div className={classNames} onClick={event => onClick(event)}>
+    <button className={classNames} onClick={event => onClick(event)}>
       {isOpen ? 'Close' : 'Menu'}
-    </div>
+    </button>
   );
 };

@@ -286,10 +286,12 @@ export class App extends Component {
     return (
       <div className="app">
         {isAuth && (
-          <MenuToggle
-            isOpen={showSidebar}
-            onClick={event => this.toggleSidebar(event)}
-          />
+          <div>
+            <MenuToggle
+              isOpen={showSidebar}
+              onClick={event => this.toggleSidebar(event)}
+            />
+          </div>
         )}
         <Auth
           isAuth={isAuth}
@@ -306,6 +308,14 @@ export class App extends Component {
           <div className={`app__container ${bodyClass}`}>
             {showSidebar && (
               <Sidebar isAuth={isAuth}>
+                <div className="apply-filter">
+                  <Button
+                    color="success"
+                    onClick={event => this.applyFilter(event)}
+                    >
+                    Apply Filter
+                  </Button>
+                  </div>
                 <Title text="IPPS Patient Data" />
                 <Text text="Provider Summary for the Top 100 Diagnosis-Related Groups" />
                 <hr />
@@ -330,14 +340,6 @@ export class App extends Component {
                   submitLabel="Apply filter"
                   onChange={(field, event) =>
                     this.setFilterField(field, event.target.value)
-                  }
-                  applyFilter={
-                    <Button
-                      color="success"
-                      onClick={event => this.applyFilter(event)}
-                    >
-                      Apply Filter
-                    </Button>
                   }
                 />
               </Sidebar>

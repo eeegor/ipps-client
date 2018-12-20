@@ -4,7 +4,6 @@
   align-items: center;
   background: $color--primary;
   border-radius: 0.25rem;
-  // box-shadow: 0 0.25rem 2rem 0 rgba(#333, 0.4);
   border: 2px solid $color--primary;
   color: #fff;
   display: flex;
@@ -15,12 +14,18 @@
   position: fixed;
   text-transform: uppercase;
   z-index: 100000;
+  cursor: pointer;
 
   height: 2.5rem;
   width: 5rem;
   right: 0.75rem;
   top: 0.75rem;
   transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background: rgba($color--primary, 0.8);
+  }
+
   @media (min-width: $size--tablet) {
     height: 3rem;
     width: 6rem;
@@ -30,9 +35,12 @@
 
   &--open {
     color: #fff;
-    // color: $color--primary;
     background: rgba($color--primary, 0.5);
     border-color: #fff;
     box-shadow: 0 0.25rem 2rem 0 rgba($color--primary, 0.4);
+
+    &:hover {
+      background: rgba(#fff, 0.3);
+    }
   }
 }

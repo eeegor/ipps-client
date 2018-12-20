@@ -126,7 +126,7 @@ export const Filter = props => {
           </select>
         </div>
 
-        <div className="filter__apply">{applyFilter}</div>
+        {applyFilter && <div className="filter__apply">{applyFilter}</div>}
       </form>
     </div>
   );

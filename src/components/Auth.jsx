@@ -11,8 +11,22 @@ export const Auth = props => {
     onLogin,
     onGotoAuth
   } = props;
-
-  if (showAuthForm === 'signup' && !isAuth) {
+  
+  if (showAuthForm === 'login' && !isAuth) {
+    return (
+      <FormAuth
+      type="login"
+      title="Log in"
+      submitLabel="Log in"
+      onChange={(field, event) =>
+        onSetFormAuthField(field, event.target.value)
+      }
+      onSubmit={event => onLogin(event)}
+      onGotoAuth={(goto, event) => onGotoAuth(goto, event)}
+      />
+      );
+    }
+    
     return (
       <FormAuth
         type="signup"
@@ -25,22 +39,5 @@ export const Auth = props => {
         onGotoAuth={(goto, event) => onGotoAuth(goto, event)}
       />
     );
-  }
-
-  if (showAuthForm === 'login' && !isAuth) {
-    return (
-      <FormAuth
-        type="login"
-        title="Log in"
-        submitLabel="Log in"
-        onChange={(field, event) =>
-          onSetFormAuthField(field, event.target.value)
-        }
-        onSubmit={event => onLogin(event)}
-        onGotoAuth={(goto, event) => onGotoAuth(goto, event)}
-      />
-    );
-  }
-
-  return null;
-};
+  };
+  

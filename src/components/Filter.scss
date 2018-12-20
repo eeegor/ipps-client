@@ -28,39 +28,3 @@
     }
   }
 }
-
-.filter__apply {
-  position: fixed;
-  bottom: 0;
-  right: -1px;
-  background: rgba(darken($color--primary, 1%), 0.9);
-  box-shadow: 0 -0.5rem 4rem 0 rgba(#fff, 0.15);
-  height: 6rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding: 1.5rem 0;
-
-  @media (min-width: $size--tablet) {
-    max-width: 300px;
-  }
-  @media (min-width: $size--desktop) {
-    max-width: 400px;
-  }
-
-  .button--success {
-    font-size: 1rem;
-    padding: 1.25rem 2rem 1.15rem 2rem;
-    background: #fff;
-    color: darken($color--primary, 5%);
-    border: 1px solid rgba(darken(#fff, 10%), 0.8);
-
-    &:hover {
-      background: $color--success;
-      border-color: darken($color--success, 3%);
-      color: #fff;
-      box-shadow: none;
-    }
-  }
-}
