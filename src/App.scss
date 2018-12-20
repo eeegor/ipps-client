@@ -135,6 +135,53 @@ hr {
   }
 }
 
+.select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1.25rem;
+  line-height: 2rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  background: #fff;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  &::-ms-expand {
+    display: none;
+  }
+}
+
+.select-custom {
+  position: relative;
+
+  .select {
+    width: 100%;
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-30%);
+    border: 6px solid transparent;
+    border-color: #333 transparent transparent transparent;
+  }
+}
+
 .info {
   position: absolute;
   top: 0;

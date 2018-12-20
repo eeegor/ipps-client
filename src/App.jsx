@@ -312,10 +312,10 @@ export class App extends Component {
                   <Button
                     color="success"
                     onClick={event => this.applyFilter(event)}
-                    >
+                  >
                     Apply Filter
                   </Button>
-                  </div>
+                </div>
                 <Title text="IPPS Patient Data" />
                 <Text text="Provider Summary for the Top 100 Diagnosis-Related Groups" />
                 <hr />

@@ -108,22 +108,25 @@ export const Filter = props => {
           <label htmlFor="provider_state" className="label">
             Provider State
           </label>
-          <select
-            onChange={event => onChange('provider_state', event)}
-            name="provider_state"
-            id="provider_state"
-            value={provider_state}
-          >
-            <option value="">Select state</option>
-            {filterMeta &&
-              filterMeta.providers.providerStates.map(unit => {
-                return (
-                  <option key={unit} value={unit}>
-                    {unit.toUpperCase()}
-                  </option>
-                );
-              })}
-          </select>
+          <div className="select-custom">
+            <select
+              className="select"
+              onChange={event => onChange('provider_state', event)}
+              name="provider_state"
+              id="provider_state"
+              value={provider_state}
+            >
+              <option value="">Select state</option>
+              {filterMeta &&
+                filterMeta.providers.providerStates.map(unit => {
+                  return (
+                    <option key={unit} value={unit}>
+                      {unit.toUpperCase()}
+                    </option>
+                  );
+                })}
+            </select>
+          </div>
         </div>
 
         {applyFilter && <div className="filter__apply">{applyFilter}</div>}

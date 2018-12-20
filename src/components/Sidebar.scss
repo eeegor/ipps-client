@@ -50,8 +50,13 @@
   .button--outline {
     color: #fff;
     border-color: rgba(#fff, 0.5);
-    padding: 1rem 1rem 0.8rem 1rem;
+    padding: 0 0.5rem;
     margin: 0.5rem 0;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
 
     &:hover {
       background: rgba(#fff, 0.3);
@@ -68,8 +73,11 @@
 
   .apply-filter {
     position: fixed;
-    background: linear-gradient(180deg, darken($color--primary, 10%), rgba($color--primary, 0)); 
-    // background: red;
+    background: linear-gradient(
+      180deg,
+      darken($color--primary, 10%),
+      rgba($color--primary, 0)
+    );
     top: 0;
     left: 0;
     right: 0;
