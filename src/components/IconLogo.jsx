@@ -1,13 +1,13 @@
 import React from 'react';
 
 export const IconLogo = props => {
-  const { color = '#29c', height, width, size = 240 } = props;
+  const { color = '#29c', height = 75, width = 200 } = props;
 
   return (
     <div className="icon icon--logo">
       <svg
-        width={width || size || 200}
-        height={height || size || 75}
+        width={width}
+        height={height}
         viewBox="0 0 201 75"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
