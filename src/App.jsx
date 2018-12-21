@@ -16,7 +16,8 @@ import {
   ListResults,
   IconAuth,
   IconError,
-  IconSmiley
+  IconSmiley,
+  Errors
 } from './components';
 import './App.scss';
 import {
@@ -35,7 +36,8 @@ import {
   getQuery,
   windowMaxWidth,
   windowMaxHeight,
-  checkBrowserAgent
+  checkBrowserAgent,
+  guid
 } from './util';
 import { Api, LOCALSTORAGE_TOKEN_NAME } from './api';
 
@@ -289,7 +291,6 @@ export class App extends Component {
         return this.setRequestStatus('profile:success', () => {
           this.setAuth(true);
           this.getProviders();
-          console.log('profile success!', res);
           return this.setState(state => ({
             ...state,
             profile: res.data
@@ -298,7 +299,6 @@ export class App extends Component {
       })
       .catch(error => {
         this.setAuth(false);
-        console.log('profile error!');
         return this.setRequestStatus('profile:fail', () => {
           this.setError(error);
           return error;
@@ -316,8 +316,10 @@ export class App extends Component {
       filter,
       showSidebar,
       meta,
-      windowSize
+      windowSize,
+      errors
     } = this.state;
+    const hasErrors = errors && errors.length !== 0;
     const hasProviders = providers && providers.length !== 0;
     const hasNoProviders = !providers || providers.length === 0;
     const { currentPage, perPage, currentCount, totalCount } = meta.providers;
@@ -331,6 +333,7 @@ export class App extends Component {
           isAuth === true && showSidebar && 'has-sidebar'
         )}
       >
+        {hasErrors && <Errors errors={errors} />}
         {isAuth === 'auth' && (
           <div className="info info--auth">
             <IconAuth size={100} />
@@ -428,8 +431,6 @@ export class App extends Component {
                   <Text>Ooops, something went wrong, please try again</Text>
                 </div>
               )}
-
-              {console.log('providersCount', providers)}
 
               {hasNoProviders &&
                 (requests.providers === 'providers:get:success' && (

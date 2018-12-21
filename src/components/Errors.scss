@@ -1,0 +1,20 @@
+@import '../variables';
+
+.errors {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba($color--danger, 0.8);
+  color: white;
+}
+
+.error-wrap {
+  padding: 0.5rem 0;
+}
+
+.error {
+  padding: 0.5rem 1rem;
+}

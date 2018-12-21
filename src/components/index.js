@@ -8,6 +8,7 @@ import { Filter } from './Filter';
 import { FilterGroup } from './FilterGroup';
 import { FormAuth } from './FormAuth';
 import { Auth } from './Auth';
+import { Errors } from './Errors';
 import { Sidebar } from './Sidebar';
 import { MenuToggle } from './MenuToggle';
 import { IconLogo } from './IconLogo';
@@ -27,6 +28,7 @@ export {
   FilterGroup,
   FormAuth,
   Auth,
+  Errors,
   Sidebar,
   MenuToggle,
   IconLogo,

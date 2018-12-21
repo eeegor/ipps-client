@@ -50,7 +50,7 @@ describe('util', () => {
       one: {},
       two: 'Another Value',
       numbers: 87654,
-      errors: ['error 1', 'incoming error']
+      errors: ['incoming error']
     });
   });
 
@@ -67,7 +67,7 @@ describe('util', () => {
       one: {},
       two: 'Another Value',
       isAuth: true,
-      errors: ['error 1']
+      errors: []
     });
   });
 
@@ -91,7 +91,7 @@ describe('util', () => {
         oldKey: 'oldValue',
         'new-field': 'Freshly set'
       },
-      errors: ['error 1']
+      errors: []
     });
   });
 
@@ -106,7 +106,8 @@ describe('util', () => {
     expect(result).toEqual({
       one: {},
       two: 'Another Value',
-      providers: ['one', 'two', 'three']
+      providers: ['one', 'two', 'three'],
+      errors: []
     });
   });
 
@@ -203,7 +204,8 @@ describe('util', () => {
       providers: [],
       requests: {
         providers: 'providers:get:loading'
-      }
+      },
+      errors: []
     });
   });
 
@@ -220,7 +222,8 @@ describe('util', () => {
       one: {},
       two: 'Another Value',
       showAuthForm: 'signup',
-      isAuth: false
+      isAuth: false,
+      errors: []
     });
   });
 

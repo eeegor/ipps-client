@@ -136,6 +136,7 @@ export const getAllowedQueryParams = () /* istanbul ignore next */ => {
 
 export const reduceFilterFromQuery = state => ({
   ...state,
+  errors: [],
   filter: getAllowedQueryParams()
 });
 
@@ -146,6 +147,7 @@ export const reduceFilterFromQuery = state => ({
 
 export const reduceSetRequestStatus = (state, payload) => ({
   ...state,
+  errors: [],
   requests: {
     ...state.requests,
     [payload.status.split(':')[0]]: payload.status
@@ -159,7 +161,7 @@ export const reduceSetRequestStatus = (state, payload) => ({
 
 export const reduceSetError = (state, payload) => ({
   ...state,
-  errors: [...state.errors, payload.error]
+  errors: [payload.error]
 });
 
 /**
@@ -169,6 +171,7 @@ export const reduceSetError = (state, payload) => ({
 
 export const reduceSetAuth = (state, payload) => ({
   ...state,
+  errors: [],
   isAuth: payload.isAuth
 });
 
@@ -179,6 +182,7 @@ export const reduceSetAuth = (state, payload) => ({
 
 export const reduceSetFormAuthField = (state, payload) => ({
   ...state,
+  errors: [],
   formAuth: {
     ...state.formAuth,
     [payload.field]: payload.value
@@ -192,6 +196,7 @@ export const reduceSetFormAuthField = (state, payload) => ({
 
 export const reduceShowAuthForm = (state, payload) => ({
   ...state,
+  errors: [],
   showAuthForm: payload.type,
   isAuth: false
 });
@@ -203,6 +208,7 @@ export const reduceShowAuthForm = (state, payload) => ({
 
 export const reduceSetProviders = (state, payload) => ({
   ...state,
+  errors: [],
   providers: payload.providers
 });
 
