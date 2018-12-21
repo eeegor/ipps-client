@@ -8,7 +8,6 @@ import {
   IconInfiniteSymbol,
   Sidebar,
   MenuToggle,
-  IconBatteryEmpty,
   Button,
   Title,
   Text,

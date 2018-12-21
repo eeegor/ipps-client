@@ -6,9 +6,9 @@ body:not(.user-is-tabbing) button:focus,
 body:not(.user-is-tabbing) input:focus,
 body:not(.user-is-tabbing) select:focus,
 body:not(.user-is-tabbing) textarea:focus,
-.ReactVirtualized__Grid,
-.ReactVirtualized__Table__Grid,
-.ReactVirtualized__Table__headerColumn {
+body:not(.user-is-tabbing) .ReactVirtualized__Grid,
+body:not(.user-is-tabbing) .ReactVirtualized__Table__Grid,
+body:not(.user-is-tabbing) .ReactVirtualized__Table__headerColumn {
   outline: none;
 }
 
@@ -30,8 +30,8 @@ body {
 html,
 body,
 .content,
-.app__container,
-.app {
+.app,
+.app__container {
   @media (min-width: $size--tablet) {
     position: fixed;
     overflow: hidden;
@@ -65,6 +65,23 @@ body {
 .app {
   &.no-auth {
     overflow-y: scroll !important;
+  }
+
+  .list-wrap {
+    background: #fff;
+    min-height: 100%;
+  }
+
+  &.has-sidebar {
+    .apply-filter {
+      display: block;
+    }
+
+    @media (max-width: $size--tablet - 1px) {
+      .list-wrap {
+        display: none;
+      }
+    }
   }
 }
 
@@ -195,6 +212,19 @@ hr {
   }
 }
 
+.icon {
+  display: block;
+}
+
+.grid {
+  display: grid;
+  grid-gap: 1rem;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .info {
   position: absolute;
   top: 0;
@@ -240,33 +270,4 @@ hr {
       margin-top: calc(6rem - 80px);
     }
   }
-}
-
-.icon {
-  display: block;
-}
-
-.list-wrap {
-  background: #fff;
-  min-height: 100%;
-}
-
-.has-sidebar {
-  .apply-filter {
-    display: block;
-  }
-  @media (max-width: $size--tablet - 1px) {
-    .list-wrap {
-      display: none;
-    }
-  }
-}
-
-.grid {
-  display: grid;
-  grid-gap: 1rem;
-}
-
-.grid-2 {
-  grid-template-columns: repeat(2, 1fr);
 }
