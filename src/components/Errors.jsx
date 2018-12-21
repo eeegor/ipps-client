@@ -34,8 +34,11 @@ export const Errors = props => {
                 const properties = errors[errorName].properties;
                 return (
                   <div className="error" key={errorName}>
-                    {properties.minlength && `${properties.path}, min length: ${properties.minlength}`}
-                    {!properties.minlength && properties.path && `${properties.path} is ${properties.type}`}
+                    {properties.minlength &&
+                      `${properties.path}, min length: ${properties.minlength}`}
+                    {!properties.minlength &&
+                      properties.path &&
+                      `${properties.path} is ${properties.type}`}
                   </div>
                 );
               })}

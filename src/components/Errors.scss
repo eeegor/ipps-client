@@ -17,4 +17,12 @@
 
 .error {
   padding: 0.5rem 1rem;
+  text-align: center;
+  
+  @media(min-width: $size--tablet) {
+    padding: 1rem 0;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+  }
 }

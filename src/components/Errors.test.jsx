@@ -5,9 +5,7 @@ import { Errors } from './Errors';
 
 describe('Errors', () => {
   it('renders markup correctly', () => {
-    const wrapper = (
-      <Errors errors={[]} />
-    );
+    const wrapper = <Errors errors={[]} />;
     const tree = renderer.create(wrapper).toJSON();
     expect(tree).toMatchSnapshot();
   });
