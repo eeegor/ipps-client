@@ -3,7 +3,7 @@ import { getQuery } from './util';
 
 export const ROOT_URL = process.env.API_URL;
 // export const ROOT_URL = process.env.API_URL_TEST;
-export const LOCALSTORAGE_TOKEN_NAME = process.env.LOCALSTORAGE_TOKEN_NAME;
+export const { LOCALSTORAGE_TOKEN_NAME } = process.env;
 
 export class Api {
   signup(formData) {
