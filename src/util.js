@@ -38,23 +38,19 @@ export const allowedParams = {
  */
 
 export const serialize = obj => {
-  var str = [];
+  const str = [];
   /* istanbul ignore next */
-  for (var p in obj)
-    if (
-      obj.hasOwnProperty(p) &&
-      p !== 'cache' &&
-      obj[p] !== '' &&
-      obj[p] !== false
-    ) {
-      if (p === 'provider_state') {
+  Object.keys(obj).forEach(key => {
+    if (key !== 'cache' && obj[key] !== '' && obj[key] !== false) {
+      if (key === 'provider_state') {
         str.push(
-          encodeURIComponent('state') + '=' + encodeURIComponent(obj[p])
+          `${encodeURIComponent('state')}=${encodeURIComponent(obj[key])}`
         );
       } else {
-        str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+        str.push(`${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`);
       }
     }
+  });
   return str.join('&');
 };
 
@@ -63,6 +59,7 @@ export const serialize = obj => {
  * Get browser url query as object
  */
 
+// eslint-disable-next-line no-restricted-globals
 const currentQuery = () => queryString.parse(location.search, {});
 
 /**
@@ -84,6 +81,7 @@ export const getQuery = () =>
  * Set browser url query
  */
 
+/* eslint-disable no-restricted-globals */
 export const setQuery = query => /* istanbul ignore next */ {
   if (history.pushState) {
     const { protocol, host, pathname } = window.location;
@@ -91,8 +89,10 @@ export const setQuery = query => /* istanbul ignore next */ {
       query && query !== ''
         ? `${protocol}//${host}${pathname}?${query}`
         : `${protocol}//${host}${pathname}`;
+
     return window.history.pushState({ path: nextQuery }, '', nextQuery);
   }
+  return false;
 };
 
 /**
@@ -114,14 +114,17 @@ export const reduceSetFilterField = (state, payload) => ({
  */
 
 export const getAllowedQueryParams = () /* istanbul ignore next */ => {
-  let nextFilter = {};
+  const nextFilter = {};
   Object.keys(currentQuery()).map(key => {
     if (Object.keys(allowedParams).includes(key)) {
       if (key === 'state') {
-        return (nextFilter['provider_state'] = currentQuery()[key]);
+        nextFilter.provider_state = currentQuery()[key];
+        return true;
       }
       nextFilter[key] = currentQuery()[key];
+      return true;
     }
+    return nextFilter;
   });
   return nextFilter;
 };
@@ -208,8 +211,8 @@ export const reduceSetProviders = (state, payload) => ({
  * Prepare next providers meta state once receive headers from api
  */
 
+// eslint-disable-next-line arrow-body-style
 export const reduceSetProvidersMeta = (state, payload) => {
-  // istanbul ignore next
   return {
     ...state,
     meta: {
@@ -220,7 +223,9 @@ export const reduceSetProvidersMeta = (state, payload) => {
         perPage: payload.meta['x-current-page-limit'],
         currentPage: payload.meta['x-current-page'],
         dbEngine: payload.meta['x-db-engine'],
-        providerStates: JSON.parse(payload.meta['x-available-states'] || [])
+        providerStates: JSON.parse(
+          payload.meta['x-available-states'] || /* istanbul ignore next */ []
+        )
       }
     }
   };

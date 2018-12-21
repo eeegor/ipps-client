@@ -6,8 +6,8 @@ export const ROOT_URL = 'https://ipps-api.now.sh';
 export const LOCALSTORAGE_TOKEN_NAME = 'ipps-api';
 
 export class Api {
-  async signup(formData) {
-    return await new Promise((resolve, reject) => {
+  signup(formData) {
+    return new Promise((resolve, reject) => {
       axios
         .post(`${ROOT_URL}/signup`, formData)
         .then(res => {
@@ -21,8 +21,8 @@ export class Api {
     });
   }
 
-  async login(formData) {
-    return await new Promise((resolve, reject) => {
+  login(formData) {
+    return new Promise((resolve, reject) => {
       axios
         .post(`${ROOT_URL}/login`, formData)
         .then(res => {
@@ -36,8 +36,8 @@ export class Api {
     });
   }
 
-  async logout() {
-    return await new Promise((resolve, reject) => {
+  logout() {
+    return new Promise((resolve, reject) => {
       axios
         .delete(`${ROOT_URL}/logout`, {
           headers: {
@@ -55,8 +55,8 @@ export class Api {
     });
   }
 
-  async getProviders() {
-    return await new Promise((resolve, reject) => {
+  getProviders() {
+    return new Promise((resolve, reject) => {
       // istanbul ignore next
       axios
         .get(`${ROOT_URL}/providers${getQuery() ? `?${getQuery()}` : ''}`, {
@@ -64,9 +64,7 @@ export class Api {
             'x-auth': localStorage.getItem(LOCALSTORAGE_TOKEN_NAME) || ''
           }
         })
-        .then(res => {
-          return resolve(res);
-        })
+        .then(res => resolve(res))
         .catch(
           // istanbul ignore next
           error => reject(error)
@@ -74,8 +72,8 @@ export class Api {
     });
   }
 
-  async profile() {
-    return await new Promise((resolve, reject) => {
+  profile() {
+    return new Promise((resolve, reject) => {
       // istanbul ignore next
       axios
         .get(`${ROOT_URL}/profile`, {
@@ -83,9 +81,7 @@ export class Api {
             'x-auth': localStorage.getItem(LOCALSTORAGE_TOKEN_NAME) || ''
           }
         })
-        .then(res => {
-          return resolve(res);
-        })
+        .then(res => resolve(res))
         .catch(
           // istanbul ignore next
           error => {

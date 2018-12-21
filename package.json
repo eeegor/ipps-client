@@ -9,8 +9,8 @@
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "deploy": "yarn build && now",
-    "format": "prettier --write \"{src,test}/**/*.{js,jsx,json,css,scss}\" \"*.config.{js,json}\" \".babelrc\"",
-    "lint": "eslint src && prettier --list-different \"{src}/**/*.{js,jsx,css,scss}\"",
+    "format": "prettier --write \"{src,test}/**/*.{js,jsx,json,scss}\" \"*.config.{js,json}\" \".babelrc\" \".prettierrc\" \".eslintrc\"",
+    "lint": "eslint src && prettier --list-different \"{src,test}/**/*.{js,jsx,scss}\"",
     "prebuild": "rm -rf dist && yarn format && cp -r src/assets dist",
     "start": "webpack-dev-server --mode development",
     "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && jest"
@@ -60,39 +60,5 @@
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"
-  },
-  "prettier": {
-    "printWidth": 80,
-    "singleQuote": true
-  },
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "node": true
-    },
-    "extends": [
-      "airbnb",
-      "prettier"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "react/jsx-filename-extension": [
-        1,
-        {
-          "extensions": [
-            ".js",
-            ".jsx"
-          ]
-        }
-      ],
-      "import/named": 0,
-      "import/no-named-as-default": 0,
-      "import/no-named-as-default-member": 0,
-      "prettier/prettier": [
-        "error"
-      ]
-    }
   }
 }

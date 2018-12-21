@@ -1,8 +1,5 @@
-import React from 'react';
 import axios from 'axios';
 import { Api, ROOT_URL } from './api';
-import { shallow } from 'enzyme';
-import { App } from './App';
 
 const DUMMY_AUTH_TOKEN = 'TOKEN2393299283203932HJSKS';
 const AUTH_HEADERS = { 'x-auth': DUMMY_AUTH_TOKEN };
@@ -116,6 +113,7 @@ describe('async providers actions', () => {
 
   it('tests a get providers request', async () => {
     const requestPayload = {
+      // eslint-disable-next-line no-useless-computed-key
       headers: { ['x-auth']: 'undefined' }
     };
     const responsePayload = {

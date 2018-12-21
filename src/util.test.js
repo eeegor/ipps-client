@@ -21,6 +21,8 @@ describe('util', () => {
     const id3 = guid();
     expect(id1).toHaveLength(36);
     expect(id1 === id2).not.toBe(true);
+    expect(id2 === id3).not.toBe(true);
+    expect(id3 === id1).not.toBe(true);
   });
 
   it('serializes object', () => {
