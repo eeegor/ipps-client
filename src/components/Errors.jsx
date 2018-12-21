@@ -7,7 +7,7 @@ export const Errors = props => {
   return (
     <div className="errors">
       {errors.map(error => {
-        const data = error.response && error.response.data || {};
+        const data = (error.response && error.response.data) || {};
         const message = data.message;
         const name = data.name;
         const dataErrors = data.errors;
