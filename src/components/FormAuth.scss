@@ -20,6 +20,10 @@
   justify-content: center;
   margin-bottom: 0.5rem;
   margin-top: 10vh;
+
+  @media (min-width: $size--tablet) {
+    margin-top: 4vh;
+  }
 }
 
 .form-auth__title {
