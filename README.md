@@ -1,5 +1,7 @@
 # React IPPS Provider Client
 
+![](20181221-143632-ipps-client.gif)
+
 > Info: More info about the ipps data can be found [here](https://data.cms.gov/Medicare-Inpatient/Inpatient-Prospective-Payment-System-IPPS-Provider/97k6-zzx3)
 
 This is an example of a decoupled frontend app implemented with `React`, fetching data from a `Express` rest api backend.
@@ -38,7 +40,7 @@ This app provides a simple authentication example that only allows registered us
 
 - Error pages
 
-## Configuration
+## :gear: Configuration
 
 Modify configuration in `.env` (start by renaming `env.example` to `.env`, [wondering why?](https://codeburst.io/process-env-what-it-is-and-why-when-how-to-use-it-effectively-505d0b2831e7))
 
@@ -148,7 +150,7 @@ yarn deploy
 >
 > If you want to skip this step, you can remove the flag from the `prebuild` in `package.json/scripts`
 
-## Tools, Libraries and Packages
+## :green_book: Tools, Libraries and Packages
 
 ### React
 
