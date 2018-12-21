@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getQuery } from './util';
+import { serialize } from './util';
 
 export const ROOT_URL = process.env.API_URL;
 // export const ROOT_URL = process.env.API_URL_TEST;
@@ -55,15 +55,18 @@ export class Api {
     });
   }
 
-  getProviders() {
+  getProviders(options) {
     return new Promise((resolve, reject) => {
       // istanbul ignore next
       axios
-        .get(`${ROOT_URL}/providers${getQuery() ? `?${getQuery()}` : ''}`, {
-          headers: {
-            'x-auth': localStorage.getItem(LOCALSTORAGE_TOKEN_NAME) || ''
+        .get(
+          `${ROOT_URL}/providers${options ? `?${serialize(options)}` : ''}`,
+          {
+            headers: {
+              'x-auth': localStorage.getItem(LOCALSTORAGE_TOKEN_NAME) || ''
+            }
           }
-        })
+        )
         .then(res => resolve(res))
         .catch(
           // istanbul ignore next

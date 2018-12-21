@@ -64,7 +64,7 @@ const currentQuery = () => queryString.parse(location.search, {});
 
 /**
  *
- * Get browser url query
+ * Get browser url query as string
  */
 
 export const getQuery = () =>
@@ -104,7 +104,13 @@ export const reduceSetFilterField = (state, payload) => ({
   ...state,
   filter: {
     ...state.filter,
-    [payload.field]: payload.value
+    [payload.field]:
+      // eslint-disable-next-line no-nested-ternary
+      payload.field === 'per_page'
+        ? payload.value < 30000
+          ? payload.value
+          : 30000
+        : payload.value
   }
 });
 
@@ -119,6 +125,11 @@ export const getAllowedQueryParams = () /* istanbul ignore next */ => {
     if (Object.keys(allowedParams).includes(key)) {
       if (key === 'state') {
         nextFilter.provider_state = currentQuery()[key];
+        return true;
+      }
+      if (key === 'per_page') {
+        nextFilter.per_page =
+          currentQuery()[key] < 30000 ? currentQuery()[key] : 30000;
         return true;
       }
       nextFilter[key] = currentQuery()[key];
@@ -191,6 +202,23 @@ export const reduceSetFormAuthField = (state, payload) => ({
 
 /**
  *
+ * Validate auth form values
+ */
+
+export const setFormAuthValidation = (
+  state,
+  { emailValid, passwordValid }
+) => ({
+  ...state,
+  formAuth: {
+    ...state.formAuth,
+    emailValid,
+    passwordValid
+  }
+});
+
+/**
+ *
  * Prepare next auth form type (signup / login)
  */
 
@@ -245,7 +273,8 @@ export const reduceSetProvidersMeta = (state, payload) => {
 
 export const reduceToggleSidebar = state => ({
   ...state,
-  showSidebar: !state.showSidebar
+  showSidebar: !state.showSidebar,
+  errors: []
 });
 
 /**

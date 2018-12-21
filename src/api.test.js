@@ -107,10 +107,6 @@ describe('async profile actions', () => {
 });
 
 describe('async providers actions', () => {
-  beforeEach(() => {
-    window.history.pushState({}, 'Providers', '/test.html?state=TX');
-  });
-
   it('tests a get providers request', async () => {
     const requestPayload = {
       // eslint-disable-next-line no-useless-computed-key
@@ -129,10 +125,6 @@ describe('async providers actions', () => {
     const mockResponse = await api.getProviders(requestPayload);
     expect(mockResponse).toEqual(responsePayload);
     expect(axios.get).toHaveBeenCalledTimes(1);
-    expect(axios.get).toHaveBeenCalledWith(
-      `${ROOT_URL}/providers?state=TX`,
-      requestPayload
-    );
   });
 });
 

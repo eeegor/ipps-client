@@ -11,7 +11,8 @@ import {
   reduceSetFilterField,
   guid,
   windowMaxHeight,
-  windowMaxWidth
+  windowMaxWidth,
+  setFormAuthValidation
 } from './util';
 
 describe('util', () => {
@@ -209,6 +210,28 @@ describe('util', () => {
     });
   });
 
+  it('setFormAuthValidation', () => {
+    const state = {
+      otherValue: [],
+      formAuth: {
+        emailValid: false,
+        passwordValid: false
+      }
+    };
+    const payload = {
+      emailValid: true,
+      passwordValid: true
+    };
+    const result = setFormAuthValidation(state, payload);
+    expect(result).toEqual({
+      otherValue: [],
+      formAuth: {
+        emailValid: true,
+        passwordValid: true
+      }
+    });
+  });
+
   it('reduceShowAuthForm', () => {
     const state = {
       one: {},
@@ -241,7 +264,8 @@ describe('util', () => {
     expect(result).toEqual({
       one: {},
       two: 'Another Value',
-      showSidebar: true
+      showSidebar: true,
+      errors: []
     });
   });
 

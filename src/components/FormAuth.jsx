@@ -18,7 +18,11 @@ export const FormAuth = props => {
 
   return (
     <div className={`form-auth form-auth--${formType}`}>
-      <form className="form-auth__form" onSubmit={event => onSubmit(event)}>
+      <form
+        className="form-auth__form"
+        onSubmit={event => onSubmit(event)}
+        noValidate={true}
+      >
         <div className="form-auth__logo">
           <IconLogo width={120} height={60} />
         </div>
@@ -37,6 +41,7 @@ export const FormAuth = props => {
             name="email"
             type="email"
             defaultValue={email}
+            noValidate={true}
             onChange={event => onChange('email', event)}
           />
         </div>
@@ -51,6 +56,7 @@ export const FormAuth = props => {
             name="password"
             type="password"
             defaultValue={password}
+            noValidate={true}
             onChange={event => onChange('password', event)}
           />
         </div>

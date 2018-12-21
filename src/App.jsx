@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import queryString from 'queryString';
 import classnames from 'classnames';
+import validator from 'validator';
 import {
   List,
   Auth,
@@ -35,19 +36,20 @@ import {
   getQuery,
   windowMaxWidth,
   windowMaxHeight,
-  checkBrowserAgent
+  checkBrowserAgent,
+  setFormAuthValidation
 } from './util';
 import { Api, LOCALSTORAGE_TOKEN_NAME } from './api';
 
 const defaultFilter = {
-  per_page: false,
+  per_page: '',
   page: 1,
-  min_discharges: false,
-  max_discharges: false,
-  min_average_covered_charges: false,
-  max_average_covered_charges: false,
-  min_average_medicare_payments: false,
-  max_average_medicare_payments: false,
+  min_discharges: '',
+  max_discharges: '',
+  min_average_covered_charges: '',
+  max_average_covered_charges: '',
+  min_average_medicare_payments: '',
+  max_average_medicare_payments: '',
   provider_state: ''
 };
 
@@ -74,7 +76,9 @@ const defaultState = {
   showSidebar: false,
   formAuth: {
     email: '',
-    password: ''
+    password: '',
+    emailValid: false,
+    passwordValid: false
   },
   meta: defaultMeta,
   windowSize: {
@@ -218,7 +222,7 @@ export class App extends Component {
   async getProviders() {
     this.setRequestStatus('providers:get:loading');
     await this.api
-      .getProviders()
+      .getProviders(this.state.filter)
       .then(res => {
         return this.setRequestStatus('providers:get:success', () => {
           this.setProviderMeta(res.headers);
@@ -230,11 +234,61 @@ export class App extends Component {
       );
   }
 
+  validateAuthForm(form) {
+    const emailValid = validator.isEmail(form.email);
+    const passwordValid = validator.isLength(form.password, { min: 6 });
+    this.setState(state =>
+      setFormAuthValidation(state, { emailValid, passwordValid })
+    );
+
+    if (
+      form.email === '' &&
+      !emailValid &&
+      form.password === '' &&
+      !passwordValid
+    ) {
+      this.setError({
+        message: 'Validation Error',
+        error: 'Email and password are required'
+      });
+      return false;
+    } else if (form.email === '') {
+      this.setError({
+        message: 'Validation Error',
+        error: 'Email is required'
+      });
+      return false;
+    } else if (!emailValid) {
+      this.setError({
+        message: 'Validation Error',
+        error: 'Email format is not correct'
+      });
+      return false;
+    } else if (form.password === '') {
+      this.setError({
+        message: 'Validation Error',
+        error: 'Password is required'
+      });
+      return false;
+    } else if (!passwordValid) {
+      this.setError({
+        message: 'Validation Error',
+        error: 'Password should have minimum length of 6'
+      });
+      return false;
+    }
+    return true;
+  }
+
   async signup(event = null) {
     event && event.preventDefault();
+    const { formAuth } = this.state;
+    if (!this.validateAuthForm(formAuth)) {
+      return;
+    }
     await this.api
-      .signup(this.state.formAuth)
-      .then(res => {
+      .signup(formAuth)
+      .then(() => {
         this.setAuth(true);
         return this.setRequestStatus('signup:success', () =>
           this.getProviders()
@@ -248,9 +302,13 @@ export class App extends Component {
 
   async login(event = null) {
     event && event.preventDefault();
+    const { formAuth } = this.state;
+    if (!this.validateAuthForm(formAuth)) {
+      return;
+    }
     await this.api
-      .login(this.state.formAuth)
-      .then(res => {
+      .login(formAuth)
+      .then(() => {
         this.setAuth(true);
         return this.setRequestStatus('login:success', () =>
           this.getProviders()
@@ -333,6 +391,7 @@ export class App extends Component {
         )}
       >
         {hasErrors && <Errors errors={errors} />}
+
         {isAuth === 'auth' && (
           <div className="info info--auth">
             <IconAuth size={100} />
@@ -450,12 +509,7 @@ export class App extends Component {
               {requests.providers === 'providers:get:loading' && (
                 <div className="info loader">
                   <IconLoading size={120} />
-                  <Text>
-                    Loading{' '}
-                    {queryString.parse(location.search.replace('?', ''))
-                      .per_page || 100}{' '}
-                    providers...
-                  </Text>
+                  <Text>Loading {filter.per_page || 100} providers...</Text>
                 </div>
               )}
 
