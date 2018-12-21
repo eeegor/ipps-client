@@ -38,7 +38,7 @@ export const Errors = props => {
                       `${properties.path}, min length: ${properties.minlength}`}
                     {!properties.minlength &&
                       properties.path &&
-                      `${properties.path} is ${properties.type}`}
+                      `${properties.path} is required`}
                   </div>
                 );
               })}
