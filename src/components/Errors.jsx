@@ -14,11 +14,11 @@ export const Errors = props => {
         const code = data.code;
 
         if (message && !errors) {
-          return <div className="error">{`name: ${message} `}</div>;
+          return <div className="error">{`${message} `}</div>;
         }
 
         if (typeof data === 'string') {
-          return <div className="error">{`name: ${data} `}</div>;
+          return <div className="error">{`${data} `}</div>;
         }
 
         return (
