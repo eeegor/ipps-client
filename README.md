@@ -1,4 +1,4 @@
-# Ipps provider data demo app with React
+# React IPPS Provider Client
 
 > Info: More info about the ipps data can be found [here](https://data.cms.gov/Medicare-Inpatient/Inpatient-Prospective-Payment-System-IPPS-Provider/97k6-zzx3)
 
@@ -130,7 +130,7 @@ If you wish, you can deploy this app to Zeit.co. To do so please configure the f
 > Info: It's also possible to host with any other providers (e.g. Heroku) which support `node.js`
 
 1. Modify configuration in `.env` (start by renaming `env.example` to `.env`, [wondering why?](https://codeburst.io/process-env-what-it-is-and-why-when-how-to-use-it-effectively-505d0b2831e7))
-2. Modify configuration in `now.json` (start by renaming `example.now.json` to `now.json`
+2. Modify configuration in `now.json` (start by renaming `now.example.json` to `now.json`
 3. Make sure you're running on a port which is mentioned inside the `CORS_WHITELIST` of the [backend](https://github.com/eeegor/ipps-api)
 
 > Info: `Zeit.co now` creates deployments with random url names. In order to properly configure `cors` it is recommended to create an `alias` for your domain. 
