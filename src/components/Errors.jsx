@@ -7,17 +7,17 @@ export const Errors = props => {
   return (
     <div className="errors">
       {errors.map(error => {
-        const data = error.response.data || '';
+        const data = error.response && error.response.data || {};
         const message = data.message;
         const name = data.name;
-        const errors = data.errors;
+        const dataErrors = data.errors;
         const code = data.code;
 
-        if (message && !errors) {
+        if (message && !dataErrors) {
           return <div className="error">{`${message} `}</div>;
         }
 
-        if (typeof data === 'string') {
+        if (typeof data === 'string' && data !== '') {
           return <div className="error">{`${data} `}</div>;
         }
 
@@ -29,9 +29,9 @@ export const Errors = props => {
                 {code === 11000 && `This user already exists`}
               </div>
             )}
-            {errors &&
-              Object.keys(errors).map(errorName => {
-                const properties = errors[errorName].properties;
+            {dataErrors &&
+              Object.keys(dataErrors).map(errorName => {
+                const properties = dataErrors[errorName].properties;
                 return (
                   <div className="error" key={errorName}>
                     {properties.minlength &&

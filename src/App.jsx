@@ -36,8 +36,7 @@ import {
   getQuery,
   windowMaxWidth,
   windowMaxHeight,
-  checkBrowserAgent,
-  guid
+  checkBrowserAgent
 } from './util';
 import { Api, LOCALSTORAGE_TOKEN_NAME } from './api';
 
@@ -102,6 +101,7 @@ export class App extends Component {
   };
 
   optimizeForMobile = () => {
+    checkBrowserAgent();
     window.addEventListener('load', () => {
       window.scrollTo(0, 0);
     });
@@ -343,7 +343,7 @@ export class App extends Component {
 
         {requests.profile === 'profile:fail' && (
           <div className="info info--bad-token">
-            <IconAuth size={80} />
+            <IconError size={100} />
             <Text>Token failed validation</Text>
           </div>
         )}
