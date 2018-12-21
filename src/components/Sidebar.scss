@@ -8,7 +8,7 @@
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   position: relative;
-  z-index: 3000;
+  z-index: 9100;
 
   &__container {
     padding: 1rem;
@@ -85,7 +85,7 @@
     padding: 0.75rem;
     padding-bottom: 2rem;
     margin-bottom: 4rem;
-    z-index: 5000;
+    z-index: 9200;
 
     @media (min-width: $size--tablet) {
       left: calc(100vw - 360px);
