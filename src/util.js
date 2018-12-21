@@ -198,7 +198,8 @@ export const reduceShowAuthForm = (state, payload) => ({
   ...state,
   errors: [],
   showAuthForm: payload.type,
-  isAuth: false
+  isAuth: false,
+  requests: {}
 });
 
 /**

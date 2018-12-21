@@ -345,6 +345,14 @@ export class App extends Component {
           <div className="info info--bad-token">
             <IconError size={100} />
             <Text>Token failed validation</Text>
+            <div className="grid grid-2">
+              <Button onClick={event => this.showAuthForm('login', event)}>
+                Login
+              </Button>
+              <Button onClick={event => this.showAuthForm('signup', event)}>
+                Signup
+              </Button>
+            </div>
           </div>
         )}
 
