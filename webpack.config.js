@@ -72,7 +72,7 @@ if (mode == 'development') {
       publicPath: process.env.PATH_DEVELOPMENT
     },
     devServer: {
-      port: process.env.PORT || 8080,
+      port: process.env.PORT || 3000,
       contentBase: './dist',
       hot: true,
       historyApiFallback: true,

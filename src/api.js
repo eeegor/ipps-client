@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { getQuery } from './util';
 
-export const ROOT_URL = 'https://ipps-api.now.sh';
-// export const ROOT_URL = 'http://localhost:5000';
-export const LOCALSTORAGE_TOKEN_NAME = 'ipps-api';
+export const ROOT_URL = process.env.API_URL;
+// export const ROOT_URL = process.env.API_URL_TEST;
+export const LOCALSTORAGE_TOKEN_NAME = process.env.LOCALSTORAGE_TOKEN_NAME;
 
 export class Api {
   signup(formData) {
