@@ -223,7 +223,8 @@ describe('util', () => {
       two: 'Another Value',
       showAuthForm: 'signup',
       isAuth: false,
-      errors: []
+      errors: [],
+      requests: {}
     });
   });
 
